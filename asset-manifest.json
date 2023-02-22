@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/cards-front/static/css/main.073c9b0a.css",
+    "main.js": "/cards-front/static/js/main.af0e344e.js",
+    "static/js/787.1998cdf9.chunk.js": "/cards-front/static/js/787.1998cdf9.chunk.js",
+    "static/media/logo.svg": "/cards-front/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/cards-front/index.html",
+    "main.073c9b0a.css.map": "/cards-front/static/css/main.073c9b0a.css.map",
+    "main.af0e344e.js.map": "/cards-front/static/js/main.af0e344e.js.map",
+    "787.1998cdf9.chunk.js.map": "/cards-front/static/js/787.1998cdf9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.af0e344e.js"
+  ]
+}
