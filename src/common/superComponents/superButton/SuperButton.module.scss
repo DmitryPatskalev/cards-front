@@ -1,0 +1,55 @@
+.button {
+  padding: 5px 24px;
+  border-radius: 3px;
+  border: none;
+  font-weight: 500;
+  font-family: 'Monserrat', sans-serif;
+  font-size: 14px;
+  color: white;
+}
+
+.default {
+  background-color: #0066cc;
+}
+
+.default:hover {
+  background-color: #0080FF;
+}
+
+.default:active {
+  background-color: #0059B3;
+}
+
+.red {
+  background-color: #CC1439;
+}
+
+.red:hover {
+  background-color: #FF1A47;
+}
+
+.red:active {
+  background-color: #B31232;
+}
+
+.disabled {
+  background-color: #004D99;
+}
+
+.button:disabled {
+  opacity: 0.3;
+}
+
+.secondary {
+  color: #0066CC;
+  border: 1px solid #0066cc;
+  background-color: white;
+}
+
+.secondary:hover {
+  background-color: #E5F0FA;
+}
+
+.secondary:active {
+  background-color: #C9E5FF;
+}
