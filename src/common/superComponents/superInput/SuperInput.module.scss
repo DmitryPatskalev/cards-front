@@ -1,16 +1,16 @@
 .input {
   width: 372px;
   height: 36px;
-  border: 1px solid #D1D1D1;
-  border-radius: 5px;
   padding-left: 10px;
+
+  border: 1px solid #d1d1d1;
+  border-radius: 5px;
 }
 
 .input:focus {
+  border: 1px solid #0066cc;
   outline: none;
-  border: 1px solid #0066CC;
 }
-
 
 .inputWrapper {
 }
@@ -19,7 +19,7 @@
 }
 
 .errorInput {
-  border: 1px solid #CC1439;
+  border: 1px solid #cc1439;
   border-radius: 5px;
 }
 
@@ -28,11 +28,12 @@
 }
 
 .error {
-  font-family: 'Montserrat', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 10px;
-  color: #CC1439;
-  text-align: left;
   margin-bottom: 5px;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  font-style: normal;
+  color: #cc1439;
+  text-align: left;
 }

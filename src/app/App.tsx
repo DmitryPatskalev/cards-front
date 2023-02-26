@@ -1,8 +1,9 @@
-import React from "react";
-import s from "./App.module.scss";
+import React from 'react'
 
-import { NavBarComponent } from "../common/navbar/NavBarComponent";
-import { Main } from "../common/main/Main";
+import { Main } from '../common/main/Main'
+import { NavBarComponent } from '../common/navbar/NavBarComponent'
+
+import s from './App.module.scss'
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       <NavBarComponent />
       <Main />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

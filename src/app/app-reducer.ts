@@ -1,7 +1,8 @@
-const initState = {};
-type InitialStateType = typeof initState;
+const initState = {}
 
-type ActionsAppType<T = any> = { type: T };
+type InitialStateType = typeof initState
+
+type ActionsAppType<T = any> = { type: T }
 
 export const appReducer = (
   state: InitialStateType = initState,
@@ -9,6 +10,6 @@ export const appReducer = (
 ): InitialStateType => {
   switch (action.type) {
     default:
-      return state;
+      return state
   }
-};
+}
