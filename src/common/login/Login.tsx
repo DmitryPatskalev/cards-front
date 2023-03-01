@@ -10,7 +10,7 @@ import s from './Login.module.scss'
 import { SignForm } from './LoginForm'
 
 export const Login = () => {
-  const { isLoggedIn } = useAppSelector(state => state.app)
+  const { isLoggedIn } = useAppSelector(state => state.auth)
 
   if (isLoggedIn) return <Navigate to={'profile'} />
 

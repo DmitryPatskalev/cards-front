@@ -3,13 +3,13 @@ import React, { useState } from 'react'
 import { Form, Formik } from 'formik'
 import { NavLink } from 'react-router-dom'
 
-import { loginTC } from '../../app/app-reducer'
-import { useAppDispatch } from '../../app/store'
+import { useAppDispatch, useAppSelector } from '../../app/store'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
 import { CheckBoxField, InputField } from '../utils/form/FormFields'
 import iconVisibilityOn from '../utils/img/icon_visibility.svg'
 import iconVisibilityOff from '../utils/img/icon_visibility_off.svg'
 
+import { loginTC } from './auth-reducer'
 import s from './Login.module.scss'
 
 type ValidateType = {
@@ -55,6 +55,8 @@ export const SignForm: React.FC<SignInForm> = ({
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const dispatch = useAppDispatch()
 
+  const isDisabled = useAppSelector(state => state.auth.isDisabled)
+
   const passwordVisibilityHandler = () => {
     setShowPassword(!showPassword)
   }
@@ -92,7 +94,11 @@ export const SignForm: React.FC<SignInForm> = ({
           <NavLink to={'password-recovery'}>Forgot password?</NavLink>
         </div>
 
-        <SuperButton type="submit" xType={'default'}>
+        <SuperButton
+          disabled={isDisabled}
+          type="submit"
+          xType={isDisabled ? 'disabled' : 'default'}
+        >
           {titleButton}
         </SuperButton>
 

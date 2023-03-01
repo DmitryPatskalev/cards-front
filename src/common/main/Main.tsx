@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Route, Routes } from 'react-router-dom'
 
+import { initializedAppTC } from '../../app/app-reducer'
+import { useAppDispatch } from '../../app/store'
 import Error from '../404/Error404'
 import { Login } from '../login/Login'
 import { NewPassword } from '../new-password/NewPassword'
@@ -13,6 +15,12 @@ import { Stand } from '../superComponents/Stand'
 import s from './Main.module.scss'
 
 export const Main = () => {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(initializedAppTC())
+  }, [])
+
   return (
     <div className={s.main}>
       <Routes>
