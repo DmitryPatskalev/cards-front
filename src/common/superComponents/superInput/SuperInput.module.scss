@@ -1,10 +1,23 @@
 .input {
-  width: 372px;
-  height: 36px;
+  width: 260px;
+  height: 26px;
   padding-left: 10px;
-
   border: 1px solid #d1d1d1;
   border-radius: 5px;
+
+  font-family: Andale Mono, monospace;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  color: #000000;
+  
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 30px #ffffff inset !important;
 }
 
 .input:focus {

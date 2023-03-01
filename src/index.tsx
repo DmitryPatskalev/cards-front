@@ -7,13 +7,18 @@ import { HashRouter } from 'react-router-dom'
 
 import App from './app/App'
 import reportWebVitals from './reportWebVitals'
+import {Provider} from "react-redux";
+import {store} from "./app/store";
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
-  <HashRouter>
-    <App />
-  </HashRouter>
+  <Provider store={store}>
+     <HashRouter>
+        <App />
+     </HashRouter>
+  </Provider>
+
 )
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,0 +1,42 @@
+.titleFieldForm {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+
+  color: #000000;
+
+  opacity: 0.5;
+}
+
+.inputFieldContainer {
+  display: flex;
+  flex-direction: column;
+  height: 70px;
+
+  .inputFieldBlock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+
+    .inputForm {
+      outline: none;
+      border: 0 solid #fff;
+    }
+  }
+
+  .errorField {
+    font-family: Andale Mono, monospace;
+    text-align: center;
+    color: red;
+  }
+
+}
+
+.checkBoxFieldContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 15px;
+}

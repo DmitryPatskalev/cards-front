@@ -27,10 +27,11 @@ export const Stand = () => {
     <div className={s.stand}>
       <div className={s.inputs}>
         <div>
-          <SuperInput value={stateForAllInputs} onChange={onChangeInputHandler} />
+          <SuperInput type="text" value={stateForAllInputs} onChange={onChangeInputHandler} />
         </div>
         <div>
           <SuperInput
+            type="text"
             value={stateForAllInputs}
             onChange={onChangeInputHandler}
             error={error}
