@@ -1,27 +1,12 @@
-import { authAPI, LoginParamsType } from '../api/cards -api'
+import { authAPI, LoginParamsType, UserParamsType } from '../api/cards -api'
 import { errorUtils } from '../common/utils/error/error-utils'
 
 import { AppThunk } from './store'
 
-export type UserParamsType = {
-  _id: string
-  email: string
-  rememberMe: boolean
-  isAdmin: boolean
-  name: string
-  verified: boolean
-  publicCardPacksCount: number
-  created: string
-  updated: string
-  __v: number
-  token: string
-  tokenDeathTime: number
-  avatar: string
-}
-
 const initialState = {
   data: [] as UserParamsType[],
   error: null as string | null,
+  isLoggedIn: false,
 }
 
 type InitialStateType = typeof initialState
@@ -31,21 +16,28 @@ export const appReducer = (
   action: ActionsAppType
 ): InitialStateType => {
   switch (action.type) {
-    case 'login/SET_LOGIN':
+    case 'app/SET_LOGIN':
       return { ...state, data: action.data }
-    case 'login/SET_ERROR': {
+    case 'app/SET_ERROR':
       return { ...state, error: action.error }
-    }
+    case 'app/SET_IS_LOGGED_IN':
+      return { ...state, isLoggedIn: action.isLoggedIn }
     default:
       return state
   }
 }
 
-export const setLoginAC = (data: UserParamsType[]) => ({ type: 'login/SET_LOGIN', data } as const)
+export const setLoginAC = (data: UserParamsType[]) => ({ type: 'app/SET_LOGIN', data } as const)
 
-export const setAppErrorAC = (error: string | null) => ({ type: 'login/SET_ERROR', error } as const)
+export const setAppErrorAC = (error: string | null) => ({ type: 'app/SET_ERROR', error } as const)
 
-export type ActionsAppType = ReturnType<typeof setLoginAC> | ReturnType<typeof setAppErrorAC>
+export const setIsLoggedInAC = (isLoggedIn: boolean) =>
+  ({ type: 'app/SET_IS_LOGGED_IN', isLoggedIn } as const)
+
+export type ActionsAppType =
+  | ReturnType<typeof setLoginAC>
+  | ReturnType<typeof setAppErrorAC>
+  | ReturnType<typeof setIsLoggedInAC>
 
 export const loginTC =
   (data: LoginParamsType): AppThunk =>
@@ -53,8 +45,8 @@ export const loginTC =
     try {
       const res = await authAPI.login(data)
 
-      console.log(res)
       dispatch(setLoginAC(res.data))
+      dispatch(setIsLoggedInAC(true))
     } catch (error: any) {
       console.log(error.response.data)
       errorUtils(error, dispatch)

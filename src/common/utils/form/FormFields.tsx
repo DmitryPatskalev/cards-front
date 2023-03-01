@@ -15,7 +15,7 @@ type InputFieldFormType = {
   placeholder?: string
 }
 
-export const InputFieldForm: React.FC<InputFieldFormType> = ({ label, children, ...props }) => {
+export const InputField: React.FC<InputFieldFormType> = ({ label, children, ...props }) => {
   const [field, meta] = useField(props)
 
   return (
@@ -40,8 +40,7 @@ type CheckBoxFieldForm = {
   name: string
 }
 
-// eslint-disable-next-line no-redeclare
-export const CheckBoxFieldForm: React.FC<CheckBoxFieldForm> = ({ children, ...props }) => {
+export const CheckBoxField: React.FC<CheckBoxFieldForm> = ({ children, ...props }) => {
   const [field, meta] = useField(props)
 
   return (
@@ -62,7 +61,7 @@ type SelectFieldType = {
   name: string
   type: string
 }
-export const SelectField: React.FC<SelectFieldType> = ({ label, ...props }) => {
+export const SelectFieldForm: React.FC<SelectFieldType> = ({ label, ...props }) => {
   const [field, meta] = useField(props)
 
   return (

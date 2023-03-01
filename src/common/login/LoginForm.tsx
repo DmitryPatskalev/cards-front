@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 import { loginTC } from '../../app/app-reducer'
 import { useAppDispatch } from '../../app/store'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
-import { CheckBoxFieldForm, InputFieldForm } from '../utils/form/FormFields'
+import { CheckBoxField, InputField } from '../utils/form/FormFields'
 import iconVisibilityOn from '../utils/img/icon_visibility.svg'
 import iconVisibilityOff from '../utils/img/icon_visibility_off.svg'
 
@@ -38,11 +38,20 @@ const validate = (values: ValidateType) => {
 }
 
 type SignInForm = {
-  title: string
+  titleForm: string
+  titleButton: string
+  titleLink?: string
+  titleQuestion?: string
   children?: React.ReactNode
 }
 
-export const SignForm: React.FC<SignInForm> = ({ title, children }) => {
+export const SignForm: React.FC<SignInForm> = ({
+  titleForm,
+  titleButton,
+  titleLink,
+  titleQuestion,
+  children,
+}) => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const dispatch = useAppDispatch()
 
@@ -63,39 +72,37 @@ export const SignForm: React.FC<SignInForm> = ({ title, children }) => {
       }}
     >
       <Form className={s.form}>
-        <h1 className={s.titleForm}>{title}</h1>
-        <InputFieldForm label={'Email'} name={'email'} type={'text'} />
+        <h1 className={s.titleForm}>{titleForm}</h1>
+        <InputField label={'Email'} name={'email'} type={'text'} />
 
-        <InputFieldForm
-          label={'Password'}
-          name={'password'}
-          type={showPassword ? 'text' : 'password'}
-        >
+        <InputField label={'Password'} name={'password'} type={showPassword ? 'text' : 'password'}>
           <img
             onClick={passwordVisibilityHandler}
             className={s.icon}
             src={showPassword ? iconVisibilityOn : iconVisibilityOff}
             alt="icon-visibility"
           />
-        </InputFieldForm>
+        </InputField>
 
-        <CheckBoxFieldForm name={'rememberMe'}>
+        <CheckBoxField name={'rememberMe'}>
           <span className={s.checkBoxText}>Remember Me</span>
-        </CheckBoxFieldForm>
+        </CheckBoxField>
 
         <div className={s.forgotPasswordBlock}>
           <NavLink to={'password-recovery'}>Forgot password?</NavLink>
         </div>
 
         <SuperButton type="submit" xType={'default'}>
-          Sign In
+          {titleButton}
         </SuperButton>
 
-        <div className={s.question}>Have not you an account yet?</div>
+        <div className={s.question}>{titleQuestion}</div>
 
         <NavLink className={s.linkSingUp} to={'register'}>
-          Sign Up
+          {titleLink}
         </NavLink>
+
+        {children}
       </Form>
     </Formik>
   )
