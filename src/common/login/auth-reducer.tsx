@@ -16,7 +16,7 @@ export const authReducer = (
   action: ActionsAuthType
 ): InitialStateType => {
   switch (action.type) {
-    case 'auth/SET_LOGIN':
+    case 'auth/SET_DATA':
       return { ...state, data: action.data }
     case 'auth/SET_ERROR':
       return { ...state, error: action.error }
@@ -29,7 +29,7 @@ export const authReducer = (
   }
 }
 
-export const setLoginAC = (data: UserParamsType[]) => ({ type: 'auth/SET_LOGIN', data } as const)
+export const setDataAC = (data: UserParamsType[]) => ({ type: 'auth/SET_DATA', data } as const)
 
 export const setErrorAC = (error: string | null) => ({ type: 'auth/SET_ERROR', error } as const)
 
@@ -40,7 +40,7 @@ export const setIsDisabledAC = (isDisabled: boolean) =>
   ({ type: 'auth/SET_IS_DISABLED', isDisabled } as const)
 
 export type ActionsAuthType =
-  | ReturnType<typeof setLoginAC>
+  | ReturnType<typeof setDataAC>
   | ReturnType<typeof setErrorAC>
   | ReturnType<typeof setIsLoggedInAC>
   | ReturnType<typeof setIsDisabledAC>
@@ -52,11 +52,9 @@ export const loginTC =
       dispatch(setIsDisabledAC(true))
       const res = await authAPI.login(data)
 
-      dispatch(setLoginAC(res.data))
+      dispatch(setDataAC(res.data))
       dispatch(setIsLoggedInAC(true))
     } catch (error: any) {
-      console.log(error.response.data)
-      dispatch(setIsDisabledAC(false))
       errorUtils(error, dispatch)
     } finally {
       dispatch(setIsDisabledAC(false))

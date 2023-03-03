@@ -4,3 +4,12 @@
 
   margin-top: 20px;
 }
+
+.spinnerBlock {
+  display: flex;
+  justify-content: center;
+
+  .spinner {
+    width: 300px;
+  }
+}

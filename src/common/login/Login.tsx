@@ -4,15 +4,16 @@ import { Navigate } from 'react-router-dom'
 
 import { useAppSelector } from '../../app/store'
 import style from '../common-style/common-container.module.scss'
-import { ErrorSnackBar } from '../error-snack-bar/ErrorSnackBar'
 
 import s from './Login.module.scss'
 import { SignForm } from './LoginForm'
 
 export const Login = () => {
-  const { isLoggedIn } = useAppSelector(state => state.auth)
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
-  if (isLoggedIn) return <Navigate to={'profile'} />
+  if (isLoggedIn) {
+    return <Navigate to={'/'} />
+  }
 
   return (
     <div className={`${style.commonContainer} ${s.loginContainer}`}>
@@ -24,7 +25,6 @@ export const Login = () => {
           titleQuestion="Have not you an account yet?"
         />
       </div>
-      <ErrorSnackBar />
     </div>
   )
 }

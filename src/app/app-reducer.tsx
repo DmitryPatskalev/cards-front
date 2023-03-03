@@ -1,5 +1,6 @@
 import { authAPI } from '../api/cards -api'
-import { setIsLoggedInAC } from '../common/login/auth-reducer'
+import { setDataAC, setIsLoggedInAC } from '../common/login/auth-reducer'
+import { errorUtils } from '../common/utils/error/error-utils'
 
 import { AppThunk } from './store'
 
@@ -38,11 +39,14 @@ export type ActionsAppType = ReturnType<typeof setStatusAC> | ReturnType<typeof 
 
 export const initializedAppTC = (): AppThunk => async dispatch => {
   try {
-    await authAPI.me()
+    const res = await authAPI.me()
 
-    dispatch(setIsLoggedInAC(true))
+    if (res.data) {
+      dispatch(setIsLoggedInAC(true))
+    }
+
     dispatch(setIsInitializedAC(true))
-  } catch (e) {
-    console.log(e)
+  } catch (e: any) {
+    errorUtils(e, dispatch)
   }
 }

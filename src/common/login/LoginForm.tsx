@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { Form, Formik } from 'formik'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
@@ -54,8 +54,7 @@ export const SignForm: React.FC<SignInForm> = ({
 }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const dispatch = useAppDispatch()
-
-  const isDisabled = useAppSelector(state => state.auth.isDisabled)
+  const { isDisabled } = useAppSelector(state => state.auth)
 
   const passwordVisibilityHandler = () => {
     setShowPassword(!showPassword)
