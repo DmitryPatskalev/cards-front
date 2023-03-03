@@ -1,5 +1,5 @@
 import { authAPI } from '../api/cards -api'
-import { setDataAC, setIsLoggedInAC } from '../common/login/auth-reducer'
+import { setUserDataAC, setIsLoggedInAC } from '../common/login/auth-reducer'
 import { errorUtils } from '../common/utils/error/error-utils'
 
 import { AppThunk } from './store'
