@@ -1,0 +1,88 @@
+.imgBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50px;
+}
+
+.nameUserBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Andale Mono, monospace;
+  text-align: center;
+  font-weight: 500;
+  font-size: 20px;
+  margin: 20px 0;
+
+  .editableInput {
+    outline: none;
+    border: 0 solid #366eff;
+    border-bottom: 1px solid blue;
+    border-radius: 0;
+    width: 200px;
+    height: 20px;
+
+  }
+
+  .pencil {
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+  }
+
+  .editableButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 24px;
+    border-radius: 2px;
+    font-weight: 400;
+    font-size: 12px;
+    margin-left: 20px;
+  }
+
+}
+
+.email {
+  font-family: Andale Mono, monospace;
+  text-align: center;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+  margin-bottom: 20px;
+
+  opacity: 0.5;
+}
+
+.buttonLogoutBlock {
+  display: flex;
+  justify-content: center;
+
+  .iconLogout {
+    width: 20px;
+    margin-right: 10px;
+  }
+
+  .buttonLogout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(109, 109, 109, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    width: 130px;
+    height: 40px;
+    border: none;
+    color: #000000;
+    padding: 0;
+
+  }
+}
+
