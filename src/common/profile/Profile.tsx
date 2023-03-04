@@ -1,21 +1,29 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/store'
-import { fetchDataUserTC } from '../login/auth-reducer'
+import { logoutTC } from '../login/auth-reducer'
 
 export const Profile = () => {
-  const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const { isLoggedIn, isDisabled } = useAppSelector(state => state.auth)
 
-  useEffect(() => {
-    dispatch(fetchDataUserTC())
-  }, [])
+  const dispatch = useAppDispatch()
+
+  const onClickLogoutHandler = () => {
+    dispatch(logoutTC())
+  }
 
   if (!isLoggedIn) {
     return <Navigate to={'login'} />
   }
 
-  return <div>Profile</div>
+  return (
+    <div>
+      Profile
+      <button disabled={isDisabled} onClick={onClickLogoutHandler}>
+        LogOut
+      </button>
+    </div>
+  )
 }

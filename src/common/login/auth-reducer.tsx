@@ -1,9 +1,8 @@
-import { authAPI, LoginParamsType, UserParamsType } from '../../api/cards -api'
+import { authAPI, LoginParamsType } from '../../api/cards -api'
 import { AppThunk } from '../../app/store'
 import { errorUtils } from '../utils/error/error-utils'
 
 const initialState = {
-  dataUser: [] as UserParamsType[],
   error: null as string | null,
   isLoggedIn: false,
   isDisabled: false,
@@ -16,8 +15,6 @@ export const authReducer = (
   action: ActionsAuthType
 ): InitialStateType => {
   switch (action.type) {
-    case 'auth/SET_DATA':
-      return { ...state, dataUser: action.dataUser }
     case 'auth/SET_ERROR':
       return { ...state, error: action.error }
     case 'auth/SET_IS_LOGGED_IN':
@@ -29,9 +26,6 @@ export const authReducer = (
   }
 }
 
-export const setUserDataAC = (dataUser: UserParamsType[]) =>
-  ({ type: 'auth/SET_DATA', dataUser } as const)
-
 export const setErrorAC = (error: string | null) => ({ type: 'auth/SET_ERROR', error } as const)
 
 export const setIsLoggedInAC = (isLoggedIn: boolean) =>
@@ -41,7 +35,6 @@ export const setIsDisabledAC = (isDisabled: boolean) =>
   ({ type: 'auth/SET_IS_DISABLED', isDisabled } as const)
 
 export type ActionsAuthType =
-  | ReturnType<typeof setUserDataAC>
   | ReturnType<typeof setErrorAC>
   | ReturnType<typeof setIsLoggedInAC>
   | ReturnType<typeof setIsDisabledAC>
@@ -60,12 +53,15 @@ export const loginTC =
     }
   }
 
-export const fetchDataUserTC = (): AppThunk => async dispatch => {
+export const logoutTC = (): AppThunk => async dispatch => {
   try {
-    const res = await authAPI.me()
+    dispatch(setIsDisabledAC(true))
+    await authAPI.logout()
 
-    dispatch(setUserDataAC(res.data))
-  } catch (e: any) {
-    errorUtils(e, dispatch)
+    dispatch(setIsLoggedInAC(false))
+  } catch (error: any) {
+    errorUtils(error, dispatch)
+  } finally {
+    dispatch(setIsDisabledAC(false))
   }
 }

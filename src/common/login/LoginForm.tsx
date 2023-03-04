@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { Form, Formik } from 'formik'
-import { Navigate, NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
@@ -56,6 +56,10 @@ export const SignForm: React.FC<SignInForm> = ({
   const dispatch = useAppDispatch()
   const { isDisabled } = useAppSelector(state => state.auth)
 
+  const navigate = useNavigate()
+
+  const onClickNavigate = (route: string) => navigate(route)
+
   const passwordVisibilityHandler = () => {
     setShowPassword(!showPassword)
   }
@@ -90,7 +94,7 @@ export const SignForm: React.FC<SignInForm> = ({
         </CheckBoxField>
 
         <div className={s.forgotPasswordBlock}>
-          <NavLink to={'password-recovery'}>Forgot password?</NavLink>
+          <div onClick={() => onClickNavigate('/password-recovery')}>Forgot password?</div>
         </div>
 
         <SuperButton
@@ -103,9 +107,9 @@ export const SignForm: React.FC<SignInForm> = ({
 
         <div className={s.question}>{titleQuestion}</div>
 
-        <NavLink className={s.linkSingUp} to={'register'}>
+        <div onClick={() => onClickNavigate('/register')} className={s.linkSingUp}>
           {titleLink}
-        </NavLink>
+        </div>
 
         {children}
       </Form>

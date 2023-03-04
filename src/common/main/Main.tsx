@@ -18,13 +18,13 @@ import s from './Main.module.scss'
 
 export const Main = () => {
   const dispatch = useAppDispatch()
-  const { isInitialized } = useAppSelector(state => state.app)
+  const { status } = useAppSelector(state => state.app)
 
   useEffect(() => {
     dispatch(initializedAppTC())
   }, [])
 
-  if (!isInitialized) {
+  if (status === 'loading') {
     return (
       <div className={s.spinnerBlock}>
         <img className={s.spinner} src={spinner} alt="spinner" />

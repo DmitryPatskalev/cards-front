@@ -1,17 +1,23 @@
 import axios from 'axios'
 
 export const instance = axios.create({
-  baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0',
-  // baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/',
+  // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0',
+  baseURL:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:7542/2.0/'
+      : 'https://neko-back.herokuapp.com/2.0/',
   withCredentials: true,
 })
 
 export const authAPI = {
   login(data: LoginParamsType) {
-    return instance.post<UserParamsType[]>('/auth/login', data)
+    return instance.post<UserParamsType>('auth/login', data)
+  },
+  logout() {
+    return instance.delete<LogoutType>('auth/me', {})
   },
   me() {
-    return instance.post<UserParamsType[]>('/auth/me')
+    return instance.post<UserParamsType>('auth/me', {})
   },
 }
 
@@ -35,4 +41,9 @@ export type UserParamsType = {
   token: string
   tokenDeathTime: number
   avatar: string
+}
+
+export type LogoutType = {
+  error: string
+  in: string
 }
