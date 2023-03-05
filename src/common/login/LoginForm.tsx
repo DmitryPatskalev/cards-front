@@ -13,8 +13,9 @@ import { loginTC } from './auth-reducer'
 import s from './Login.module.scss'
 
 type ValidateType = {
-  email: string
-  password: string
+  email?: string
+  password?: string
+  confirmPassword?: string
 }
 
 const validate = (values: ValidateType) => {
@@ -32,6 +33,12 @@ const validate = (values: ValidateType) => {
     errors.password = 'Must be 7 characters or more'
   } else if (values.password.length > 25) {
     errors.password = 'Must be 25 characters or less'
+  }
+
+  if (!values.confirmPassword) {
+    errors.confirmPassword = 'The field is required'
+  } else if (values.confirmPassword !== values.password) {
+    errors.confirmPassword = 'Passwords must match'
   }
 
   return errors
@@ -69,6 +76,7 @@ export const SignForm: React.FC<SignInForm> = ({
       initialValues={{
         email: '',
         password: '',
+        confirmPassword: '',
         rememberMe: false,
       }}
       validate={validate}
@@ -78,6 +86,7 @@ export const SignForm: React.FC<SignInForm> = ({
     >
       <Form className={s.form}>
         <h1 className={s.titleForm}>{titleForm}</h1>
+
         <InputField label={'Email'} name={'email'} type={'text'} />
 
         <InputField label={'Password'} name={'password'} type={showPassword ? 'text' : 'password'}>
@@ -88,6 +97,8 @@ export const SignForm: React.FC<SignInForm> = ({
             alt="icon-visibility"
           />
         </InputField>
+
+        {children}
 
         <CheckBoxField name={'rememberMe'}>
           <span className={s.checkBoxText}>Remember Me</span>
@@ -110,8 +121,6 @@ export const SignForm: React.FC<SignInForm> = ({
         <div onClick={() => onClickNavigate('/register')} className={s.linkSingUp}>
           {titleLink}
         </div>
-
-        {children}
       </Form>
     </Formik>
   )
