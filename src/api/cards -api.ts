@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const instance = axios.create({
+const instance = axios.create({
   // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0',
   baseURL:
     process.env.NODE_ENV === 'development'
@@ -10,6 +10,9 @@ export const instance = axios.create({
 })
 
 export const authAPI = {
+  register(data: LoginParamsType) {
+    return instance.post<UserParamsType>('auth/register', data)
+  },
   login(data: LoginParamsType) {
     return instance.post<UserParamsType>('auth/login', data)
   },
@@ -19,12 +22,21 @@ export const authAPI = {
   me() {
     return instance.post<UserParamsType>('auth/me', {})
   },
+  forgot(data: ForgotPasswordParamsType) {
+    return instance.post('auth/forgot', data)
+  },
 }
 
 export type LoginParamsType = {
   email: string
   password: string
-  rememberMe: boolean
+  rememberMe?: boolean
+}
+
+export type ForgotPasswordParamsType = {
+  email: string // кому восстанавливать пароль
+  from?: string
+  message: string
 }
 
 export type UserParamsType = {

@@ -78,7 +78,7 @@ export const Profile = () => {
             )}
           </div>
 
-          <div className={s.email}>nya-admin@nya.nya</div>
+          <div className={s.email}>dmitrypatskalev@gmail.com</div>
           <div className={s.buttonLogoutBlock}>
             <SuperButton
               xType={'secondary'}

@@ -9,7 +9,7 @@ import s from './FormFields.module.scss'
 
 type InputFieldFormType = {
   children?: React.ReactNode
-  label: string
+  label?: string
   name: string
   type: string
   placeholder?: string
