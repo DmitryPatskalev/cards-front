@@ -4,6 +4,7 @@ import {
   ForgotPasswordParamsType,
   LoginParamsType,
 } from '../../api/cards -api'
+import { setStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
 import { errorUtils } from '../utils/error/error-utils'
 
@@ -84,7 +85,9 @@ export const loginTC =
   async dispatch => {
     try {
       dispatch(setIsDisabledAC(true))
-      await authAPI.login(data)
+      const res = await authAPI.login(data)
+
+      dispatch(updateUserAC(res.data.name))
       dispatch(setIsLoggedInAC(true))
     } catch (error: any) {
       errorUtils(error, dispatch)
@@ -115,14 +118,14 @@ export const forgottenPasswordTC =
     }
   }
 
-export const changeNameTC =
+export const updateUserTC =
   (name: string): AppThunk =>
   async dispatch => {
     try {
+      dispatch(setStatusAC('succeeded'))
       const res = await authAPI.update(name)
 
       dispatch(updateUserAC(res.data.updatedUser.name))
-      console.log(res.data.updatedUser.name)
     } catch (error: any) {
       errorUtils(error, dispatch)
     }

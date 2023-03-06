@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import commonStyle from '../common-style/common-container.module.scss'
-import { changeNameTC, logoutTC } from '../login/auth-reducer'
+import { updateUserTC, logoutTC } from '../login/auth-reducer'
 import style from '../login/Login.module.scss'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
 import { SuperInput } from '../superComponents/superInput/SuperInput'
@@ -31,7 +31,7 @@ export const Profile = () => {
   }
   const activateViewMode = () => {
     setEdit(false)
-    dispatch(changeNameTC(newName))
+    dispatch(updateUserTC(newName))
   }
   const onChangeNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNewName(e.currentTarget.value)

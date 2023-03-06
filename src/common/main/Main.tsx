@@ -8,6 +8,7 @@ import Error from '../404/Error404'
 import { ErrorSnackBar } from '../error-snack-bar/ErrorSnackBar'
 import { Login } from '../login/Login'
 import { NewPassword } from '../new-password/NewPassword'
+import { CheckEmail } from '../password-recovery/CheckEmail'
 import { PasswordRecovery } from '../password-recovery/PasswordRecovery'
 import { Profile } from '../profile/Profile'
 import { Register } from '../register/Register'
@@ -41,6 +42,7 @@ export const Main = () => {
         <Route path={'profile'} element={<Profile />} />
         <Route path={'*'} element={<Error />} />
         <Route path={'password-recovery'} element={<PasswordRecovery />} />
+        <Route path={'check-email'} element={<CheckEmail />} />
         <Route path={'new-password'} element={<NewPassword />} />
         <Route path={'stand'} element={<Stand />} />
       </Routes>
