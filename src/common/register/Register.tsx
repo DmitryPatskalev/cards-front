@@ -9,8 +9,7 @@ import { registerTC } from '../login/auth-reducer'
 import s from '../login/Login.module.scss'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
 import { InputField } from '../utils/form/FormFields'
-import iconVisibilityOn from '../utils/img/icon_visibility.svg'
-import iconVisibilityOff from '../utils/img/icon_visibility_off.svg'
+import { IconVisibility } from '../utils/form/IconVisibility'
 
 export type ValidateType = {
   email: string
@@ -18,7 +17,7 @@ export type ValidateType = {
   confirmPassword: string
 }
 
-const validate = (values: ValidateType) => {
+const validate = (values: Partial<ValidateType>) => {
   const errors: Partial<ValidateType> = {}
 
   if (!values.email) {
@@ -55,10 +54,6 @@ export const Register = () => {
 
   const onClickNavigate = (route: string) => navigate(route)
 
-  const passwordVisibilityHandler = () => {
-    setShowPassword(!showPassword)
-  }
-
   if (isRegistered) {
     return <Navigate to={'/login'} />
   }
@@ -87,12 +82,7 @@ export const Register = () => {
               name={'password'}
               type={showPassword ? 'text' : 'password'}
             >
-              <img
-                onClick={passwordVisibilityHandler}
-                className={s.icon}
-                src={showPassword ? iconVisibilityOn : iconVisibilityOff}
-                alt="icon-visibility"
-              />
+              <IconVisibility showPassword={showPassword} setShowPassword={setShowPassword} />
             </InputField>
 
             <InputField
@@ -100,12 +90,7 @@ export const Register = () => {
               name={'confirmPassword'}
               type={showPassword ? 'text' : 'password'}
             >
-              <img
-                onClick={passwordVisibilityHandler}
-                className={s.icon}
-                src={showPassword ? iconVisibilityOn : iconVisibilityOff}
-                alt="icon-visibility"
-              />
+              <IconVisibility showPassword={showPassword} setShowPassword={setShowPassword} />
             </InputField>
 
             <SuperButton

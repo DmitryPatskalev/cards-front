@@ -7,8 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../app/store'
 import style from '../common-style/common-container.module.scss'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
 import { CheckBoxField, InputField } from '../utils/form/FormFields'
-import iconVisibilityOn from '../utils/img/icon_visibility.svg'
-import iconVisibilityOff from '../utils/img/icon_visibility_off.svg'
+import { IconVisibility } from '../utils/form/IconVisibility'
 
 import { loginTC } from './auth-reducer'
 import s from './Login.module.scss'
@@ -19,7 +18,7 @@ export type ValidateType = {
   rememberMe: boolean
 }
 
-const validate = (values: ValidateType) => {
+const validate = (values: Partial<ValidateType>) => {
   const errors: Partial<ValidateType> = {}
 
   if (!values.email) {
@@ -49,10 +48,6 @@ export const Login = () => {
 
   const onClickNavigate = (route: string) => navigate(route)
 
-  const passwordVisibilityHandler = () => {
-    setShowPassword(!showPassword)
-  }
-
   if (isLoggedIn) {
     return <Navigate to={'/'} />
   }
@@ -81,12 +76,7 @@ export const Login = () => {
               name={'password'}
               type={showPassword ? 'text' : 'password'}
             >
-              <img
-                onClick={passwordVisibilityHandler}
-                className={s.icon}
-                src={showPassword ? iconVisibilityOn : iconVisibilityOff}
-                alt="icon-visibility"
-              />
+              <IconVisibility showPassword={showPassword} setShowPassword={setShowPassword} />
             </InputField>
 
             <CheckBoxField name={'rememberMe'}>

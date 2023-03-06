@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import commonStyle from '../common-style/common-container.module.scss'
-import { logoutTC } from '../login/auth-reducer'
+import { changeNameTC, logoutTC } from '../login/auth-reducer'
 import style from '../login/Login.module.scss'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
 import { SuperInput } from '../superComponents/superInput/SuperInput'
@@ -15,10 +15,9 @@ import pencil from '../utils/img/pencil-line-light.svg'
 import s from './Profile.module.scss'
 
 export const Profile = () => {
-  const { isLoggedIn, isDisabled } = useAppSelector(state => state.auth)
+  const { isLoggedIn, isDisabled, name } = useAppSelector(state => state.auth)
   const [newName, setNewName] = useState<string>('')
   const [edit, setEdit] = useState<boolean>(false)
-  const [value, setValue] = useState<string>('Loki, son of Odin!!!')
 
   const dispatch = useAppDispatch()
 
@@ -28,11 +27,11 @@ export const Profile = () => {
 
   const activateEditMode = () => {
     setEdit(true)
-    setNewName(value)
+    setNewName(name)
   }
   const activateViewMode = () => {
     setEdit(false)
-    setValue(newName)
+    dispatch(changeNameTC(newName))
   }
   const onChangeNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNewName(e.currentTarget.value)
@@ -63,7 +62,7 @@ export const Profile = () => {
                 type="text"
               />
             ) : (
-              <span>{value}</span>
+              <span>{name}</span>
             )}
             {edit ? (
               <SuperButton
