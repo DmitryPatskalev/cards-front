@@ -15,7 +15,7 @@ import pencil from '../utils/img/pencil-line-light.svg'
 import s from './Profile.module.scss'
 
 export const Profile = () => {
-  const { isLoggedIn, isDisabled, name } = useAppSelector(state => state.auth)
+  const { isLoggedIn, isDisabled, name, email } = useAppSelector(state => state.auth)
   const [newName, setNewName] = useState<string>('')
   const [edit, setEdit] = useState<boolean>(false)
 
@@ -77,7 +77,7 @@ export const Profile = () => {
             )}
           </div>
 
-          <div className={s.email}>dmitrypatskalev@gmail.com</div>
+          <div className={s.email}>{email}</div>
           <div className={s.buttonLogoutBlock}>
             <SuperButton
               xType={'secondary'}

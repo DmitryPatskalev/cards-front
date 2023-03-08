@@ -9,7 +9,7 @@ const instance = axios.create({
   withCredentials: true,
 })
 
-const forgotInstance = axios.create({
+const recoveryPasswordInstance = axios.create({
   baseURL: 'https://neko-back.herokuapp.com/2.0/',
   withCredentials: true,
 })
@@ -30,11 +30,16 @@ export const authAPI = {
   update(name: string) {
     return instance.put<UpdateUserType>('auth/me', { name })
   },
+  newPassword(password: string, resetPasswordToken: string) {
+    return instance.post<NewPasswordType>(`/auth/set-new-password/${resetPasswordToken}`, {
+      password,
+    })
+  },
 }
 
-export const forgotPasswordAPI = {
-  forgot(data: ForgotPasswordParamsType) {
-    return forgotInstance.post('auth/forgot', data)
+export const recoveryPasswordAPI = {
+  recovery(data: ForgotPasswordParamsType) {
+    return recoveryPasswordInstance.post('auth/forgot', data)
   },
 }
 
@@ -49,6 +54,11 @@ export type ForgotPasswordParamsType = {
   email: string // кому восстанавливать пароль
   from?: string
   message: string
+}
+
+export type NewPasswordType = {
+  info: string
+  error: string
 }
 
 export type UserParamsType = {

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import commonStyle from '../common-style/common-container.module.scss'
+import { recoveryPasswordTC } from '../login/auth-reducer'
 import style from '../login/Login.module.scss'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
 import { InputField } from '../utils/form/FormFields'
@@ -13,6 +14,7 @@ import s from './PasswordRecovery.module.scss'
 
 export type ValidateType = {
   email: string
+  message: string
 }
 const validate = (values: ValidateType) => {
   const errors: Partial<ValidateType> = {}
@@ -27,13 +29,19 @@ const validate = (values: ValidateType) => {
 }
 
 export const PasswordRecovery = () => {
+  const styleRecovery = `<h3 
+	style="background-color: lightblue; font-family: Monserrat, 'sans-serif'; padding: 30px">
+	password recovery link: <a href='http://localhost:3000/#/set-new-password/$token$'>Recovery Password</a>
+</h3>`
+
   const dispatch = useAppDispatch()
 
-  const { isDisabled } = useAppSelector(state => state.auth)
-
+  const { isDisabled, isSuccess } = useAppSelector(state => state.auth)
   const navigate = useNavigate()
 
   const onClickNavigate = (route: string) => navigate(route)
+
+  if (isSuccess) navigate('/check-email')
 
   return (
     <div className={`${commonStyle.commonContainer} ${style.loginContainer}`}>
@@ -41,11 +49,11 @@ export const PasswordRecovery = () => {
         <Formik
           initialValues={{
             email: '',
+            message: styleRecovery,
           }}
           validate={validate}
           onSubmit={values => {
-            alert(JSON.stringify(values, null, 2))
-            //dispatch(registerTC(values))
+            dispatch(recoveryPasswordTC(values))
           }}
         >
           <Form className={style.form}>

@@ -1,5 +1,5 @@
 import { authAPI } from '../api/cards -api'
-import { setIsLoggedInAC, updateUserAC } from '../common/login/auth-reducer'
+import { setIsLoggedInAC, setUserEmailAC, updateUserNameAC } from '../common/login/auth-reducer'
 import { errorUtils } from '../common/utils/error/error-utils'
 
 import { AppThunk } from './store'
@@ -40,12 +40,14 @@ export type ActionsAppType = ReturnType<typeof setStatusAC> | ReturnType<typeof 
 export const initializedAppTC = (): AppThunk => async dispatch => {
   dispatch(setStatusAC('loading'))
   try {
-    dispatch(setStatusAC('succeeded'))
     const res = await authAPI.me()
+    const { name, email } = res.data
 
+    dispatch(setStatusAC('succeeded'))
     dispatch(setIsLoggedInAC(true))
     dispatch(setIsInitializedAC(true))
-    dispatch(updateUserAC(res.data.name))
+    dispatch(updateUserNameAC(name))
+    dispatch(setUserEmailAC(email))
   } catch (e: any) {
     errorUtils(e, dispatch)
     dispatch(setStatusAC('failed'))

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useParams } from 'react-router-dom'
 
 import { initializedAppTC } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
@@ -20,6 +20,8 @@ import s from './Main.module.scss'
 export const Main = () => {
   const dispatch = useAppDispatch()
   const { status } = useAppSelector(state => state.app)
+
+  const { token } = useParams()
 
   useEffect(() => {
     dispatch(initializedAppTC())
@@ -43,7 +45,7 @@ export const Main = () => {
         <Route path={'*'} element={<Error />} />
         <Route path={'password-recovery'} element={<PasswordRecovery />} />
         <Route path={'check-email'} element={<CheckEmail />} />
-        <Route path={'new-password'} element={<NewPassword />} />
+        <Route path={`set-new-password/:${token}`} element={<NewPassword />} />
         <Route path={'stand'} element={<Stand />} />
       </Routes>
       <ErrorSnackBar />

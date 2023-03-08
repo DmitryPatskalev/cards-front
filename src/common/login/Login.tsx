@@ -41,10 +41,8 @@ const validate = (values: Partial<ValidateType>) => {
 export const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const dispatch = useAppDispatch()
-
-  const { isDisabled, isLoggedIn } = useAppSelector(state => state.auth)
-
   const navigate = useNavigate()
+  const { isDisabled, isLoggedIn } = useAppSelector(state => state.auth)
 
   const onClickNavigate = (route: string) => navigate(route)
 
