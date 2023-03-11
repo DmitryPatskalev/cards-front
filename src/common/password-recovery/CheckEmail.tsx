@@ -12,11 +12,10 @@ import s from './PasswordRecovery.module.scss'
 
 export const CheckEmail = () => {
   const navigate = useNavigate()
-  const { isSuccess, message, email } = useAppSelector(state => state.auth)
+
+  const { email } = useAppSelector(state => state.auth)
 
   const onClickNavigate = (route: string) => navigate(route)
-
-  console.log(email, isSuccess, message)
 
   return (
     <div className={`${commonStyle.commonContainer} ${style.loginContainer}`}>
@@ -27,7 +26,7 @@ export const CheckEmail = () => {
             <img src={emailIcon} alt="email" />
           </div>
           <div className={s.emailInstruction}>
-            We have sent an Email with instructions to {email}
+            We have sent an Email with instructions to <b>{email}</b>
           </div>
           <SuperButton onClick={() => onClickNavigate('/login')} xType={'default'}>
             Back to login

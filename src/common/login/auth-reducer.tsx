@@ -1,11 +1,4 @@
-import { date } from 'yup'
-
-import {
-  authAPI,
-  recoveryPasswordAPI,
-  ForgotPasswordParamsType,
-  LoginParamsType,
-} from '../../api/cards -api'
+import { authAPI, ForgotPasswordParamsType, LoginParamsType } from '../../api/cards -api'
 import { setStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
 import { errorUtils } from '../utils/error/error-utils'
@@ -123,18 +116,18 @@ export const logoutTC = (): AppThunk => async dispatch => {
 }
 
 export const recoveryPasswordTC =
-  (field: ForgotPasswordParamsType): AppThunk =>
+  (data: ForgotPasswordParamsType): AppThunk =>
   async dispatch => {
     try {
       dispatch(setIsDisabledAC(true))
-      const res = await recoveryPasswordAPI.recovery(field)
+      const res = await authAPI.recovery(data)
+      const { email, message } = res.data
 
-      dispatch(setIsSuccessAC(true))
       if (res.data.success) {
-        const { email, message } = res.data
-
+        dispatch(setIsSuccessAC(true))
         dispatch(recoveryPasswordAC(email, message))
-        dispatch(setUserEmailAC(email))
+      } else {
+        setErrorAC(res.data.error)
       }
     } catch (error: any) {
       errorUtils(error, dispatch)
@@ -160,14 +153,17 @@ export const setNewPasswordTC =
   (password: string, resetPasswordToken: string): AppThunk =>
   async dispatch => {
     try {
+      dispatch(setIsDisabledAC(true))
       const res = await authAPI.newPassword(password, resetPasswordToken)
 
       if (res.data.info) {
         dispatch(setNewPasswordAC(password, resetPasswordToken))
-        console.log(res.data)
+        dispatch(setIsSuccessAC(true))
       }
     } catch (error: any) {
       errorUtils(error, dispatch)
+    } finally {
+      dispatch(setIsDisabledAC(false))
     }
   }
 

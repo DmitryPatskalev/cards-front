@@ -14,7 +14,6 @@ import s from './PasswordRecovery.module.scss'
 
 export type ValidateType = {
   email: string
-  message: string
 }
 const validate = (values: ValidateType) => {
   const errors: Partial<ValidateType> = {}

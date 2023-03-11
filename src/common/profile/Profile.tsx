@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import commonStyle from '../common-style/common-container.module.scss'
-import { updateUserTC, logoutTC } from '../login/auth-reducer'
+import { logoutTC, updateUserTC } from '../login/auth-reducer'
 import style from '../login/Login.module.scss'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
 import { SuperInput } from '../superComponents/superInput/SuperInput'
@@ -38,7 +38,7 @@ export const Profile = () => {
   }
 
   if (!isLoggedIn) {
-    return <Navigate to={'login'} />
+    return <Navigate to={'/login'} />
   }
 
   return (

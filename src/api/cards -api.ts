@@ -2,15 +2,14 @@ import axios from 'axios'
 
 const instance = axios.create({
   // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0',
-  baseURL:
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:7542/2.0/'
-      : 'https://neko-back.herokuapp.com/2.0/',
-  withCredentials: true,
-})
+  // baseURL:
+  //   process.env.NODE_ENV === 'development'
+  //     ? 'http://localhost:7542/2.0/'
+  //     : 'https://neko-back.herokuapp.com/2.0/',
 
-const recoveryPasswordInstance = axios.create({
   baseURL: 'https://neko-back.herokuapp.com/2.0/',
+  // baseURL: 'http://localhost:7542/2.0/',
+
   withCredentials: true,
 })
 
@@ -30,16 +29,14 @@ export const authAPI = {
   update(name: string) {
     return instance.put<UpdateUserType>('auth/me', { name })
   },
-  newPassword(password: string, resetPasswordToken: string) {
-    return instance.post<NewPasswordType>(`/auth/set-new-password/${resetPasswordToken}`, {
-      password,
-    })
-  },
-}
-
-export const recoveryPasswordAPI = {
   recovery(data: ForgotPasswordParamsType) {
-    return recoveryPasswordInstance.post('auth/forgot', data)
+    return instance.post('auth/forgot', data)
+  },
+  newPassword(password: string, resetPasswordToken: string) {
+    return instance.post<NewPasswordType>('auth/set-new-password', {
+      password,
+      resetPasswordToken,
+    })
   },
 }
 

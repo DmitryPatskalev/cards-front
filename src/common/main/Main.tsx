@@ -34,6 +34,7 @@ export const Main = () => {
       </div>
     )
   }
+  console.log(token)
 
   return (
     <div className={s.main}>
