@@ -126,6 +126,7 @@ export const recoveryPasswordTC =
       if (res.data.success) {
         dispatch(setIsSuccessAC(true))
         dispatch(recoveryPasswordAC(email, message))
+        dispatch(setUserEmailAC(data.email))
       } else {
         setErrorAC(res.data.error)
       }
