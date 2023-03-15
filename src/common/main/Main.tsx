@@ -5,6 +5,7 @@ import { Route, Routes, useParams } from 'react-router-dom'
 import { initializedAppTC } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import Error from '../404/Error404'
+import { Cards } from '../cards/Cards'
 import { ErrorSnackBar } from '../error-snack-bar/ErrorSnackBar'
 import { Login } from '../login/Login'
 import { NewPassword } from '../new-password/NewPassword'
@@ -48,6 +49,7 @@ export const Main = () => {
         <Route path={'check-email'} element={<CheckEmail />} />
         <Route path={`set-new-password/:${token}`} element={<NewPassword />} />
         <Route path={'stand'} element={<Stand />} />
+        <Route path={'cards/pack'} element={<Cards />} />
       </Routes>
       <ErrorSnackBar />
     </div>
