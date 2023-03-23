@@ -1,15 +1,26 @@
 import React from 'react'
 
-import { useAppSelector } from '../../../../app/store'
+import { UpdatedPackType } from '../../../../api/typesAPI'
+import { useAppDispatch, useAppSelector } from '../../../../app/store'
 import learn from '../../../utils/img/learn.svg'
 import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
 import { SubTitle } from '../../../utils/SubTitle/SubTitle'
+import { deletePackTC, updatePackTC } from '../../packsReducer'
 
 import s from './Table.module.scss'
 
 export const Table = () => {
-  const { card } = useAppSelector(state => state.cards)
+  const { packs } = useAppSelector(state => state.packs)
+  const dispatch = useAppDispatch()
+
+  const updatePackHandler = (data: UpdatedPackType) => {
+    dispatch(updatePackTC(data))
+  }
+
+  const deletePackHandler = (id: string) => {
+    dispatch(deletePackTC(id))
+  }
 
   return (
     <table className={s.table}>
@@ -33,7 +44,7 @@ export const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {card.map(elem => {
+        {packs.map(elem => {
           return (
             <tr key={elem._id}>
               <td>{elem.name.slice(0, 30)}</td>
@@ -42,7 +53,15 @@ export const Table = () => {
               <td>{elem.user_name}</td>
               <td className={s.actionsBlock}>
                 <img className={s.actions} src={learn} alt="learn" />
-                <img src={pencil} alt="pencil" />
+                <img
+                  onClick={() =>
+                    updatePackHandler({
+                      cardsPack: { _id: '641c7832f24ee44dc23342c0', name: 'New pack updated' },
+                    })
+                  }
+                  src={pencil}
+                  alt="pencil"
+                />
                 <img src={remove} alt="remove" />
               </td>
             </tr>

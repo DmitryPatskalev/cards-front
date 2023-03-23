@@ -5,9 +5,10 @@ import {
   ForgotPasswordParamsType,
   LoginParamsType,
   LogoutType,
-  NewCardsType,
+  NewPackType,
   NewPasswordType,
   ParamsType,
+  UpdatedPackType,
   UpdateUserType,
   UserParamsType,
 } from './typesAPI'
@@ -45,11 +46,21 @@ export const authAPI = {
 }
 
 export const cardsAPI = {
-  getCards(params?: ParamsType) {
-    return instance.get<CardsPackDomainType>('/cards/pack', { params: { ...params } })
+  getPacks() {
+    return instance.get<CardsPackDomainType>('/cards/pack', {
+      params: {
+        user_id: '6352ce8810be8e0004d5b4f4',
+      },
+    })
   },
-  createCards(data: NewCardsType) {
-    return instance.post<CardsPackDomainType>('/cards/pack', { data })
+  createPack(data: NewPackType) {
+    return instance.post<CardsPackDomainType>('/cards/pack', data)
+  },
+  updatedPack(data: UpdatedPackType) {
+    return instance.put<CardsPackDomainType>('/cards/pack', data)
+  },
+  deletePack(id: string) {
+    return instance.delete<CardsPackDomainType>('/cards/pack', { params: id })
   },
 }
 

@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store'
 import { SuperButton } from '../../../superComponents/superButton/SuperButton'
 import { SuperInput } from '../../../superComponents/superInput/SuperInput'
 import { SubTitle } from '../../../utils/SubTitle/SubTitle'
-import { getCardsTC } from '../../cardsReducer'
+import { getPacksTC } from '../../packsReducer'
 
 import clearFilter from './../../../utils/img/clear-filter.svg'
 import s from './Handler.module.scss'
@@ -21,7 +21,7 @@ export const Handlers = () => {
     setActive(true)
   }
   const switchAllButtonHandler = () => {
-    dispatch(getCardsTC())
+    dispatch(getPacksTC())
     setActive(false)
   }
 

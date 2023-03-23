@@ -72,20 +72,27 @@ export type CardsPackType = {
 }
 
 export type ParamsType = {
-  packName: string
-  min: number
-  max: number
-  sortPacks: number
-  page: number
-  pageCount: number
-  user_id: string
-  block: boolean
+  packName?: string
+  min?: number
+  max?: number
+  sortPacks?: number
+  page?: number
+  pageCount?: number
+  user_id?: string
+  block?: boolean
 }
 
-export type NewCardsType = {
+export type NewPackType = {
   cardsPack: {
     name: string // если не отправить будет таким
     deckCover?: string // не обязателен
-    private: boolean // если не отправить будет такой
+    private?: boolean // если не отправить будет такой
+  }
+}
+
+export type UpdatedPackType = {
+  cardsPack: {
+    _id: string
+    name: string
   }
 }
