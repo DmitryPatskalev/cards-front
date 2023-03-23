@@ -1,4 +1,5 @@
-import { authAPI, ForgotPasswordParamsType, LoginParamsType } from '../../api/cards -api'
+import { authAPI } from '../../api/cards -api'
+import { ForgotPasswordParamsType, LoginParamsType } from '../../api/typesAPI'
 import { setStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
 import { errorUtils } from '../utils/error/error-utils'

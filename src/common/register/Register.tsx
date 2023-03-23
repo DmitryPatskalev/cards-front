@@ -47,12 +47,8 @@ export const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const dispatch = useAppDispatch()
-
   const { isDisabled, isRegistered } = useAppSelector(state => state.auth)
-
   const navigate = useNavigate()
-
-  const onClickNavigate = (route: string) => navigate(route)
 
   if (isRegistered) {
     return <Navigate to={'/login'} />
@@ -103,7 +99,7 @@ export const Register = () => {
 
             <div className={s.question}>Have not you an account yet?</div>
 
-            <div onClick={() => onClickNavigate('/login')} className={s.linkSing}>
+            <div onClick={() => navigate('/login')} className={s.linkSing}>
               Sign In
             </div>
           </Form>

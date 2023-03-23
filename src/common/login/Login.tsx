@@ -44,8 +44,6 @@ export const Login = () => {
   const navigate = useNavigate()
   const { isDisabled, isLoggedIn } = useAppSelector(state => state.auth)
 
-  const onClickNavigate = (route: string) => navigate(route)
-
   if (isLoggedIn) {
     return <Navigate to={'/'} />
   }
@@ -82,7 +80,7 @@ export const Login = () => {
             </CheckBoxField>
 
             <div className={s.forgotPasswordBlock}>
-              <div onClick={() => onClickNavigate('/password-recovery')}>Forgot password?</div>
+              <div onClick={() => navigate('/password-recovery')}>Forgot password?</div>
             </div>
 
             <SuperButton
@@ -95,7 +93,7 @@ export const Login = () => {
 
             <div className={s.question}>Have not you an account yet?</div>
 
-            <div onClick={() => onClickNavigate('/register')} className={s.linkSing}>
+            <div onClick={() => navigate('/register')} className={s.linkSing}>
               Sign Up
             </div>
           </Form>

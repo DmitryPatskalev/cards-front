@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import commonStyle from '../common-style/common-container.module.scss'
@@ -8,6 +8,7 @@ import { logoutTC, updateUserTC } from '../login/auth-reducer'
 import style from '../login/Login.module.scss'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
 import { SuperInput } from '../superComponents/superInput/SuperInput'
+import leftArrow from '../utils/img/leftArrow.svg'
 import logout from '../utils/img/logout.svg'
 import avatar from '../utils/img/Loki.jpeg'
 import pencil from '../utils/img/pencil-line-light.svg'
@@ -20,6 +21,7 @@ export const Profile = () => {
   const [edit, setEdit] = useState<boolean>(false)
 
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const onClickLogoutHandler = () => {
     dispatch(logoutTC())
@@ -43,6 +45,15 @@ export const Profile = () => {
 
   return (
     <div className={`${commonStyle.commonContainer} ${style.loginContainer}`}>
+      <div className={s.navigationToPack}>
+        <img
+          onClick={() => navigate('cards/pack')}
+          className={s.leftArrow}
+          src={leftArrow}
+          alt="leftArrow"
+        />
+        <span className={s.backTo}>Back to Pack List</span>
+      </div>
       <div className={style.formContainer}>
         <div className={style.form}>
           <h2 className={style.titleForm}>Personal Information</h2>
@@ -50,7 +61,7 @@ export const Profile = () => {
           <div className={s.imgBlock}>
             <img className={s.avatar} src={avatar} alt="avatar" />
           </div>
-
+          <span className={s.nickName}>Nickname</span>
           <div className={s.nameUserBlock}>
             {edit ? (
               <SuperInput

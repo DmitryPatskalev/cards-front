@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 
-import { Route, Routes, useParams } from 'react-router-dom'
+import { Outlet, Route, Routes, useParams } from 'react-router-dom'
 
 import { initializedAppTC } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import Error from '../404/Error404'
-import { Cards } from '../cards/Cards'
+import { Card } from '../cards/card/Card'
+import { Pack } from '../cards/pack/Pack'
 import { ErrorSnackBar } from '../error-snack-bar/ErrorSnackBar'
 import { Login } from '../login/Login'
 import { NewPassword } from '../new-password/NewPassword'
@@ -35,21 +36,24 @@ export const Main = () => {
       </div>
     )
   }
-  console.log(token)
 
   return (
     <div className={s.main}>
       <Routes>
         <Route path={'/'} element={<Profile />} />
-        <Route path={'login'} element={<Login />} />
-        <Route path={'register'} element={<Register />} />
-        <Route path={'profile'} element={<Profile />} />
-        <Route path={'*'} element={<Error />} />
-        <Route path={'password-recovery'} element={<PasswordRecovery />} />
-        <Route path={'check-email'} element={<CheckEmail />} />
-        <Route path={`set-new-password/:${token}`} element={<NewPassword />} />
-        <Route path={'stand'} element={<Stand />} />
-        <Route path={'cards/pack'} element={<Cards />} />
+        <Route path={'/login'} element={<Login />} />
+        <Route path={'/register'} element={<Register />} />
+        <Route path={'/profile'} element={<Profile />} />
+        <Route path={'/*'} element={<Error />} />
+        <Route path={'/password-recovery'} element={<PasswordRecovery />} />
+        <Route path={'/check-email'} element={<CheckEmail />} />
+        <Route path={`/set-new-password/:${token}`} element={<NewPassword />} />
+        <Route path={'/stand'} element={<Stand />} />
+
+        <Route path={'/cards'} element={<Outlet />}>
+          <Route path={'/cards/pack'} element={<Pack />} />
+          <Route path={'/cards/card'} element={<Card />} />
+        </Route>
       </Routes>
       <ErrorSnackBar />
     </div>

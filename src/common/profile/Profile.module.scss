@@ -1,7 +1,34 @@
+.navigationToPack {
+  display: flex;
+  width: 100%;
+  margin-bottom: 12px;
+
+
+  .leftArrow {
+    padding-right: 10px;
+    cursor: pointer;
+  }
+
+  .backTo {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+  }
+}
+.nickName{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: #000000;
+  opacity: 0.5;
+  margin-left: 20px;
+}
 .imgBlock {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 30px;
 }
 
 .avatar {
@@ -19,7 +46,7 @@
   text-align: center;
   font-weight: 500;
   font-size: 20px;
-  margin: 20px 0;
+  margin: 5px 0 20px 0;
 
   .editableInput {
     outline: none;
@@ -85,4 +112,5 @@
 
   }
 }
+
 
