@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../../app/store'
 import common from '../../common-style/common-container.module.scss'
 import { SuperButton } from '../../superComponents/superButton/SuperButton'
 import { Title } from '../../utils/Title/Title'
-import { createNewPacksTC } from '../packsReducer'
+import { createNewPacksTC } from '../packs-reducer'
 
 import s from './Pack.module.scss'
 import { Handlers } from './table/Handlers'

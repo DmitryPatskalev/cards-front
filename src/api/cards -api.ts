@@ -46,10 +46,10 @@ export const authAPI = {
 }
 
 export const cardsAPI = {
-  getPacks() {
+  getPacks(params?: ParamsType) {
     return instance.get<CardsPackDomainType>('/cards/pack', {
       params: {
-        user_id: '6352ce8810be8e0004d5b4f4',
+        ...params,
       },
     })
   },
@@ -60,7 +60,7 @@ export const cardsAPI = {
     return instance.put<CardsPackDomainType>('/cards/pack', data)
   },
   deletePack(id: string) {
-    return instance.delete<CardsPackDomainType>('/cards/pack', { params: id })
+    return instance.delete<CardsPackDomainType>(`/cards/pack/${id}`)
   },
 }
 

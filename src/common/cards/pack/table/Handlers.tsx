@@ -1,35 +1,39 @@
 import React, { useEffect, useState } from 'react'
 
-import { useParams } from 'react-router-dom'
-
 import { useAppDispatch, useAppSelector } from '../../../../app/store'
 import { SuperButton } from '../../../superComponents/superButton/SuperButton'
 import { SuperInput } from '../../../superComponents/superInput/SuperInput'
 import { SubTitle } from '../../../utils/SubTitle/SubTitle'
-import { getPacksTC } from '../../packsReducer'
+import { getAllPackTC, getMyPacksTC } from '../../packs-reducer'
 
 import clearFilter from './../../../utils/img/clear-filter.svg'
 import s from './Handler.module.scss'
 
 export const Handlers = () => {
   const [active, setActive] = useState<boolean>(false)
-  const { user_id } = useParams()
-  const dispatch = useAppDispatch()
   const { isLoggedIn } = useAppSelector(state => state.auth)
 
+  const { page } = useAppSelector(state => state.packs)
+  const dispatch = useAppDispatch()
+
   const switchMyButtonHandler = () => {
+    if (isLoggedIn) {
+      dispatch(getMyPacksTC())
+    }
     setActive(true)
   }
   const switchAllButtonHandler = () => {
-    dispatch(getPacksTC())
+    if (isLoggedIn) {
+      dispatch(getAllPackTC())
+    }
     setActive(false)
   }
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     dispatch(getCardsTC())
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(getAllPackTC())
+    }
+  }, [page])
 
   return (
     <div className={s.handlersContainer}>

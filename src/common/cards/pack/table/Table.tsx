@@ -6,12 +6,13 @@ import learn from '../../../utils/img/learn.svg'
 import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
 import { SubTitle } from '../../../utils/SubTitle/SubTitle'
-import { deletePackTC, updatePackTC } from '../../packsReducer'
+import { deletePackTC, setPageAC, updatePackTC } from '../../packs-reducer'
 
 import s from './Table.module.scss'
 
 export const Table = () => {
-  const { packs } = useAppSelector(state => state.packs)
+  const { packs, page } = useAppSelector(state => state.packs)
+
   const dispatch = useAppDispatch()
 
   const updatePackHandler = (data: UpdatedPackType) => {
@@ -21,6 +22,19 @@ export const Table = () => {
   const deletePackHandler = (id: string) => {
     dispatch(deletePackTC(id))
   }
+
+  const setPageHandler = (page: number) => {
+    dispatch(setPageAC(page))
+  }
+
+  const numbers = [
+    { id: 1, number: 1 },
+    { id: 2, number: 2 },
+    { id: 3, number: 3 },
+    { id: 4, number: 4 },
+    { id: 5, number: 5 },
+    { id: 6, number: 6 },
+  ]
 
   return (
     <table className={s.table}>
@@ -68,6 +82,19 @@ export const Table = () => {
           )
         })}
       </tbody>
+      <div style={{ marginTop: '20px' }}>
+        {numbers.map(p => {
+          return (
+            <button
+              onClick={() => setPageHandler(p.number)}
+              style={p.id === page ? { backgroundColor: 'lightblue' } : {}}
+              key={p.id}
+            >
+              {p.number}
+            </button>
+          )
+        })}
+      </div>
     </table>
   )
 }

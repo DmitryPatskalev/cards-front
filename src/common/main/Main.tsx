@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { Outlet, Route, Routes, useParams } from 'react-router-dom'
+import { Route, Routes, useParams } from 'react-router-dom'
 
 import { initializedAppTC } from '../../app/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../app/store'
@@ -50,10 +50,9 @@ export const Main = () => {
         <Route path={`/set-new-password/:${token}`} element={<NewPassword />} />
         <Route path={'/stand'} element={<Stand />} />
 
-        <Route path={'/cards'} element={<Outlet />}>
-          <Route path={'/cards/pack'} element={<Pack />} />
-          <Route path={'/cards/card'} element={<Card />} />
-        </Route>
+        <Route path={'/cards/pack'} element={<Pack />} />
+        <Route path={'cards/pack/:page'} element={<Pack />} />
+        <Route path={'/cards/card'} element={<Card />} />
       </Routes>
       <ErrorSnackBar />
     </div>
