@@ -13,7 +13,7 @@ export const Handlers = () => {
   const [active, setActive] = useState<boolean>(false)
   const { isLoggedIn } = useAppSelector(state => state.auth)
 
-  const { page } = useAppSelector(state => state.packs)
+  const { page, pageCount } = useAppSelector(state => state.packs)
   const dispatch = useAppDispatch()
 
   const switchMyButtonHandler = () => {
@@ -33,7 +33,7 @@ export const Handlers = () => {
     if (isLoggedIn) {
       dispatch(getAllPackTC())
     }
-  }, [page])
+  }, [page, pageCount])
 
   return (
     <div className={s.handlersContainer}>

@@ -47,11 +47,7 @@ export const authAPI = {
 
 export const cardsAPI = {
   getPacks(params?: ParamsType) {
-    return instance.get<CardsPackDomainType>('/cards/pack', {
-      params: {
-        ...params,
-      },
-    })
+    return instance.get<CardsPackDomainType>('/cards/pack', { params })
   },
   createPack(data: NewPackType) {
     return instance.post<CardsPackDomainType>('/cards/pack', data)
