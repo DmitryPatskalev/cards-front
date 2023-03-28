@@ -1,0 +1,27 @@
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 600px;
+}
+.select{
+  width: 70px;
+  height: 40px;
+  background: #FFFFFF;
+  /* Neutral Dark/+90 */
+
+  border: 1px solid #ECEBEB;
+  border-radius: 2px;
+
+}
+.text1, .text2 {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.text1{
+  margin-left: 40px;
+}
+

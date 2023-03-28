@@ -110,7 +110,7 @@ export const Table = () => {
                   <img
                     onClick={() =>
                       updatePackHandler({
-                        cardsPack: { _id: '641c7832f24ee44dc23342c0', name: 'New pack updated' },
+                        cardsPack: { _id: '6423259a9791a3b8fd33bd0f', name: 'New pack updated' },
                       })
                     }
                     src={pencil}
