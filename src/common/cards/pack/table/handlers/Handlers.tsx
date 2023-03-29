@@ -2,23 +2,24 @@ import React, { useEffect, useState } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../../app/store'
-import { SuperButton } from '../../../superComponents/superButton/SuperButton'
-import { SuperInput } from '../../../superComponents/superInput/SuperInput'
-import { SubTitle } from '../../../utils/SubTitle/SubTitle'
-import { getAllPackTC, getMyPacksTC, setPageAC, setPageCountAC } from '../../packs-reducer'
+import { useAppDispatch, useAppSelector } from '../../../../../app/store'
+import { SuperButton } from '../../../../superComponents/superButton/SuperButton'
+import clearFilter from '../../../../utils/img/clear-filter.svg'
+import { SubTitle } from '../../../../utils/SubTitle/SubTitle'
+import { getAllPackTC, getMyPacksTC, setPageAC, setPageCountAC } from '../../../packs-reducer'
+import { SuperDebounceInput } from '../debounce/SuperDebounceInput'
+import { SuperPagination } from '../pagination/SuperPagination'
 
-import clearFilter from './../../../utils/img/clear-filter.svg'
 import s from './Handler.module.scss'
-import { SuperPagination } from './pagination/SuperPagination'
 
 export const Handlers = () => {
   const [active, setActive] = useState<boolean>(false)
-  const { isLoggedIn } = useAppSelector(state => state.auth)
   const [searchParams, setSearchParams] = useSearchParams()
+  const [find, setFind] = useState('')
 
-  const { page, pageCount, cardPacksTotalCount } = useAppSelector(state => state.packs)
   const dispatch = useAppDispatch()
+  const { isLoggedIn } = useAppSelector(state => state.auth)
+  const { page, pageCount, cardPacksTotalCount } = useAppSelector(state => state.packs)
 
   const switchMyButtonHandler = () => {
     if (isLoggedIn) {
@@ -31,6 +32,15 @@ export const Handlers = () => {
       dispatch(getAllPackTC({}))
     }
     setActive(false)
+  }
+
+  const sendQuery = (packName: string) => {
+    dispatch(getAllPackTC({ packName }))
+  }
+
+  const onChangeText = (packName: string) => {
+    setFind(packName)
+    setSearchParams({ params: packName })
   }
 
   const onChangePagination = (newPage: number, newPageCount: number) => {
@@ -48,7 +58,14 @@ export const Handlers = () => {
     if (isLoggedIn) {
       const params = Object.fromEntries(searchParams)
 
-      dispatch(getAllPackTC({ page: +params.page, pageCount: +params.pageCount }))
+      dispatch(
+        getAllPackTC({
+          page: +params.page,
+          pageCount: +params.pageCount,
+          packName: params.packName,
+        })
+      )
+      setFind(params.packName || '')
     }
   }, [page, pageCount])
 
@@ -57,7 +74,15 @@ export const Handlers = () => {
       <div className={s.handlersContainer}>
         <div className={s.searchBlock}>
           <SubTitle title="Search" />
-          <SuperInput className={s.searchInput} type="text" placeholder="Provide your text" />
+
+          <SuperDebounceInput
+            onChangeText={onChangeText}
+            onDebounceChange={sendQuery}
+            value={find}
+            className={s.searchInput}
+            type="text"
+            placeholder="Provide your text"
+          />
         </div>
         <div className={s.buttonBlock}>
           <SubTitle title="Show packs cards" />
@@ -82,7 +107,7 @@ export const Handlers = () => {
           <SubTitle title="Number of cards" />
           <div className={s.range}>
             <div className={s.rangeCount}>1</div>
-            <div className={s.rangeLine}>------------</div>
+            <div className={s.rangeLine}>------------------------</div>
             <div className={s.rangeCount}>30</div>
           </div>
         </div>
@@ -92,12 +117,14 @@ export const Handlers = () => {
           </div>
         </div>
       </div>
-      <SuperPagination
-        page={page}
-        pageCount={pageCount}
-        cardPacksTotalCount={cardPacksTotalCount}
-        onChange={onChangePagination}
-      />
+      <div className={s.paginationContainer}>
+        <SuperPagination
+          page={page}
+          pageCount={pageCount}
+          cardPacksTotalCount={cardPacksTotalCount}
+          onChange={onChangePagination}
+        />
+      </div>
     </>
   )
 }

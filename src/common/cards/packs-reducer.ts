@@ -20,7 +20,7 @@ export const packsReducer = (
   action: ActionCardsType
 ): InitialStateType => {
   switch (action.type) {
-    case 'cards/GET_CARDS':
+    case 'cards/GET_PACKS':
       return { ...state, packs: action.packs }
 
     case 'cards/SET_PAGE':
@@ -36,7 +36,7 @@ export const packsReducer = (
   }
 }
 
-export const getPacksAC = (packs: CardsPackType[]) => ({ type: 'cards/GET_CARDS', packs } as const)
+export const getPacksAC = (packs: CardsPackType[]) => ({ type: 'cards/GET_PACKS', packs } as const)
 export const setPageAC = (page: number) => ({ type: 'cards/SET_PAGE', page } as const)
 export const setPageCountAC = (pageCount: number) =>
   ({ type: 'cards/SET_PAGE_COUNT', pageCount } as const)

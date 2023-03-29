@@ -8,7 +8,7 @@ import { Title } from '../../utils/Title/Title'
 import { createNewPacksTC } from '../packs-reducer'
 
 import s from './Pack.module.scss'
-import { Handlers } from './table/Handlers'
+import { Handlers } from './table/handlers/Handlers'
 import { Table } from './table/Table'
 
 export const Pack = () => {

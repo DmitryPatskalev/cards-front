@@ -1,5 +1,5 @@
 import { authAPI } from '../../api/cards -api'
-import { ForgotPasswordParamsType, LoginParamsType } from '../../api/typesAPI'
+import { ForgotPasswordType, LoginType } from '../../api/typesAPI'
 import { setStatusAC } from '../../app/app-reducer'
 import { AppThunk } from '../../app/store'
 import { errorUtils } from '../utils/error/error-utils'
@@ -73,7 +73,7 @@ export const setNewPasswordAC = (password: string, resetPasswordToken: string) =
   ({ type: 'auth/SET_NEW_PASSWORD', password, resetPasswordToken } as const)
 
 export const registerTC =
-  (data: LoginParamsType): AppThunk =>
+  (data: LoginType): AppThunk =>
   async dispatch => {
     try {
       dispatch(setIsDisabledAC(true))
@@ -87,7 +87,7 @@ export const registerTC =
   }
 
 export const loginTC =
-  (data: LoginParamsType): AppThunk =>
+  (data: LoginType): AppThunk =>
   async dispatch => {
     try {
       dispatch(setIsDisabledAC(true))
@@ -117,7 +117,7 @@ export const logoutTC = (): AppThunk => async dispatch => {
 }
 
 export const recoveryPasswordTC =
-  (data: ForgotPasswordParamsType): AppThunk =>
+  (data: ForgotPasswordType): AppThunk =>
   async dispatch => {
     try {
       dispatch(setIsDisabledAC(true))

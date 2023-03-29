@@ -56,7 +56,7 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = ({
         onChange={onChangeSelect}
         className={s.select}
       />
-      <span className={s.text2}>string in table</span>
+      <span className={s.text2}>Cards per Page</span>
     </div>
   )
 }

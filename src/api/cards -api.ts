@@ -2,8 +2,8 @@ import axios from 'axios'
 
 import {
   CardsPackDomainType,
-  ForgotPasswordParamsType,
-  LoginParamsType,
+  ForgotPasswordType,
+  LoginType,
   LogoutType,
   NewPackType,
   NewPasswordType,
@@ -19,10 +19,10 @@ const instance = axios.create({
 })
 
 export const authAPI = {
-  register(data: LoginParamsType) {
+  register(data: LoginType) {
     return instance.post<UserParamsType>('/auth/register', data)
   },
-  login(data: LoginParamsType) {
+  login(data: LoginType) {
     return instance.post<UserParamsType>('/auth/login', data)
   },
   logout() {
@@ -34,7 +34,7 @@ export const authAPI = {
   update(name: string) {
     return instance.put<UpdateUserType>('/auth/me', { name })
   },
-  recovery(data: ForgotPasswordParamsType) {
+  recovery(data: ForgotPasswordType) {
     return instance.post('/auth/forgot', data)
   },
   newPassword(password: string, resetPasswordToken: string) {

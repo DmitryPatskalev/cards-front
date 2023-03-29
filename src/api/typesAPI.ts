@@ -1,11 +1,11 @@
-export type LoginParamsType = {
+export type LoginType = {
   email?: string
   password?: string
   confirmPassword?: string
   rememberMe?: boolean
 }
 
-export type ForgotPasswordParamsType = {
+export type ForgotPasswordType = {
   email: string // кому восстанавливать пароль
   from?: string
   message: string

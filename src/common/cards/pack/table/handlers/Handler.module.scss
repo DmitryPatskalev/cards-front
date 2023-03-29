@@ -12,12 +12,11 @@
 
 
     .searchInput {
-      min-width: 100px;
-      max-width: 413px;
+      width: 300px;
       height: 22px;
       padding: 6px 6px 6px 40px;
       margin-top: 10px;
-      background: url('../../../utils/img/search-icon.svg') no-repeat 10px;
+      background: url('../../../../utils/img/search-icon.svg') no-repeat 10px;
 
       background-size: auto 50%;
     }
@@ -89,4 +88,12 @@
       }
     }
   }
+}
+
+.paginationContainer{
+  display: flex;
+  width: 100%;
+  height: 60px;
+  justify-content: flex-start;
+  align-items: center;
 }

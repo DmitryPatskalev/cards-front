@@ -15,9 +15,20 @@
 }
 .table thead tr th:first-child {
   border-radius: 8px 0 0 8px;
+  width: 35%;
+}
+.table thead tr th:nth-child(2){
+  width: 7%;
+}
+.table thead tr th:nth-child(3){
+  width: 20%;
+}
+.table thead tr th:nth-child(4){
+  width: 25%;
 }
 .table thead tr th:last-child {
   border-radius: 0 8px 8px 0;
+  width: 13%;
 }
 .table tbody td {
   text-align: left;
@@ -35,6 +46,7 @@
 .table tbody tr td:last-child {
   border-radius: 0 8px 8px 0;
 }
+
 .actionsBlock{
   display: flex;
   justify-content: space-evenly;
