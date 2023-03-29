@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 600px;
 }
 .select{
   width: 70px;
@@ -18,10 +17,13 @@
   font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 12px;
 }
 
 .text1{
-  margin-left: 40px;
+  margin-right: 10px;
 }
 
+.text2{
+  margin-left: 10px;
+}

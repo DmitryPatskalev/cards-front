@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 
 import { cardsAPI } from '../../api/cards -api'
-import { CardsPackType, NewPackType, UpdatedPackType } from '../../api/typesAPI'
+import { CardsPackType, NewPackType, ParamsType, UpdatedPackType } from '../../api/typesAPI'
 import { AppThunk } from '../../app/store'
 import { errorUtils } from '../utils/error/error-utils'
 
@@ -53,18 +53,22 @@ export const getMyPacksTC = (): AppThunk => async dispatch => {
   }
 }
 
-export const getAllPackTC = (): AppThunk => async (dispatch: Dispatch, getState) => {
-  const { page, pageCount } = getState().packs
+export const getAllPackTC =
+  (params: ParamsType): AppThunk =>
+  async (dispatch: Dispatch, getState) => {
+    const { page, pageCount } = getState().packs
 
-  try {
-    const res = await cardsAPI.getPacks({ page, pageCount })
+    try {
+      const res = await cardsAPI.getPacks({ page, pageCount })
 
-    dispatch(getPacksAC(res.data.cardPacks))
-    dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
-  } catch (e: any) {
-    errorUtils(e, dispatch)
+      dispatch(getPacksAC(res.data.cardPacks))
+      dispatch(setPageAC(params.page || 1))
+      dispatch(setPageCountAC(params.pageCount || 5))
+      dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
+    } catch (e: any) {
+      errorUtils(e, dispatch)
+    }
   }
-}
 
 export const createNewPacksTC =
   (data: NewPackType): AppThunk =>

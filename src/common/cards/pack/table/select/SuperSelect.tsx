@@ -20,7 +20,7 @@ export const SuperSelect: React.FC<SuperSelectPropsType> = ({
   const mappedOptions: any[] = options
     ? options.map(o => {
         return (
-          <option className={s.option} key={o.id} value={o.id}>
+          <option className={s.option} key={o.id} value={o.value}>
             {o.value}
           </option>
         )
