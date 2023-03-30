@@ -16,7 +16,7 @@
       height: 22px;
       padding: 6px 6px 6px 40px;
       margin-top: 10px;
-      background: url('../../../../utils/img/search-icon.svg') no-repeat 10px;
+      background: url('../../../utils/img/search-icon.svg') no-repeat 10px;
 
       background-size: auto 50%;
     }
@@ -43,7 +43,7 @@
       justify-content: space-between;
       align-items: center;
 
-      .rangeCount {
+      .rangeMinCount, .rangeMaxCount {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -60,9 +60,11 @@
         /* identical to box height */
       }
 
-      .rangeLine {
-        padding: 0 12px;
-
+      .rangeMinCount {
+        margin-right: 20px;
+      }
+      .rangeMaxCount{
+        margin-left: 20px;
       }
     }
   }

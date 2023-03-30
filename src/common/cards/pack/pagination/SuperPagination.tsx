@@ -39,14 +39,7 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = ({
 
   return (
     <div className={s.pagination}>
-      <Pagination
-        page={page}
-        count={lastPage}
-        onChange={onChangeCallBack}
-
-        // hideNextButton
-        // hidePrevButton
-      />
+      <Pagination page={page} count={lastPage} onChange={onChangeCallBack} />
 
       <span className={s.text1}>Show</span>
 
@@ -56,6 +49,7 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = ({
         onChange={onChangeSelect}
         className={s.select}
       />
+
       <span className={s.text2}>Cards per Page</span>
     </div>
   )

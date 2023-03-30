@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../../../app/store'
-import { SuperButton } from '../../../../superComponents/superButton/SuperButton'
-import clearFilter from '../../../../utils/img/clear-filter.svg'
-import { SubTitle } from '../../../../utils/SubTitle/SubTitle'
+import { useAppDispatch, useAppSelector } from '../../../../app/store'
+import { SuperButton } from '../../../superComponents/superButton/SuperButton'
+import clearFilter from '../../../utils/img/clear-filter.svg'
+import { SubTitle } from '../../../utils/SubTitle/SubTitle'
+import { SuperDebounceInput } from '../debounce/SuperDebounceInput'
 import {
   getAllPackTC,
   getMyPacksTC,
+  setMaxCardsCountAC,
+  setMinCardsCountAC,
   setPageAC,
   setPageCountAC,
   setSearchPacksAC,
-} from '../../../packs-reducer'
-import { SuperDebounceInput } from '../debounce/SuperDebounceInput'
+} from '../packs-reducer'
 import { SuperPagination } from '../pagination/SuperPagination'
+import { SuperRange } from '../range/SuperRange'
 
 import s from './Handler.module.scss'
 
@@ -24,7 +27,9 @@ export const Handlers = () => {
 
   const dispatch = useAppDispatch()
   const { isLoggedIn } = useAppSelector(state => state.auth)
-  const { page, pageCount, cardPacksTotalCount, packName } = useAppSelector(state => state.packs)
+  const { page, pageCount, cardPacksTotalCount, packName, min, max } = useAppSelector(
+    state => state.packs
+  )
 
   const switchMyButtonHandler = () => {
     if (isLoggedIn) {
@@ -59,11 +64,22 @@ export const Handlers = () => {
     setSearchParams(allQuery)
   }
 
+  const querySearch = () => {
+    dispatch(getAllPackTC())
+  }
+
+  const onChangeRange = (event: Event, value: number | number[]) => {
+    if (!Array.isArray(value)) {
+      dispatch(setMinCardsCountAC(min))
+      dispatch(setMaxCardsCountAC(max))
+    }
+  }
+
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(getAllPackTC())
     }
-  }, [page, pageCount, packName])
+  }, [page, pageCount])
 
   return (
     <>
@@ -73,7 +89,7 @@ export const Handlers = () => {
 
           <SuperDebounceInput
             onChangeText={onChangeText}
-            //onDebounceChange={getAllPackTC}
+            onDebounceChange={querySearch}
             value={packName}
             className={s.searchInput}
             type="text"
@@ -102,9 +118,9 @@ export const Handlers = () => {
         <div className={s.rangeBlock}>
           <SubTitle title="Number of cards" />
           <div className={s.range}>
-            <div className={s.rangeCount}>1</div>
-            <div className={s.rangeLine}>------------------------</div>
-            <div className={s.rangeCount}>30</div>
+            <div className={s.rangeMinCount}>{min}</div>
+            <SuperRange value={[min, max]} onChange={onChangeRange} />
+            <div className={s.rangeMaxCount}>{max}</div>
           </div>
         </div>
         <div className={s.filterClearBlock}>

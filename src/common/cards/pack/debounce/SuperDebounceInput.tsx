@@ -1,6 +1,6 @@
 import React, { DetailedHTMLProps, InputHTMLAttributes, ReactNode, useState } from 'react'
 
-import { SuperInput } from '../../../../superComponents/superInput/SuperInput'
+import { SuperInput } from '../../../superComponents/superInput/SuperInput'
 
 type DefaultInputPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -28,16 +28,13 @@ export const SuperDebounceInput: React.FC<SuperDebounceInputPropsType> = ({
     onChangeText?.(value)
 
     if (onDebounceChange) {
+      timerId && clearInterval(timerId)
       const id: number = +setTimeout(() => {
         onDebounceChange(value)
         setTimerId(undefined)
-      }, 3000)
+      }, 500)
 
       setTimerId(id)
-
-      return () => {
-        clearTimeout(timerId)
-      }
     }
   }
 

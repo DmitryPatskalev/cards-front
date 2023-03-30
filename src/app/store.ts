@@ -2,7 +2,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
-import { ActionCardsType, packsReducer } from '../common/cards/packs-reducer'
+import { ActionCardsType, packsReducer } from '../common/cards/pack/packs-reducer'
 import { ActionsAuthType, authReducer } from '../common/login/auth-reducer'
 
 import { ActionsAppType, appReducer } from './app-reducer'

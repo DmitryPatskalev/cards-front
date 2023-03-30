@@ -1,13 +1,15 @@
-import { cardsAPI } from '../../api/cards -api'
-import { CardsPackType, NewPackType, ParamsType, UpdatedPackType } from '../../api/typesAPI'
-import { AppThunk } from '../../app/store'
-import { errorUtils } from '../utils/error/error-utils'
+import { cardsAPI } from '../../../api/cards -api'
+import { CardsPackType, NewPackType, UpdatedPackType } from '../../../api/typesAPI'
+import { AppThunk } from '../../../app/store'
+import { errorUtils } from '../../utils/error/error-utils'
 
 const initialState = {
   packs: [] as CardsPackType[],
   page: 1,
   pageCount: 5,
   cardPacksTotalCount: 0,
+  min: 0,
+  max: 110,
   packName: '',
   isDisabled: false,
 }
@@ -33,6 +35,12 @@ export const packsReducer = (
 
     case 'cards/SET_SEARCH':
       return { ...state, packName: action.packName }
+
+    case 'cards/SET-MIN-CARDS-COUNT':
+      return { ...state, min: action.minCount }
+
+    case 'cards/SET-MAX-CARDS-COUNT':
+      return { ...state, max: action.maxCount }
     default:
       return state
   }
@@ -46,6 +54,10 @@ export const setCardPacksTotalCountAC = (cardPacksTotalCount: number) =>
   ({ type: 'cards/SET_PACK_CARDS_TOTAL_COUNT', cardPacksTotalCount } as const)
 export const setSearchPacksAC = (packName: string) =>
   ({ type: 'cards/SET_SEARCH', packName } as const)
+export const setMinCardsCountAC = (minCount: number) =>
+  ({ type: 'cards/SET-MIN-CARDS-COUNT', minCount } as const)
+export const setMaxCardsCountAC = (maxCount: number) =>
+  ({ type: 'cards/SET-MAX-CARDS-COUNT', maxCount } as const)
 
 export const getMyPacksTC = (): AppThunk => async dispatch => {
   try {
@@ -58,10 +70,10 @@ export const getMyPacksTC = (): AppThunk => async dispatch => {
 }
 
 export const getAllPackTC = (): AppThunk => async (dispatch, getState) => {
-  const { page, pageCount, packName } = getState().packs
+  const { page, pageCount, packName, min, max } = getState().packs
 
   try {
-    const res = await cardsAPI.getPacks({ page, pageCount, packName })
+    const res = await cardsAPI.getPacks({ page, pageCount, packName, min, max })
 
     dispatch(getPacksAC(res.data.cardPacks))
     dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
@@ -109,3 +121,5 @@ export type ActionCardsType =
   | ReturnType<typeof setPageCountAC>
   | ReturnType<typeof setCardPacksTotalCountAC>
   | ReturnType<typeof setSearchPacksAC>
+  | ReturnType<typeof setMinCardsCountAC>
+  | ReturnType<typeof setMaxCardsCountAC>

@@ -5,10 +5,10 @@ import { useAppDispatch } from '../../../app/store'
 import common from '../../common-style/common-container.module.scss'
 import { SuperButton } from '../../superComponents/superButton/SuperButton'
 import { Title } from '../../utils/Title/Title'
-import { createNewPacksTC } from '../packs-reducer'
 
+import { Handlers } from './handlers/Handlers'
 import s from './Pack.module.scss'
-import { Handlers } from './table/handlers/Handlers'
+import { createNewPacksTC } from './packs-reducer'
 import { Table } from './table/Table'
 
 export const Pack = () => {

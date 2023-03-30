@@ -6,7 +6,7 @@ import learn from '../../../utils/img/learn.svg'
 import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
 import { SubTitle } from '../../../utils/SubTitle/SubTitle'
-import { deletePackTC, updatePackTC } from '../../packs-reducer'
+import { deletePackTC, updatePackTC } from '../packs-reducer'
 
 import s from './Table.module.scss'
 
@@ -22,8 +22,6 @@ export const Table = () => {
   const deletePackHandler = (id: string) => {
     dispatch(deletePackTC(id))
   }
-
-  console.log(packs.length)
 
   return (
     <table className={s.table}>
