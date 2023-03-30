@@ -28,13 +28,16 @@ export const SuperDebounceInput: React.FC<SuperDebounceInputPropsType> = ({
     onChangeText?.(value)
 
     if (onDebounceChange) {
-      timerId && clearTimeout(timerId)
       const id: number = +setTimeout(() => {
         onDebounceChange(value)
         setTimerId(undefined)
-      }, 1500)
+      }, 3000)
 
       setTimerId(id)
+
+      return () => {
+        clearTimeout(timerId)
+      }
     }
   }
 

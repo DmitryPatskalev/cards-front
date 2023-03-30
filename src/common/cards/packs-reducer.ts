@@ -1,5 +1,3 @@
-import { Dispatch } from 'redux'
-
 import { cardsAPI } from '../../api/cards -api'
 import { CardsPackType, NewPackType, ParamsType, UpdatedPackType } from '../../api/typesAPI'
 import { AppThunk } from '../../app/store'
@@ -10,6 +8,7 @@ const initialState = {
   page: 1,
   pageCount: 5,
   cardPacksTotalCount: 0,
+  packName: '',
   isDisabled: false,
 }
 
@@ -31,6 +30,9 @@ export const packsReducer = (
 
     case 'cards/SET_PACK_CARDS_TOTAL_COUNT':
       return { ...state, cardPacksTotalCount: action.cardPacksTotalCount }
+
+    case 'cards/SET_SEARCH':
+      return { ...state, packName: action.packName }
     default:
       return state
   }
@@ -42,6 +44,8 @@ export const setPageCountAC = (pageCount: number) =>
   ({ type: 'cards/SET_PAGE_COUNT', pageCount } as const)
 export const setCardPacksTotalCountAC = (cardPacksTotalCount: number) =>
   ({ type: 'cards/SET_PACK_CARDS_TOTAL_COUNT', cardPacksTotalCount } as const)
+export const setSearchPacksAC = (packName: string) =>
+  ({ type: 'cards/SET_SEARCH', packName } as const)
 
 export const getMyPacksTC = (): AppThunk => async dispatch => {
   try {
@@ -53,22 +57,18 @@ export const getMyPacksTC = (): AppThunk => async dispatch => {
   }
 }
 
-export const getAllPackTC =
-  (params: ParamsType): AppThunk =>
-  async (dispatch: Dispatch, getState) => {
-    const { page, pageCount } = getState().packs
+export const getAllPackTC = (): AppThunk => async (dispatch, getState) => {
+  const { page, pageCount, packName } = getState().packs
 
-    try {
-      const res = await cardsAPI.getPacks({ page, pageCount })
+  try {
+    const res = await cardsAPI.getPacks({ page, pageCount, packName })
 
-      dispatch(getPacksAC(res.data.cardPacks))
-      dispatch(setPageAC(params.page || 1))
-      dispatch(setPageCountAC(params.pageCount || 5))
-      dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
-    } catch (e: any) {
-      errorUtils(e, dispatch)
-    }
+    dispatch(getPacksAC(res.data.cardPacks))
+    dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
+  } catch (e: any) {
+    errorUtils(e, dispatch)
   }
+}
 
 export const createNewPacksTC =
   (data: NewPackType): AppThunk =>
@@ -108,3 +108,4 @@ export type ActionCardsType =
   | ReturnType<typeof setPageAC>
   | ReturnType<typeof setPageCountAC>
   | ReturnType<typeof setCardPacksTotalCountAC>
+  | ReturnType<typeof setSearchPacksAC>

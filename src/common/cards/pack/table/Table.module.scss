@@ -56,3 +56,13 @@
   height: 20px;
   cursor: pointer;
 }
+
+.emptyPacks{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  color: red;
+  font-weight: bold;
+  width: 300%
+}

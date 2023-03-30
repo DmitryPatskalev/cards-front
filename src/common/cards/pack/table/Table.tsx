@@ -23,6 +23,8 @@ export const Table = () => {
     dispatch(deletePackTC(id))
   }
 
+  console.log(packs.length)
+
   return (
     <table className={s.table}>
       <thead>
@@ -45,29 +47,33 @@ export const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {packs.map(elem => {
-          return (
-            <tr key={elem._id}>
-              <td>{elem.name.slice(0, 30)}</td>
-              <td>{elem.cardsCount}</td>
-              <td>{elem.updated.slice(0, 10)}</td>
-              <td>{elem.user_name}</td>
-              <td className={s.actionsBlock}>
-                <img className={s.actions} src={learn} alt="learn" />
-                <img
-                  onClick={() =>
-                    updatePackHandler({
-                      cardsPack: { _id: '6423259a9791a3b8fd33bd0f', name: 'New pack updated' },
-                    })
-                  }
-                  src={pencil}
-                  alt="pencil"
-                />
-                <img src={remove} alt="remove" />
-              </td>
-            </tr>
-          )
-        })}
+        {packs.length ? (
+          packs.map(elem => {
+            return (
+              <tr key={elem._id}>
+                <td>{elem.name.slice(0, 30)}</td>
+                <td>{elem.cardsCount}</td>
+                <td>{elem.updated.slice(0, 10)}</td>
+                <td>{elem.user_name}</td>
+                <td className={s.actionsBlock}>
+                  <img className={s.actions} src={learn} alt="learn" />
+                  <img
+                    onClick={() =>
+                      updatePackHandler({
+                        cardsPack: { _id: '6423259a9791a3b8fd33bd0f', name: 'New pack updated' },
+                      })
+                    }
+                    src={pencil}
+                    alt="pencil"
+                  />
+                  <img src={remove} alt="remove" />
+                </td>
+              </tr>
+            )
+          })
+        ) : (
+          <h2 className={s.emptyPacks}>Packs not found. Try to change your search parameters</h2>
+        )}
       </tbody>
     </table>
   )

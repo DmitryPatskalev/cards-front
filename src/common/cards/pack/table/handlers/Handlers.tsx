@@ -6,7 +6,13 @@ import { useAppDispatch, useAppSelector } from '../../../../../app/store'
 import { SuperButton } from '../../../../superComponents/superButton/SuperButton'
 import clearFilter from '../../../../utils/img/clear-filter.svg'
 import { SubTitle } from '../../../../utils/SubTitle/SubTitle'
-import { getAllPackTC, getMyPacksTC, setPageAC, setPageCountAC } from '../../../packs-reducer'
+import {
+  getAllPackTC,
+  getMyPacksTC,
+  setPageAC,
+  setPageCountAC,
+  setSearchPacksAC,
+} from '../../../packs-reducer'
 import { SuperDebounceInput } from '../debounce/SuperDebounceInput'
 import { SuperPagination } from '../pagination/SuperPagination'
 
@@ -15,11 +21,10 @@ import s from './Handler.module.scss'
 export const Handlers = () => {
   const [active, setActive] = useState<boolean>(false)
   const [searchParams, setSearchParams] = useSearchParams()
-  const [find, setFind] = useState('')
 
   const dispatch = useAppDispatch()
   const { isLoggedIn } = useAppSelector(state => state.auth)
-  const { page, pageCount, cardPacksTotalCount } = useAppSelector(state => state.packs)
+  const { page, pageCount, cardPacksTotalCount, packName } = useAppSelector(state => state.packs)
 
   const switchMyButtonHandler = () => {
     if (isLoggedIn) {
@@ -29,18 +34,18 @@ export const Handlers = () => {
   }
   const switchAllButtonHandler = () => {
     if (isLoggedIn) {
-      dispatch(getAllPackTC({}))
+      dispatch(getAllPackTC())
     }
     setActive(false)
   }
 
-  const sendQuery = (packName: string) => {
-    dispatch(getAllPackTC({ packName }))
-  }
+  const onChangeText = (newPackName: string) => {
+    dispatch(setSearchPacksAC(newPackName))
+    const querySearch = newPackName !== '' ? { packName: newPackName } : {}
+    const { packName, ...lastQueries } = Object.fromEntries(searchParams)
+    const allQuery: any = { ...lastQueries, ...querySearch }
 
-  const onChangeText = (packName: string) => {
-    setFind(packName)
-    setSearchParams({ params: packName })
+    setSearchParams(allQuery)
   }
 
   const onChangePagination = (newPage: number, newPageCount: number) => {
@@ -56,18 +61,9 @@ export const Handlers = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      const params = Object.fromEntries(searchParams)
-
-      dispatch(
-        getAllPackTC({
-          page: +params.page,
-          pageCount: +params.pageCount,
-          packName: params.packName,
-        })
-      )
-      setFind(params.packName || '')
+      dispatch(getAllPackTC())
     }
-  }, [page, pageCount])
+  }, [page, pageCount, packName])
 
   return (
     <>
@@ -77,8 +73,8 @@ export const Handlers = () => {
 
           <SuperDebounceInput
             onChangeText={onChangeText}
-            onDebounceChange={sendQuery}
-            value={find}
+            //onDebounceChange={getAllPackTC}
+            value={packName}
             className={s.searchInput}
             type="text"
             placeholder="Provide your text"
