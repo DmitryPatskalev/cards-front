@@ -41,6 +41,7 @@ export const packsReducer = (
 
     case 'cards/SET-MAX-CARDS-COUNT':
       return { ...state, max: action.maxCount }
+
     default:
       return state
   }

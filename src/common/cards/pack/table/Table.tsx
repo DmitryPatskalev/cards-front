@@ -12,7 +12,6 @@ import s from './Table.module.scss'
 
 export const Table = () => {
   const { packs } = useAppSelector(state => state.packs)
-
   const dispatch = useAppDispatch()
 
   const updatePackHandler = (data: UpdatedPackType) => {
@@ -64,7 +63,7 @@ export const Table = () => {
                     src={pencil}
                     alt="pencil"
                   />
-                  <img src={remove} alt="remove" />
+                  <img onClick={() => deletePackHandler(elem._id)} src={remove} alt="remove" />
                 </td>
               </tr>
             )

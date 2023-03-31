@@ -32,7 +32,7 @@ export const SuperDebounceInput: React.FC<SuperDebounceInputPropsType> = ({
       const id: number = +setTimeout(() => {
         onDebounceChange(value)
         setTimerId(undefined)
-      }, 500)
+      }, 1000)
 
       setTimerId(id)
     }

@@ -69,9 +69,9 @@ export const Handlers = () => {
   }
 
   const onChangeRange = (event: Event, value: number | number[]) => {
-    if (!Array.isArray(value)) {
-      dispatch(setMinCardsCountAC(min))
-      dispatch(setMaxCardsCountAC(max))
+    if (Array.isArray(value)) {
+      dispatch(setMinCardsCountAC(value[0]))
+      dispatch(setMaxCardsCountAC(value[1]))
     }
   }
 
@@ -79,7 +79,7 @@ export const Handlers = () => {
     if (isLoggedIn) {
       dispatch(getAllPackTC())
     }
-  }, [page, pageCount])
+  }, [page, pageCount, min, max])
 
   return (
     <>
