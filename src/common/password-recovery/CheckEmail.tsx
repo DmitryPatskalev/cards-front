@@ -2,13 +2,14 @@ import React from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
-import { useAppSelector } from '../../app/store'
 import commonStyle from '../common-style/common-container.module.scss'
 import style from '../login/Login.module.scss'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
 import emailIcon from '../utils/img/email.svg'
 
 import s from './PasswordRecovery.module.scss'
+
+import { useAppSelector } from 'app/store'
 
 export const CheckEmail = () => {
   const navigate = useNavigate()

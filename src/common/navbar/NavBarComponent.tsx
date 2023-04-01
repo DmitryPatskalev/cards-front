@@ -2,13 +2,14 @@ import React from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
-import { useAppSelector } from '../../app/store'
 import style from '../common-style/common-container.module.scss'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
 import loki from '../utils/img/Loki.jpeg'
 
 import logo from './../utils/img/logo-incubator.svg'
 import s from './NavBar.module.scss'
+
+import { useAppSelector } from 'app/store'
 
 export const NavBarComponent = () => {
   const navigate = useNavigate()

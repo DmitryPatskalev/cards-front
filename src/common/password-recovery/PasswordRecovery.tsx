@@ -3,14 +3,15 @@ import React from 'react'
 import { Form, Formik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../app/store'
 import commonStyle from '../common-style/common-container.module.scss'
-import { recoveryPasswordTC } from '../login/auth-reducer'
+import { recoveryPasswordTC } from '../login/login-reducer'
 import style from '../login/Login.module.scss'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
 import { InputField } from '../utils/form/FormFields'
 
 import s from './PasswordRecovery.module.scss'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
 
 export type ValidateType = {
   email: string

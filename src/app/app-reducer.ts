@@ -1,8 +1,8 @@
-import { authAPI } from '../api/cards -api'
-import { setIsLoggedInAC, setUserEmailAC, updateUserNameAC } from '../common/login/auth-reducer'
-import { errorUtils } from '../common/utils/error/error-utils'
-
 import { AppThunk } from './store'
+
+import { authAPI } from 'api/cards -api'
+import { setIsLoggedInAC, setUserEmailAC, updateUserNameAC } from 'common/login/login-reducer'
+import { errorUtils } from 'common/utils/error/error-utils'
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -37,6 +37,7 @@ export const setIsInitializedAC = (isInitialized: boolean) =>
 
 export type ActionsAppType = ReturnType<typeof setStatusAC> | ReturnType<typeof setIsInitializedAC>
 
+//thunks
 export const initializedAppTC = (): AppThunk => async dispatch => {
   dispatch(setStatusAC('loading'))
   try {

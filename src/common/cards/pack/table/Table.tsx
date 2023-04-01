@@ -1,25 +1,26 @@
 import React from 'react'
 
-import { UpdatedPackType } from '../../../../api/typesAPI'
-import { useAppDispatch, useAppSelector } from '../../../../app/store'
 import learn from '../../../utils/img/learn.svg'
 import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
-import { SubTitle } from '../../../utils/SubTitle/SubTitle'
 import { deletePackTC, updatePackTC } from '../packs-reducer'
 
 import s from './Table.module.scss'
 
+import { UpdatedPackType } from 'api/typesAPI'
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { SubTitle } from 'common/utils/SubTitle/SubTitle'
+
 export const Table = () => {
-  const { packs } = useAppSelector(state => state.packs)
+  const { packs, isMyPacks } = useAppSelector(state => state.packs)
   const dispatch = useAppDispatch()
 
   const updatePackHandler = (data: UpdatedPackType) => {
     dispatch(updatePackTC(data))
   }
 
-  const deletePackHandler = (id: string) => {
-    dispatch(deletePackTC(id))
+  const deletePackHandler = () => {
+    dispatch(deletePackTC())
   }
 
   return (
@@ -53,17 +54,26 @@ export const Table = () => {
                 <td>{elem.updated.slice(0, 10)}</td>
                 <td>{elem.user_name}</td>
                 <td className={s.actionsBlock}>
-                  <img className={s.actions} src={learn} alt="learn" />
-                  <img
-                    onClick={() =>
-                      updatePackHandler({
-                        cardsPack: { _id: '6423259a9791a3b8fd33bd0f', name: 'New pack updated' },
-                      })
-                    }
-                    src={pencil}
-                    alt="pencil"
-                  />
-                  <img onClick={() => deletePackHandler(elem._id)} src={remove} alt="remove" />
+                  {isMyPacks ? (
+                    <>
+                      <img className={s.actions} src={learn} alt="learn" />
+                      <img
+                        onClick={() =>
+                          updatePackHandler({
+                            cardsPack: {
+                              _id: '642825eded6cfb1d02f208a0',
+                              name: 'New pack updated',
+                            },
+                          })
+                        }
+                        src={pencil}
+                        alt="pencil"
+                      />
+                      <img onClick={deletePackHandler} src={remove} alt="remove" />
+                    </>
+                  ) : (
+                    <img className={s.actions} src={learn} alt="learn" />
+                  )}
                 </td>
               </tr>
             )

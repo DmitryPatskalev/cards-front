@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
-import { ActionsAuthType, setErrorAC } from '../../login/auth-reducer'
+import { ActionsAuthType, setErrorAC } from '../../login/login-reducer'
 
 export const errorUtils = (
   e: Error | AxiosError<{ error: string }>,

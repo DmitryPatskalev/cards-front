@@ -55,8 +55,12 @@ export const cardsAPI = {
   updatedPack(data: UpdatedPackType) {
     return instance.put<CardsPackDomainType>('/cards/pack', data)
   },
-  deletePack(id: string) {
-    return instance.delete<CardsPackDomainType>(`/cards/pack/${id}`)
+  deletePack() {
+    return instance.delete<CardsPackDomainType>('/cards/pack', {
+      params: {
+        id: '642825eded6cfb1d02f208a0',
+      },
+    })
   },
 }
 

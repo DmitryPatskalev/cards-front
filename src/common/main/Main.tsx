@@ -2,8 +2,6 @@ import React, { useEffect } from 'react'
 
 import { Route, Routes, useParams } from 'react-router-dom'
 
-import { initializedAppTC } from '../../app/app-reducer'
-import { useAppDispatch, useAppSelector } from '../../app/store'
 import Error from '../404/Error404'
 import { Card } from '../cards/card/Card'
 import { Pack } from '../cards/pack/Pack'
@@ -18,6 +16,9 @@ import { Stand } from '../superComponents/Stand'
 import spinner from '../utils/img/spinner.svg'
 
 import s from './Main.module.scss'
+
+import { initializedAppTC } from 'app/app-reducer'
+import { useAppDispatch, useAppSelector } from 'app/store'
 
 export const Main = () => {
   const dispatch = useAppDispatch()
@@ -51,7 +52,7 @@ export const Main = () => {
         <Route path={'/stand'} element={<Stand />} />
 
         <Route path={'/cards/pack'} element={<Pack />} />
-        <Route path={'cards/pack/:page'} element={<Pack />} />
+        <Route path={'cards/pack/:my'} element={<Pack />} />
         <Route path={'/cards/card'} element={<Card />} />
       </Routes>
       <ErrorSnackBar />

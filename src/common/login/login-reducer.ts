@@ -1,8 +1,9 @@
-import { authAPI } from '../../api/cards -api'
-import { ForgotPasswordType, LoginType } from '../../api/typesAPI'
-import { setStatusAC } from '../../app/app-reducer'
-import { AppThunk } from '../../app/store'
 import { errorUtils } from '../utils/error/error-utils'
+
+import { authAPI } from 'api/cards -api'
+import { ForgotPasswordType, LoginType } from 'api/typesAPI'
+import { setStatusAC } from 'app/app-reducer'
+import { AppThunk } from 'app/store'
 
 const initialState = {
   error: null as string | null,
@@ -19,7 +20,7 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-export const authReducer = (
+export const loginReducer = (
   state: InitialStateType = initialState,
   action: ActionsAuthType
 ): InitialStateType => {

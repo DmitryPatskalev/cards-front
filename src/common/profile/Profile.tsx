@@ -2,9 +2,8 @@ import React, { ChangeEvent, useState } from 'react'
 
 import { Navigate, useNavigate } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../app/store'
 import commonStyle from '../common-style/common-container.module.scss'
-import { logoutTC, updateUserTC } from '../login/auth-reducer'
+import { logoutTC, updateUserTC } from '../login/login-reducer'
 import style from '../login/Login.module.scss'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
 import { SuperInput } from '../superComponents/superInput/SuperInput'
@@ -14,6 +13,8 @@ import avatar from '../utils/img/Loki.jpeg'
 import pencil from '../utils/img/pencil-line-light.svg'
 
 import s from './Profile.module.scss'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
 
 export const Profile = () => {
   const { isLoggedIn, isDisabled, name, email } = useAppSelector(state => state.auth)

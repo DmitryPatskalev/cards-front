@@ -2,14 +2,11 @@ import React, { useEffect, useState } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../../app/store'
-import { SuperButton } from '../../../superComponents/superButton/SuperButton'
 import clearFilter from '../../../utils/img/clear-filter.svg'
-import { SubTitle } from '../../../utils/SubTitle/SubTitle'
 import { SuperDebounceInput } from '../debounce/SuperDebounceInput'
 import {
-  getAllPackTC,
   getMyPacksTC,
+  getPacksTC,
   setMaxCardsCountAC,
   setMinCardsCountAC,
   setPageAC,
@@ -21,8 +18,11 @@ import { SuperRange } from '../range/SuperRange'
 
 import s from './Handler.module.scss'
 
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { SuperButton } from 'common/superComponents/superButton/SuperButton'
+import { SubTitle } from 'common/utils/SubTitle/SubTitle'
+
 export const Handlers = () => {
-  const [active, setActive] = useState<boolean>(false)
   const [searchParams, setSearchParams] = useSearchParams()
 
   const dispatch = useAppDispatch()
@@ -31,17 +31,11 @@ export const Handlers = () => {
     state => state.packs
   )
 
-  const switchMyButtonHandler = () => {
-    if (isLoggedIn) {
-      dispatch(getMyPacksTC())
-    }
-    setActive(true)
+  const getMyPacksHandler = () => {
+    dispatch(getMyPacksTC())
   }
-  const switchAllButtonHandler = () => {
-    if (isLoggedIn) {
-      dispatch(getAllPackTC())
-    }
-    setActive(false)
+  const getAllPacksHandler = () => {
+    dispatch(getPacksTC())
   }
 
   const onChangeText = (newPackName: string) => {
@@ -65,19 +59,18 @@ export const Handlers = () => {
   }
 
   const querySearch = () => {
-    dispatch(getAllPackTC())
+    dispatch(getPacksTC())
   }
-
-  const onChangeRange = (event: Event, value: number | number[]) => {
-    if (Array.isArray(value)) {
-      dispatch(setMinCardsCountAC(value[0]))
-      dispatch(setMaxCardsCountAC(value[1]))
+  const onChangeRange = (event: Event, newValue: number | number[]) => {
+    if (Array.isArray(newValue)) {
+      dispatch(setMinCardsCountAC(newValue[0]))
+      dispatch(setMaxCardsCountAC(newValue[1]))
     }
   }
 
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch(getAllPackTC())
+      dispatch(getPacksTC())
     }
   }, [page, pageCount, min, max])
 
@@ -96,39 +89,37 @@ export const Handlers = () => {
             placeholder="Provide your text"
           />
         </div>
+
         <div className={s.buttonBlock}>
           <SubTitle title="Show packs cards" />
           <div className={s.buttons}>
-            <SuperButton
-              onClick={switchMyButtonHandler}
-              className={s.switch}
-              xType={active ? 'default' : 'secondary'}
-            >
+            <SuperButton onClick={getMyPacksHandler} className={s.switch} xType={'default'}>
               My
             </SuperButton>
-            <SuperButton
-              onClick={switchAllButtonHandler}
-              className={s.switch}
-              xType={active ? 'secondary' : 'default'}
-            >
+
+            <SuperButton onClick={getAllPacksHandler} className={s.switch} xType={'secondary'}>
               All
             </SuperButton>
           </div>
         </div>
+
         <div className={s.rangeBlock}>
           <SubTitle title="Number of cards" />
+
           <div className={s.range}>
             <div className={s.rangeMinCount}>{min}</div>
             <SuperRange value={[min, max]} onChange={onChangeRange} />
             <div className={s.rangeMaxCount}>{max}</div>
           </div>
         </div>
+
         <div className={s.filterClearBlock}>
           <div className={s.filterClear}>
             <img className={s.imageFilter} src={clearFilter} alt={'edit'} />
           </div>
         </div>
       </div>
+
       <div className={s.paginationContainer}>
         <SuperPagination
           page={page}

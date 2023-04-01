@@ -3,14 +3,15 @@ import React, { useState } from 'react'
 import { Form, Formik } from 'formik'
 import { Navigate, useNavigate } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../app/store'
 import style from '../common-style/common-container.module.scss'
 import { SuperButton } from '../superComponents/superButton/SuperButton'
 import { CheckBoxField, InputField } from '../utils/form/FormFields'
 import { IconVisibility } from '../utils/form/IconVisibility'
 
-import { loginTC } from './auth-reducer'
+import { loginTC } from './login-reducer'
 import s from './Login.module.scss'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
 
 export type ValidateType = {
   email: string

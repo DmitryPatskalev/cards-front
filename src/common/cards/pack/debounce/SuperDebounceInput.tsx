@@ -1,6 +1,6 @@
 import React, { DetailedHTMLProps, InputHTMLAttributes, ReactNode, useState } from 'react'
 
-import { SuperInput } from '../../../superComponents/superInput/SuperInput'
+import { SuperInput } from 'common/superComponents/superInput/SuperInput'
 
 type DefaultInputPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
