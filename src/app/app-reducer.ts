@@ -1,7 +1,12 @@
 import { AppThunk } from './store'
 
-import { authAPI } from 'api/cards -api'
-import { setIsLoggedInAC, setUserEmailAC, updateUserNameAC } from 'common/login/login-reducer'
+import { authAPI } from 'api/packs-api'
+import {
+  setIsLoggedInAC,
+  setUserEmailAC,
+  setUserId,
+  updateUserNameAC,
+} from 'common/login/login-reducer'
 import { errorUtils } from 'common/utils/error/error-utils'
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -47,6 +52,7 @@ export const initializedAppTC = (): AppThunk => async dispatch => {
     dispatch(setStatusAC('succeeded'))
     dispatch(setIsLoggedInAC(true))
     dispatch(setIsInitializedAC(true))
+    dispatch(setUserId(res.data._id))
     dispatch(updateUserNameAC(name))
     dispatch(setUserEmailAC(email))
   } catch (e: any) {

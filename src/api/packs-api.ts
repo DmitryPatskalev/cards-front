@@ -1,13 +1,16 @@
 import axios from 'axios'
 
 import {
+  CardsDomainType,
   CardsPackDomainType,
+  CardsParamsType,
+  CreatePacksType,
   ForgotPasswordType,
   LoginType,
   LogoutType,
   NewPackType,
   NewPasswordType,
-  ParamsType,
+  PacksParamsType,
   UpdatedPackType,
   UpdateUserType,
   UserParamsType,
@@ -45,8 +48,8 @@ export const authAPI = {
   },
 }
 
-export const cardsAPI = {
-  getPacks(params?: ParamsType) {
+export const packsApi = {
+  getPacks(params?: PacksParamsType) {
     return instance.get<CardsPackDomainType>('/cards/pack', { params })
   },
   createPack(data: NewPackType) {
@@ -58,9 +61,18 @@ export const cardsAPI = {
   deletePack() {
     return instance.delete<CardsPackDomainType>('/cards/pack', {
       params: {
-        id: '642825eded6cfb1d02f208a0',
+        id: '6429bd5842dc2ce2e5399705',
       },
     })
+  },
+}
+
+export const cardsAPI = {
+  getCards(params?: CardsParamsType) {
+    return instance.get<CardsDomainType>('/cards/card', { params })
+  },
+  postCards(data: CreatePacksType) {
+    return instance.post<CardsDomainType>('/cards/card', data)
   },
 }
 

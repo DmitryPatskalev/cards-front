@@ -20,7 +20,7 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = ({
 }) => {
   const lastPage = Math.ceil(cardPacksTotalCount / pageCount)
 
-  const onChangeCallBack = (event: any, page: number) => {
+  const onChangeCallBack = (event: ChangeEvent<unknown>, page: number) => {
     onChange(page, pageCount)
   }
 
@@ -39,7 +39,13 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = ({
 
   return (
     <div className={s.pagination}>
-      <Pagination page={page} count={lastPage} onChange={onChangeCallBack} />
+      <Pagination
+        shape={'rounded'}
+        color={'primary'}
+        page={page}
+        count={lastPage}
+        onChange={onChangeCallBack}
+      />
 
       <span className={s.text1}>Show</span>
 

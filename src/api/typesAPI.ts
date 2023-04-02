@@ -1,3 +1,5 @@
+//auth
+
 export type LoginType = {
   email?: string
   password?: string
@@ -43,6 +45,7 @@ export type UpdateUserType = {
   tokenDeathTime: number
 }
 
+//packs
 export type CardsPackDomainType = {
   cardPacks: CardsPackType[]
   page: number
@@ -71,7 +74,7 @@ export type CardsPackType = {
   __v: number
 }
 
-export type ParamsType = {
+export type PacksParamsType = {
   packName?: string
   min?: number
   max?: number
@@ -86,7 +89,7 @@ export type NewPackType = {
   cardsPack: {
     name: string // если не отправить будет таким
     deckCover?: string // не обязателен
-    private?: boolean // если не отправить будет такой
+    //private?: boolean // если не отправить будет такой
   }
 }
 
@@ -95,4 +98,55 @@ export type UpdatedPackType = {
     _id: string
     name: string
   }
+}
+
+//cards
+
+export type CardsParamsType = {
+  cardAnswer: string // не обязательно
+  cardQuestion: string // не обязательно
+  cardsPack_id: string
+  min: number // не обязательно
+  max: number // не обязательно
+  sortCards: string // не обязательно
+  page: number // не обязательно
+  pageCount: number // не обязательно
+}
+
+export type CreatePacksType = {
+  card: {
+    cardsPack_id: string
+    question: string // если не отправить будет таким
+    answer: string // если не отправить будет таким
+    grade: number // 0..5, не обязателен
+    shots: number // не обязателен
+    answerImg: string // не обязателен
+    questionImg: string // не обязателен
+    questionVideo: string // не обязателен
+    answerVideo: string // не обязателен
+  }
+}
+
+export type UpdatePacksType = {
+  card: {
+    _id: string
+    question: string // не обязательно
+  }
+}
+
+export type CardsDomainType = {
+  cards: any[]
+  packUserId: string
+  packName: string
+  packPrivate: boolean
+  packDeckCover: string
+  packCreated: string
+  packUpdated: string
+  page: number
+  pageCount: number
+  cardsTotalCount: number
+  minGrade: number
+  maxGrade: number
+  token: string
+  tokenDeathTime: number
 }

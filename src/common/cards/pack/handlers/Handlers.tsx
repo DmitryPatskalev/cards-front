@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { SyntheticEvent, useEffect } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
 import clearFilter from '../../../utils/img/clear-filter.svg'
 import { SuperDebounceInput } from '../debounce/SuperDebounceInput'
 import {
-  getMyPacksTC,
   getPacksTC,
+  setIsMyPacks,
   setMaxCardsCountAC,
   setMinCardsCountAC,
   setPageAC,
@@ -27,20 +27,20 @@ export const Handlers = () => {
 
   const dispatch = useAppDispatch()
   const { isLoggedIn } = useAppSelector(state => state.auth)
-  const { page, pageCount, cardPacksTotalCount, packName, min, max } = useAppSelector(
+  const { page, pageCount, cardPacksTotalCount, packName, min, max, isMyPacks } = useAppSelector(
     state => state.packs
   )
 
   const getMyPacksHandler = () => {
-    dispatch(getMyPacksTC())
+    dispatch(setIsMyPacks(true))
   }
   const getAllPacksHandler = () => {
-    dispatch(getPacksTC())
+    dispatch(setIsMyPacks(false))
   }
 
   const onChangeText = (newPackName: string) => {
     dispatch(setSearchPacksAC(newPackName))
-    const querySearch = newPackName !== '' ? { packName: newPackName } : {}
+    const querySearch = newPackName !== '' ? { packName: newPackName + '' } : {}
     const { packName, ...lastQueries } = Object.fromEntries(searchParams)
     const allQuery: any = { ...lastQueries, ...querySearch }
 
@@ -61,10 +61,19 @@ export const Handlers = () => {
   const querySearch = () => {
     dispatch(getPacksTC())
   }
-  const onChangeRange = (event: Event, newValue: number | number[]) => {
+  const onChangeRange = (
+    event: Event | SyntheticEvent<Element, Event>,
+    newValue: number | number[]
+  ) => {
     if (Array.isArray(newValue)) {
       dispatch(setMinCardsCountAC(newValue[0]))
       dispatch(setMaxCardsCountAC(newValue[1]))
+      const queryMin = newValue[0] !== 0 ? { min: newValue[0] + '' } : {}
+      const queryMax = newValue[1] !== 110 ? { max: newValue[1] + '' } : {}
+      const { min, max, ...lastQueries } = Object.fromEntries(searchParams)
+      const allQuery: any = { ...lastQueries, ...queryMin, ...queryMax }
+
+      setSearchParams(allQuery)
     }
   }
 
@@ -72,7 +81,7 @@ export const Handlers = () => {
     if (isLoggedIn) {
       dispatch(getPacksTC())
     }
-  }, [page, pageCount, min, max])
+  }, [page, pageCount, min, max, isMyPacks])
 
   return (
     <>
@@ -93,11 +102,19 @@ export const Handlers = () => {
         <div className={s.buttonBlock}>
           <SubTitle title="Show packs cards" />
           <div className={s.buttons}>
-            <SuperButton onClick={getMyPacksHandler} className={s.switch} xType={'default'}>
+            <SuperButton
+              onClick={getMyPacksHandler}
+              className={s.switch}
+              xType={isMyPacks ? 'default' : 'secondary'}
+            >
               My
             </SuperButton>
 
-            <SuperButton onClick={getAllPacksHandler} className={s.switch} xType={'secondary'}>
+            <SuperButton
+              onClick={getAllPacksHandler}
+              className={s.switch}
+              xType={isMyPacks ? 'secondary' : 'default'}
+            >
               All
             </SuperButton>
           </div>
@@ -108,7 +125,7 @@ export const Handlers = () => {
 
           <div className={s.range}>
             <div className={s.rangeMinCount}>{min}</div>
-            <SuperRange value={[min, max]} onChange={onChangeRange} />
+            <SuperRange value={[min, max]} onChangeCommitted={onChangeRange} />
             <div className={s.rangeMaxCount}>{max}</div>
           </div>
         </div>

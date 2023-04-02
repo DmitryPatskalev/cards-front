@@ -1,7 +1,9 @@
+import { Dispatch } from 'redux'
+
 import { errorUtils } from '../../utils/error/error-utils'
 
-import { cardsAPI } from 'api/cards -api'
-import { CardsPackType, NewPackType, ParamsType, UpdatedPackType } from 'api/typesAPI'
+import { packsApi } from 'api/packs-api'
+import { CardsPackType, NewPackType, UpdatedPackType } from 'api/typesAPI'
 import { AppThunk } from 'app/store'
 
 const initialState = {
@@ -12,9 +14,8 @@ const initialState = {
   min: 0,
   max: 110,
   packName: '',
-  user_id: '',
   isMyPacks: false,
-  isDisabled: false,
+  isLoading: false,
 }
 
 type InitialStateType = typeof initialState
@@ -48,6 +49,9 @@ export const packsReducer = (
     case 'cards/SET_IS_MY_PACKS':
       return { ...state, isMyPacks: action.isMyPacks }
 
+    case 'cards/SET_IS_LOADING':
+      return { ...state, isLoading: action.isLoading }
+
     default:
       return state
   }
@@ -75,50 +79,44 @@ export const setMaxCardsCountAC = (maxCount: number) =>
 export const setIsMyPacks = (isMyPacks: boolean) =>
   ({ type: 'cards/SET_IS_MY_PACKS', isMyPacks } as const)
 
+export const setIsLoadingAC = (isLoading: boolean) =>
+  ({ type: 'cards/SET_IS_LOADING', isLoading } as const)
+
 //thunks
-export const getMyPacksTC = (): AppThunk => async (dispatch, getState) => {
-  const { page, pageCount, packName, min, max } = getState().packs
+
+export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
+  const { page, pageCount, packName, min, max, isMyPacks } = getState().packs
+  const { user_id } = getState().auth
 
   try {
-    const res = await cardsAPI.getPacks({
+    dispatch(setIsLoadingAC(true))
+    const res = await packsApi.getPacks({
       page,
       pageCount,
       packName,
       min,
       max,
-      user_id: '6352ce8810be8e0004d5b4f4',
+      user_id: isMyPacks ? user_id : '',
     })
 
-    dispatch(setIsMyPacks(true))
+    dispatch(setIsLoadingAC(false))
     dispatch(getPacksAC(res.data.cardPacks))
     dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
   } catch (e: any) {
     errorUtils(e, dispatch)
+  } finally {
+    dispatch(setIsLoadingAC(false))
   }
 }
-
-export const getPacksTC =
-  (params?: ParamsType): AppThunk =>
-  async (dispatch, getState) => {
-    const { page, pageCount, packName, min, max } = getState().packs
-
-    try {
-      const res = await cardsAPI.getPacks({ page, pageCount, packName, min, max })
-
-      dispatch(setIsMyPacks(false))
-      dispatch(getPacksAC(res.data.cardPacks))
-      dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
-    } catch (e: any) {
-      errorUtils(e, dispatch)
-    }
-  }
 
 export const createNewPacksTC =
   (data: NewPackType): AppThunk =>
   async dispatch => {
     try {
-      await cardsAPI.createPack(data)
-      dispatch(getMyPacksTC())
+      dispatch(setIsLoadingAC(true))
+      await packsApi.createPack(data)
+      dispatch(setIsLoadingAC(false))
+      dispatch(getPacksTC())
     } catch (e: any) {
       errorUtils(e, dispatch)
     }
@@ -128,8 +126,10 @@ export const updatePackTC =
   (data: UpdatedPackType): AppThunk =>
   async dispatch => {
     try {
-      await cardsAPI.updatedPack(data)
-      dispatch(getMyPacksTC())
+      dispatch(setIsLoadingAC(true))
+      await packsApi.updatedPack(data)
+      dispatch(setIsLoadingAC(false))
+      dispatch(getPacksTC())
     } catch (e: any) {
       errorUtils(e, dispatch)
     }
@@ -137,8 +137,10 @@ export const updatePackTC =
 
 export const deletePackTC = (): AppThunk => async dispatch => {
   try {
-    await cardsAPI.deletePack()
-    dispatch(getMyPacksTC())
+    dispatch(setIsLoadingAC(true))
+    await packsApi.deletePack()
+    dispatch(setIsLoadingAC(false))
+    dispatch(getPacksTC())
   } catch (e: any) {
     errorUtils(e, dispatch)
   }
@@ -153,3 +155,4 @@ export type ActionCardsType =
   | ReturnType<typeof setMinCardsCountAC>
   | ReturnType<typeof setMaxCardsCountAC>
   | ReturnType<typeof setIsMyPacks>
+  | ReturnType<typeof setIsLoadingAC>

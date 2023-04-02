@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { CircularProgress } from '@mui/material'
+
 import learn from '../../../utils/img/learn.svg'
 import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
@@ -12,7 +14,7 @@ import { useAppDispatch, useAppSelector } from 'app/store'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 
 export const Table = () => {
-  const { packs, isMyPacks } = useAppSelector(state => state.packs)
+  const { packs, isMyPacks, isLoading } = useAppSelector(state => state.packs)
   const dispatch = useAppDispatch()
 
   const updatePackHandler = (data: UpdatedPackType) => {
@@ -44,44 +46,50 @@ export const Table = () => {
           </th>
         </tr>
       </thead>
-      <tbody>
-        {packs.length ? (
-          packs.map(elem => {
-            return (
-              <tr key={elem._id}>
-                <td>{elem.name.slice(0, 30)}</td>
-                <td>{elem.cardsCount}</td>
-                <td>{elem.updated.slice(0, 10)}</td>
-                <td>{elem.user_name}</td>
-                <td className={s.actionsBlock}>
-                  {isMyPacks ? (
-                    <>
+      {isLoading ? (
+        <div className={s.circularProgress}>
+          <CircularProgress />
+        </div>
+      ) : (
+        <tbody>
+          {packs.length ? (
+            packs.map(elem => {
+              return (
+                <tr key={elem._id}>
+                  <td>{elem.name.slice(0, 30)}</td>
+                  <td>{elem.cardsCount}</td>
+                  <td>{elem.updated.slice(0, 10)}</td>
+                  <td>{elem.user_name}</td>
+                  <td className={s.actionsBlock}>
+                    {isMyPacks ? (
+                      <>
+                        <img className={s.actions} src={learn} alt="learn" />
+                        <img
+                          onClick={() =>
+                            updatePackHandler({
+                              cardsPack: {
+                                _id: '6429bd3742dc2ce2e53996eb',
+                                name: 'Tor',
+                              },
+                            })
+                          }
+                          src={pencil}
+                          alt="pencil"
+                        />
+                        <img onClick={deletePackHandler} src={remove} alt="remove" />
+                      </>
+                    ) : (
                       <img className={s.actions} src={learn} alt="learn" />
-                      <img
-                        onClick={() =>
-                          updatePackHandler({
-                            cardsPack: {
-                              _id: '642825eded6cfb1d02f208a0',
-                              name: 'New pack updated',
-                            },
-                          })
-                        }
-                        src={pencil}
-                        alt="pencil"
-                      />
-                      <img onClick={deletePackHandler} src={remove} alt="remove" />
-                    </>
-                  ) : (
-                    <img className={s.actions} src={learn} alt="learn" />
-                  )}
-                </td>
-              </tr>
-            )
-          })
-        ) : (
-          <h2 className={s.emptyPacks}>Packs not found. Try to change your search parameters</h2>
-        )}
-      </tbody>
+                    )}
+                  </td>
+                </tr>
+              )
+            })
+          ) : (
+            <h2 className={s.emptyPacks}>Packs not found. Try to change your search parameters</h2>
+          )}
+        </tbody>
+      )}
     </table>
   )
 }

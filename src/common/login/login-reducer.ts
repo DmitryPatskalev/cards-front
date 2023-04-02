@@ -1,6 +1,6 @@
 import { errorUtils } from '../utils/error/error-utils'
 
-import { authAPI } from 'api/cards -api'
+import { authAPI } from 'api/packs-api'
 import { ForgotPasswordType, LoginType } from 'api/typesAPI'
 import { setStatusAC } from 'app/app-reducer'
 import { AppThunk } from 'app/store'
@@ -16,6 +16,7 @@ const initialState = {
   message: '',
   password: '',
   resetPasswordToken: '',
+  user_id: '',
 }
 
 type InitialStateType = typeof initialState
@@ -43,7 +44,8 @@ export const loginReducer = (
       return { ...state, isSuccess: action.isSuccess }
     case 'auth/SET_NEW_PASSWORD':
       return { ...state, password: action.password, resetPasswordToken: action.resetPasswordToken }
-
+    case 'auth/SET_USER_ID':
+      return { ...state, user_id: action.id }
     default:
       return state
   }
@@ -72,6 +74,8 @@ export const setIsSuccessAC = (isSuccess: boolean) =>
 
 export const setNewPasswordAC = (password: string, resetPasswordToken: string) =>
   ({ type: 'auth/SET_NEW_PASSWORD', password, resetPasswordToken } as const)
+
+export const setUserId = (id: string) => ({ type: 'auth/SET_USER_ID', id } as const)
 
 export const registerTC =
   (data: LoginType): AppThunk =>
@@ -180,3 +184,4 @@ export type ActionsAuthType =
   | ReturnType<typeof setUserEmailAC>
   | ReturnType<typeof setIsSuccessAC>
   | ReturnType<typeof setNewPasswordAC>
+  | ReturnType<typeof setUserId>
