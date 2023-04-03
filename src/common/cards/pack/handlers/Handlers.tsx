@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect, useState } from 'react'
+import React, { SyntheticEvent, useEffect } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
@@ -31,13 +31,38 @@ export const Handlers = () => {
     state => state.packs
   )
 
-  const searchParamsObject = Object.fromEntries(searchParams)
+  // const params = Object.fromEntries(searchParams)
+  //
+  // console.log(params)
 
-  console.log(searchParamsObject)
+  const removeQueryParams = () => {
+    const queryPage = searchParams.get('page')
+    const queryPageCount = searchParams.get('pageCount')
+    const queryPackName = searchParams.get('packName')
+    const queryMin = searchParams.get('min')
+    const queryMax = searchParams.get('max')
+
+    if (queryPage || queryPageCount || queryPackName || queryMin || queryMax) {
+      searchParams.delete('page')
+      searchParams.delete('pageCount')
+      searchParams.delete('packName')
+      searchParams.delete('min')
+      searchParams.delete('max')
+
+      dispatch(setPageAC(1))
+      dispatch(setPageCountAC(5))
+      dispatch(setSearchPacksAC(''))
+      dispatch(setMinCardsCountAC(0))
+      dispatch(setMaxCardsCountAC(110))
+
+      setSearchParams(searchParams)
+    }
+  }
 
   const getMyPacksHandler = () => {
     dispatch(setIsMyPacks(true))
   }
+
   const getAllPacksHandler = () => {
     dispatch(setIsMyPacks(false))
   }
@@ -136,7 +161,7 @@ export const Handlers = () => {
         </div>
 
         <div className={s.filterClearBlock}>
-          <div className={s.filterClear}>
+          <div onClick={removeQueryParams} className={s.filterClear}>
             <img className={s.imageFilter} src={clearFilter} alt={'edit'} />
           </div>
         </div>

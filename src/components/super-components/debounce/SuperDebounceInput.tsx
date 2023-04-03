@@ -14,7 +14,7 @@ type SuperDebounceInputPropsType = Omit<DefaultInputPropsType, 'type'> & {
   error?: ReactNode
   spanClassName?: string
 } & {
-  onDebounceChange?: (value: string) => void
+  onDebounceChange?: (value: string | null) => void
 }
 
 export const SuperDebounceInput: React.FC<SuperDebounceInputPropsType> = ({

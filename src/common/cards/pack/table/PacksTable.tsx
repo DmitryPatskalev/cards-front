@@ -64,7 +64,8 @@ export const PacksTable = () => {
                   <td className={s.actionsBlock}>
                     {isMyPacks ? (
                       <>
-                        <img className={s.actions} src={learn} alt="learn" />
+                        <img src={learn} alt="learn" />
+
                         <img
                           onClick={() =>
                             updatePackHandler({
@@ -80,7 +81,7 @@ export const PacksTable = () => {
                         <img onClick={deletePackHandler} src={remove} alt="remove" />
                       </>
                     ) : (
-                      <img className={s.actions} src={learn} alt="learn" />
+                      <img src={learn} alt="learn" />
                     )}
                   </td>
                 </tr>
