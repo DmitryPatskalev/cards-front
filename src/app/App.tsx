@@ -2,14 +2,14 @@ import React from 'react'
 
 import s from './App.module.scss'
 
-import { Main } from 'common/main/Main'
-import { NavBarComponent } from 'common/navbar/NavBarComponent'
+import { MainRoutes } from 'common/routes/MainRoutes'
+import { Navbar } from 'components/navbar/Navbar'
 
 function App() {
   return (
     <div className={s.app}>
-      <NavBarComponent />
-      <Main />
+      <Navbar />
+      <MainRoutes />
     </div>
   )
 }

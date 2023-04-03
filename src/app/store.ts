@@ -4,8 +4,8 @@ import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { ActionsAppType, appReducer } from './app-reducer'
 
+import { ActionsAuthType, loginReducer } from 'common/auth/login/login-reducer'
 import { ActionCardsType, packsReducer } from 'common/cards/pack/packs-reducer'
-import { ActionsAuthType, loginReducer } from 'common/login/login-reducer'
 
 export const rootReducer = combineReducers({
   auth: loginReducer,

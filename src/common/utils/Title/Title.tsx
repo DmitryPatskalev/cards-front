@@ -9,5 +9,3 @@ type TitleNameType = {
 export const Title: React.FC<TitleNameType> = ({ title }) => {
   return <div className={s.title}>{title}</div>
 }
-
-export default Title

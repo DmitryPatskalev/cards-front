@@ -1,5 +1,5 @@
-import { updateUserNameAC } from '../../login/login-reducer'
-import { errorUtils } from '../../utils/error/error-utils'
+import { updateUserNameAC } from '../../auth/login/login-reducer'
+import { errorUtils } from '../../utils/errors/error/error-utils'
 
 import { packsApi } from 'api/packs-api'
 import { CardsPackType, NewPackType, UpdatedPackType } from 'api/typesAPI'
@@ -98,10 +98,9 @@ export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
       user_id: isMyPacks ? user_id : '',
     })
 
-    dispatch(setIsLoadingAC(false))
-
     dispatch(getPacksAC(res.data.cardPacks))
     dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
+    dispatch(setIsLoadingAC(false))
   } catch (e: any) {
     errorUtils(e, dispatch)
   } finally {

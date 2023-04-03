@@ -2,10 +2,10 @@ import React from 'react'
 
 import { useField } from 'formik'
 
-import { SuperCheckBox } from '../../superComponents/superCheckBox/SuperCheckBox'
-import { SuperInput } from '../../superComponents/superInput/SuperInput'
-
 import s from './FormFields.module.scss'
+
+import { SuperCheckBox } from 'components/super-components/checkBox/SuperCheckBox'
+import { SuperInput } from 'components/super-components/input/SuperInput'
 
 type InputFieldFormType = {
   children?: React.ReactNode

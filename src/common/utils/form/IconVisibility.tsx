@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import s from '../../login/Login.module.scss'
+import s from '../../auth/login/Login.module.scss'
 import iconVisibilityOn from '../img/icon_visibility.svg'
 import iconVisibilityOff from '../img/icon_visibility_off.svg'
 

@@ -6,8 +6,8 @@ import {
   setUserEmailAC,
   setUserId,
   updateUserNameAC,
-} from 'common/login/login-reducer'
-import { errorUtils } from 'common/utils/error/error-utils'
+} from 'common/auth/login/login-reducer'
+import { errorUtils } from 'common/utils/errors/error/error-utils'
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 

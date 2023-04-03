@@ -1,9 +1,8 @@
-import React, { SyntheticEvent, useEffect } from 'react'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 
-import { useLocation, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 import clearFilter from '../../../utils/img/clear-filter.svg'
-import { SuperDebounceInput } from '../debounce/SuperDebounceInput'
 import {
   getPacksTC,
   setIsMyPacks,
@@ -13,14 +12,15 @@ import {
   setPageCountAC,
   setSearchPacksAC,
 } from '../packs-reducer'
-import { SuperPagination } from '../pagination/SuperPagination'
-import { SuperRange } from '../range/SuperRange'
 
 import s from './Handler.module.scss'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
-import { SuperButton } from 'common/superComponents/superButton/SuperButton'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
+import { SuperButton } from 'components/super-components/button/SuperButton'
+import { SuperDebounceInput } from 'components/super-components/debounce/SuperDebounceInput'
+import { SuperPagination } from 'components/super-components/pagination/SuperPagination'
+import { Range } from 'components/super-components/range/Range'
 
 export const Handlers = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -31,17 +31,15 @@ export const Handlers = () => {
     state => state.packs
   )
 
-  const params = Object.fromEntries(searchParams)
+  const searchParamsObject = Object.fromEntries(searchParams)
+
+  console.log(searchParamsObject)
 
   const getMyPacksHandler = () => {
-    if (isLoggedIn) {
-      dispatch(setIsMyPacks(true))
-    }
+    dispatch(setIsMyPacks(true))
   }
   const getAllPacksHandler = () => {
-    if (isLoggedIn) {
-      dispatch(setIsMyPacks(false))
-    }
+    dispatch(setIsMyPacks(false))
   }
 
   const onChangeText = (newPackName: string) => {
@@ -67,6 +65,7 @@ export const Handlers = () => {
   const querySearch = () => {
     dispatch(getPacksTC())
   }
+
   const onChangeRange = (
     event: Event | SyntheticEvent<Element, Event>,
     newValue: number | number[]
@@ -131,7 +130,7 @@ export const Handlers = () => {
 
           <div className={s.range}>
             <div className={s.rangeMinCount}>{min}</div>
-            <SuperRange value={[min, max]} onChangeCommitted={onChangeRange} />
+            <Range value={[min, max]} onChangeCommitted={onChangeRange} />
             <div className={s.rangeMaxCount}>{max}</div>
           </div>
         </div>
@@ -145,6 +144,7 @@ export const Handlers = () => {
 
       <div className={s.paginationContainer}>
         <SuperPagination
+          title="Cards per Page"
           page={page}
           pageCount={pageCount}
           cardPacksTotalCount={cardPacksTotalCount}
