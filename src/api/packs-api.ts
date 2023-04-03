@@ -34,7 +34,7 @@ export const authAPI = {
   me() {
     return instance.post<UserParamsType>('/auth/me', {})
   },
-  update(name: string) {
+  updateUserName(name: string) {
     return instance.put<UpdateUserType>('/auth/me', { name })
   },
   recovery(data: ForgotPasswordType) {
@@ -61,7 +61,7 @@ export const packsApi = {
   deletePack() {
     return instance.delete<CardsPackDomainType>('/cards/pack', {
       params: {
-        id: '6429bd5842dc2ce2e5399705',
+        id: '642aa72ca915a156406e9c20',
       },
     })
   },

@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, useEffect } from 'react'
 
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 
 import clearFilter from '../../../utils/img/clear-filter.svg'
 import { SuperDebounceInput } from '../debounce/SuperDebounceInput'
@@ -31,11 +31,17 @@ export const Handlers = () => {
     state => state.packs
   )
 
+  const params = Object.fromEntries(searchParams)
+
   const getMyPacksHandler = () => {
-    dispatch(setIsMyPacks(true))
+    if (isLoggedIn) {
+      dispatch(setIsMyPacks(true))
+    }
   }
   const getAllPacksHandler = () => {
-    dispatch(setIsMyPacks(false))
+    if (isLoggedIn) {
+      dispatch(setIsMyPacks(false))
+    }
   }
 
   const onChangeText = (newPackName: string) => {

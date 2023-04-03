@@ -6,10 +6,8 @@
 }
 
 .spinnerBlock {
+  height: 500px;
   display: flex;
   justify-content: center;
-
-  .spinner {
-    width: 300px;
-  }
+  align-items: center;
 }

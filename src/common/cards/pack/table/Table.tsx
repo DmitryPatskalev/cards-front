@@ -15,6 +15,7 @@ import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 
 export const Table = () => {
   const { packs, isMyPacks, isLoading } = useAppSelector(state => state.packs)
+
   const dispatch = useAppDispatch()
 
   const updatePackHandler = (data: UpdatedPackType) => {
@@ -60,6 +61,7 @@ export const Table = () => {
                   <td>{elem.cardsCount}</td>
                   <td>{elem.updated.slice(0, 10)}</td>
                   <td>{elem.user_name}</td>
+
                   <td className={s.actionsBlock}>
                     {isMyPacks ? (
                       <>
@@ -68,8 +70,8 @@ export const Table = () => {
                           onClick={() =>
                             updatePackHandler({
                               cardsPack: {
-                                _id: '6429bd3742dc2ce2e53996eb',
-                                name: 'Tor',
+                                _id: '642a7ef4761a7a9b7c06e74c',
+                                name: 'Updated',
                               },
                             })
                           }

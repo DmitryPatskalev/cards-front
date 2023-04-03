@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 
+import { CircularProgress } from '@mui/material'
 import { Route, Routes, useParams } from 'react-router-dom'
 
 import Error from '../404/Error404'
@@ -13,7 +14,6 @@ import { PasswordRecovery } from '../password-recovery/PasswordRecovery'
 import { Profile } from '../profile/Profile'
 import { Register } from '../register/Register'
 import { Stand } from '../superComponents/Stand'
-import spinner from '../utils/img/spinner.svg'
 
 import s from './Main.module.scss'
 
@@ -33,7 +33,7 @@ export const Main = () => {
   if (status === 'loading') {
     return (
       <div className={s.spinnerBlock}>
-        <img className={s.spinner} src={spinner} alt="spinner" />
+        <CircularProgress size={100} />
       </div>
     )
   }

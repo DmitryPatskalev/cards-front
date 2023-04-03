@@ -24,7 +24,7 @@ export const Pack = () => {
       <div className={s.navBlock}>
         <Title title="Pack List" />
         <SuperButton
-          onClick={() => createNewCards({ cardsPack: { name: 'Tor' } })}
+          onClick={() => createNewCards({ cardsPack: { name: 'Batman' } })}
           className={s.button}
           xType="default"
         >

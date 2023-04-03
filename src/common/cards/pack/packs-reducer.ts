@@ -1,5 +1,4 @@
-import { Dispatch } from 'redux'
-
+import { updateUserNameAC } from '../../login/login-reducer'
 import { errorUtils } from '../../utils/error/error-utils'
 
 import { packsApi } from 'api/packs-api'
@@ -100,6 +99,7 @@ export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
     })
 
     dispatch(setIsLoadingAC(false))
+
     dispatch(getPacksAC(res.data.cardPacks))
     dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
   } catch (e: any) {
@@ -156,3 +156,4 @@ export type ActionCardsType =
   | ReturnType<typeof setMaxCardsCountAC>
   | ReturnType<typeof setIsMyPacks>
   | ReturnType<typeof setIsLoadingAC>
+  | ReturnType<typeof updateUserNameAC>

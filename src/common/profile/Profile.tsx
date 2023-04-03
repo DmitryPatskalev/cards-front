@@ -29,12 +29,12 @@ export const Profile = () => {
   }
 
   const activateEditMode = () => {
-    setEdit(true)
     setNewName(name)
+    setEdit(true)
   }
   const activateViewMode = () => {
-    setEdit(false)
     dispatch(updateUserTC(newName))
+    setEdit(false)
   }
   const onChangeNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNewName(e.currentTarget.value)
@@ -81,6 +81,7 @@ export const Profile = () => {
                 onClick={activateViewMode}
                 className={s.editableButton}
                 xType={'default'}
+                disabled={isDisabled}
               >
                 SAVE
               </SuperButton>

@@ -148,7 +148,7 @@ export const updateUserTC =
   async dispatch => {
     try {
       dispatch(setStatusAC('succeeded'))
-      const res = await authAPI.update(name)
+      const res = await authAPI.updateUserName(name)
 
       dispatch(updateUserNameAC(res.data.updatedUser.name))
     } catch (error: any) {
