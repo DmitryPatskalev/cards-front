@@ -47,14 +47,15 @@ export const initializedAppTC = (): AppThunk => async dispatch => {
   dispatch(setStatusAC('loading'))
   try {
     const res = await authAPI.me()
-    const { name, email } = res.data
+    const { name, email, _id } = res.data
 
     dispatch(setStatusAC('succeeded'))
-    dispatch(setIsLoggedInAC(true))
-    dispatch(setIsInitializedAC(true))
-    dispatch(setUserId(res.data._id))
+
+    dispatch(setUserId(_id))
     dispatch(updateUserNameAC(name))
     dispatch(setUserEmailAC(email))
+    dispatch(setIsLoggedInAC(true))
+    dispatch(setIsInitializedAC(true))
   } catch (e: any) {
     errorUtils(e, dispatch)
     dispatch(setStatusAC('failed'))

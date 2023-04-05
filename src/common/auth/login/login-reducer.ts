@@ -15,7 +15,7 @@ const initialState = {
   message: '',
   password: '',
   resetPasswordToken: '',
-  user_id: '',
+  _id: '',
 }
 
 type InitialStateType = typeof initialState
@@ -44,7 +44,7 @@ export const loginReducer = (
     case 'auth/SET_NEW_PASSWORD':
       return { ...state, password: action.password, resetPasswordToken: action.resetPasswordToken }
     case 'auth/SET_USER_ID':
-      return { ...state, user_id: action.id }
+      return { ...state, _id: action._id }
     default:
       return state
   }
@@ -74,7 +74,7 @@ export const setIsSuccessAC = (isSuccess: boolean) =>
 export const setNewPasswordAC = (password: string, resetPasswordToken: string) =>
   ({ type: 'auth/SET_NEW_PASSWORD', password, resetPasswordToken } as const)
 
-export const setUserId = (id: string) => ({ type: 'auth/SET_USER_ID', id } as const)
+export const setUserId = (_id: string) => ({ type: 'auth/SET_USER_ID', _id } as const)
 
 export const registerTC =
   (data: LoginType): AppThunk =>

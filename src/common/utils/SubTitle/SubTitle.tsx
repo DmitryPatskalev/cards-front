@@ -6,5 +6,5 @@ type SubTitleType = {
   title: string
 }
 export const SubTitle: React.FC<SubTitleType> = ({ title }) => {
-  return <div className={s.title}>{title}</div>
+  return <span className={s.title}>{title}</span>
 }

@@ -3,8 +3,8 @@
   width: 100%;
   border: none;
   margin: 20px 0;
-
 }
+
 .table thead th {
   font-weight: bold;
   text-align: left;
@@ -13,9 +13,11 @@
   background: #d8d8d8;
   font-size: 14px;
 }
+
 .table thead tr th:first-child {
   border-radius: 8px 0 0 8px;
   width: 35%;
+
 }
 .table thead tr th:nth-child(2){
   width: 10%;
@@ -51,10 +53,33 @@
   display: flex;
   justify-content: space-evenly;
 }
-.actionsBlock img {
+
+.actionsBlock button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  background: none;
+  height: 24px;
+  cursor: pointer;
+  border: none;
+}
+
+.actionsBlock img{
   width: 20px;
   height: 20px;
-  cursor: pointer;
+}
+
+.actionsBlock button:disabled{
+  cursor: auto;
+  opacity: 0.3;
+}
+
+
+
+
+.actionsBlock button img:disabled{
+  cursor: none;
 }
 
 .emptyPacks{

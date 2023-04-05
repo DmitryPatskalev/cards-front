@@ -1,11 +1,13 @@
 import React from 'react'
 
 import { CircularProgress } from '@mui/material'
+import { useSearchParams } from 'react-router-dom'
 
+import { SuperSort } from '../../../../components/super-components/sort/SuperSort'
 import learn from '../../../utils/img/learn.svg'
 import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
-import { deletePackTC, updatePackTC } from '../packs-reducer'
+import { deletePackTC, setSortCardsAC, updatePackTC } from '../packs-reducer'
 
 import { UpdatedPackType } from 'api/typesAPI'
 import { useAppDispatch, useAppSelector } from 'app/store'
@@ -13,7 +15,19 @@ import s from 'common/common-css-style/Table.module.scss'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 
 export const PacksTable = () => {
-  const { packs, isMyPacks, isLoading } = useAppSelector(state => state.packs)
+  const { packs, isMyPacks, isLoading, sortCards } = useAppSelector(state => state.packs)
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const onChangeSort = (newSort: string) => {
+    dispatch(setSortCardsAC(newSort))
+
+    const querySort = newSort !== '' ? { sortCards: newSort } : {}
+    const { sortCards, ...lastQueries } = Object.fromEntries(searchParams)
+
+    const allQuery: any = { ...lastQueries, ...querySort }
+
+    setSearchParams(allQuery)
+  }
 
   const dispatch = useAppDispatch()
 
@@ -31,9 +45,11 @@ export const PacksTable = () => {
         <tr>
           <th>
             <SubTitle title="Name" />
+            <SuperSort sort={sortCards} value="grade" onChange={onChangeSort} />
           </th>
           <th>
             <SubTitle title="Cards" />
+            <SuperSort sort={sortCards} value="grade" onChange={onChangeSort} />
           </th>
           <th>
             <SubTitle title="Last Updated" />
@@ -53,20 +69,21 @@ export const PacksTable = () => {
       ) : (
         <tbody>
           {packs.length ? (
-            packs.map(elem => {
+            packs.map(p => {
               return (
-                <tr key={elem._id}>
-                  <td>{elem.name.slice(0, 30)}</td>
-                  <td>{elem.cardsCount}</td>
-                  <td>{elem.updated.slice(0, 10)}</td>
-                  <td>{elem.user_name}</td>
+                <tr key={p._id}>
+                  <td>{p.name.slice(0, 30)}</td>
+                  <td>{p.cardsCount}</td>
+                  <td>{p.updated.slice(0, 10)}</td>
+                  <td>{p.user_name}</td>
 
                   <td className={s.actionsBlock}>
-                    {isMyPacks ? (
+                    {isMyPacks || p.user_id === '6352ce8810be8e0004d5b4f4' ? (
                       <>
-                        <img src={learn} alt="learn" />
-
-                        <img
+                        <button disabled={!p.cardsCount}>
+                          <img src={learn} alt="learn" />
+                        </button>
+                        <button
                           onClick={() =>
                             updatePackHandler({
                               cardsPack: {
@@ -75,13 +92,17 @@ export const PacksTable = () => {
                               },
                             })
                           }
-                          src={pencil}
-                          alt="pencil"
-                        />
-                        <img onClick={deletePackHandler} src={remove} alt="remove" />
+                        >
+                          <img src={pencil} alt="pencil" />
+                        </button>
+                        <button onClick={deletePackHandler}>
+                          <img src={remove} alt="remove" />
+                        </button>
                       </>
                     ) : (
-                      <img src={learn} alt="learn" />
+                      <button disabled={!p.cardsCount}>
+                        <img src={learn} alt="learn" />
+                      </button>
                     )}
                   </td>
                 </tr>
