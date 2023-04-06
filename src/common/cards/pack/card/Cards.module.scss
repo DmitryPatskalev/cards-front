@@ -1,0 +1,15 @@
+.searchBlock{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.searchInputCards{
+    width: 42%;
+    height: 22px;
+    padding: 6px 6px 6px 40px;
+    margin-top: 10px;
+    background: url('../../../utils/img/search-icon.svg') no-repeat 10px;
+    background-size: auto 50%;
+}

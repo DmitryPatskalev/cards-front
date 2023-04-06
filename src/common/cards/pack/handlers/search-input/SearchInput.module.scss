@@ -1,9 +1,14 @@
-.searchInput {
-  width: 300px;
-  height: 22px;
-  padding: 6px 6px 6px 40px;
-  margin-top: 10px;
-  background: url('../../../../utils/img/search-icon.svg') no-repeat 10px;
+.searchBlock{
+  display: flex;
+  flex-direction: column;
 
-  background-size: auto 50%;
+  .searchInput {
+    width: 300px;
+    height: 22px;
+    padding: 6px 6px 6px 40px;
+    margin-top: 10px;
+    background: url('../../../../utils/img/search-icon.svg') no-repeat 10px;
+
+    background-size: auto 50%;
+  }
 }
