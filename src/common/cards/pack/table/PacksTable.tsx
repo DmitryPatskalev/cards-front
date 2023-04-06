@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { CircularProgress } from '@mui/material'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import learn from '../../../utils/img/learn.svg'
 import pencil from '../../../utils/img/pencil-line-light.svg'
@@ -17,6 +17,8 @@ import { SuperSort } from 'components/super-components/sort/SuperSort'
 export const PacksTable = () => {
   const { packs, isLoading, sortPacks } = useAppSelector(state => state.packs)
   const [searchParams, setSearchParams] = useSearchParams()
+
+  const navigate = useNavigate()
 
   const onChangeSort = (newSort: string) => {
     dispatch(setSortPacksAC(newSort))
@@ -80,7 +82,7 @@ export const PacksTable = () => {
                   <td className={s.actionsBlock}>
                     {p.user_id === '6352ce8810be8e0004d5b4f4' ? (
                       <>
-                        <button disabled={!p.cardsCount}>
+                        <button onClick={() => navigate('/cards/card')} disabled={!p.cardsCount}>
                           <img src={learn} alt="learn" />
                         </button>
                         <button
@@ -100,7 +102,7 @@ export const PacksTable = () => {
                         </button>
                       </>
                     ) : (
-                      <button disabled={!p.cardsCount}>
+                      <button onClick={() => navigate('/cards/card')} disabled={!p.cardsCount}>
                         <img src={learn} alt="learn" />
                       </button>
                     )}

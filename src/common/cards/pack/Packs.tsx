@@ -20,7 +20,7 @@ export const Packs = () => {
   }
 
   return (
-    <div className={`${common.commonContainer}`}>
+    <div className={common.commonContainer}>
       <div className={s.navBlock}>
         <Title title="Packs List" />
         <SuperButton

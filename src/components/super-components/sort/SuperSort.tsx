@@ -2,12 +2,13 @@ import React from 'react'
 
 import up from '../../../common/utils/img/Polygon 2.svg'
 import down from '../../../common/utils/img/Polygon 5.svg'
+import sort_up from '../../../common/utils/img/sort_up.svg'
 
 import s from './SuperSort.module.scss'
 
-const upIcon = up
-const downIcon = down
-const noneIcon = '[]'
+const upIcon = down
+const downIcon = up
+const noneIcon = sort_up
 
 export type SuperSortPropsType = {
   sort: string
@@ -16,14 +17,6 @@ export type SuperSortPropsType = {
 }
 
 const pureChange = (sort: string, down: string, up: string) => {
-  // if (sort === down) {
-  //   return up
-  // } else if (sort === up) {
-  //   return ''
-  // } else {
-  //   return down
-  // }
-
   // eslint-disable-next-line no-nested-ternary
   return sort === down ? up : sort === up ? '' : down
 }

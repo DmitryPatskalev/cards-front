@@ -2,6 +2,8 @@ import React, { ChangeEvent, useState } from 'react'
 
 import { Navigate, useNavigate } from 'react-router-dom'
 
+import { SubTitle } from '../../utils/SubTitle/SubTitle'
+
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { logoutTC, updateUserTC } from 'common/auth/login/login-reducer'
 import style from 'common/auth/login/Login.module.scss'
@@ -51,7 +53,7 @@ export const Profile = () => {
           src={leftArrow}
           alt="leftArrow"
         />
-        <span className={s.backTo}>Back to Pack List</span>
+        <SubTitle title="Go to Pack List" />
       </div>
       <div className={style.formContainer}>
         <div className={style.form}>

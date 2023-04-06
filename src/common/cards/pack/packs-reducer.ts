@@ -1,4 +1,3 @@
-import { updateUserNameAC } from '../../auth/login/login-reducer'
 import { errorUtils } from '../../utils/errors/error/error-utils'
 
 import { packsApi } from 'api/packs-api'

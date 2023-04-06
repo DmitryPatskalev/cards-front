@@ -1,3 +1,5 @@
+import { setIsMyPacks } from '../common/cards/pack/packs-reducer'
+
 import { AppThunk } from './store'
 
 import { authAPI } from 'api/packs-api'
