@@ -2,12 +2,13 @@ import React from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../../../app/store'
-import { SuperDebounceInput } from '../../../../../components/super-components/debounce/SuperDebounceInput'
-import { SubTitle } from '../../../../utils/SubTitle/SubTitle'
 import { getPacksTC, setSearchPacksAC } from '../../packs-reducer'
 
 import s from './SearchInput.module.scss'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { SubTitle } from 'common/utils/SubTitle/SubTitle'
+import { SuperDebounceInput } from 'components/super-components/debounce/SuperDebounceInput'
 
 export const SearchInput = () => {
   const [searchParams, setSearchParams] = useSearchParams()

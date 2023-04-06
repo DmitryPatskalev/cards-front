@@ -61,7 +61,7 @@ export const packsApi = {
   deletePack() {
     return instance.delete<CardsPackDomainType>('/cards/pack', {
       params: {
-        id: '642aa72ca915a156406e9c20',
+        id: '642aa7aca915a156406e9c6a',
       },
     })
   },

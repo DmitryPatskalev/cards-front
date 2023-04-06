@@ -1,11 +1,10 @@
 import React from 'react'
 
-import { useAppDispatch, useAppSelector } from '../../../../app/store'
-import { SuperButton } from '../../../../components/super-components/button/SuperButton'
-import { SubTitle } from '../../../utils/SubTitle/SubTitle'
-import { setIsMyPacks } from '../packs-reducer'
-
-import s from './Handler.module.scss'
+import { useAppDispatch, useAppSelector } from 'app/store'
+import s from 'common/cards/pack/handlers/Handler.module.scss'
+import { setIsMyPacks } from 'common/cards/pack/packs-reducer'
+import { SubTitle } from 'common/utils/SubTitle/SubTitle'
+import { SuperButton } from 'components/super-components/button/SuperButton'
 
 export const Buttons = () => {
   const { isMyPacks } = useAppSelector(state => state.packs)

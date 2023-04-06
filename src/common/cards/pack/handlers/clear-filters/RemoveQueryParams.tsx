@@ -2,7 +2,6 @@ import React from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { useAppDispatch } from '../../../../../app/store'
 import clearFilter from '../../../../utils/img/clear-filter.svg'
 import {
   setMaxCardsCountAC,
@@ -13,6 +12,8 @@ import {
   setSortPacksAC,
 } from '../../packs-reducer'
 import s from '../Handler.module.scss'
+
+import { useAppDispatch } from 'app/store'
 
 export const RemoveQueryParams = () => {
   const [searchParams, setSearchParams] = useSearchParams()

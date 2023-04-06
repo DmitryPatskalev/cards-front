@@ -2,10 +2,11 @@ import React from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../../../app/store'
-import { SuperPagination } from '../../../../../components/super-components/pagination/SuperPagination'
 import { setPageAC, setPageCountAC } from '../../packs-reducer'
 import s from '../Handler.module.scss'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { SuperPagination } from 'components/super-components/pagination/SuperPagination'
 
 export const PacksPagination = () => {
   const [searchParams, setSearchParams] = useSearchParams()

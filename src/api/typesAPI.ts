@@ -135,7 +135,7 @@ export type UpdatePacksType = {
 }
 
 export type CardsDomainType = {
-  cards: any[]
+  cards: CardType[]
   packUserId: string
   packName: string
   packPrivate: boolean
@@ -149,4 +149,25 @@ export type CardsDomainType = {
   maxGrade: number
   token: string
   tokenDeathTime: number
+}
+
+export type CardType = {
+  _id: string
+  cardsPack_id: string
+  user_id: string
+  question: string
+  answer: string
+  grade: number
+  shots: number
+  questionImg: string
+  answerImg: string
+  answerVideo: string
+  questionVideo: string
+  comments: string
+  type: string
+  rating: number
+  more_id: string
+  created: string
+  updated: string
+  __v: number
 }

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 
 import { getPacksTC } from '../packs-reducer'
 
-import { Buttons } from './Buttons'
 import { RemoveQueryParams } from './clear-filters/RemoveQueryParams'
 import s from './Handler.module.scss'
 import { PacksPagination } from './packs-pagination/PacksPagination'
@@ -10,6 +9,7 @@ import { SearchInput } from './search-input/SearchInput'
 import { Slider } from './slider/Slider'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
+import { Buttons } from 'common/cards/pack/handlers/buttons/Buttons'
 
 export const Handlers = () => {
   const dispatch = useAppDispatch()
