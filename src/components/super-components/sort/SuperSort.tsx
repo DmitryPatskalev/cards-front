@@ -42,10 +42,7 @@ export const SuperSort: React.FC<SuperSortPropsType> = ({ sort, onChange, value 
   return (
     <span className={s.sortIconContainer}>
       <button onClick={onChangeCallBack}>
-        <img className={s.sortIcon} src={upIcon} alt="upIcon" />
-      </button>
-      <button onClick={onChangeCallBack}>
-        <img className={s.sortIcon} src={downIcon} alt="downIcon" />
+        <img src={icon} alt="upIcon" />
       </button>
     </span>
   )

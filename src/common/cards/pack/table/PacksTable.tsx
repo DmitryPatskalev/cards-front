@@ -3,26 +3,26 @@ import React from 'react'
 import { CircularProgress } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
 
-import { SuperSort } from '../../../../components/super-components/sort/SuperSort'
 import learn from '../../../utils/img/learn.svg'
 import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
-import { deletePackTC, setSortCardsAC, updatePackTC } from '../packs-reducer'
+import { deletePackTC, setSortPacksAC, updatePackTC } from '../packs-reducer'
 
 import { UpdatedPackType } from 'api/typesAPI'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import s from 'common/common-css-style/Table.module.scss'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
+import { SuperSort } from 'components/super-components/sort/SuperSort'
 
 export const PacksTable = () => {
-  const { packs, isMyPacks, isLoading, sortCards } = useAppSelector(state => state.packs)
+  const { packs, isLoading, sortPacks } = useAppSelector(state => state.packs)
   const [searchParams, setSearchParams] = useSearchParams()
 
   const onChangeSort = (newSort: string) => {
-    dispatch(setSortCardsAC(newSort))
+    dispatch(setSortPacksAC(newSort))
 
-    const querySort = newSort !== '' ? { sortCards: newSort } : {}
-    const { sortCards, ...lastQueries } = Object.fromEntries(searchParams)
+    const querySort = newSort !== '' ? { sortPacks: newSort } : {}
+    const { sortPacks, ...lastQueries } = Object.fromEntries(searchParams)
 
     const allQuery: any = { ...lastQueries, ...querySort }
 
@@ -45,11 +45,11 @@ export const PacksTable = () => {
         <tr>
           <th>
             <SubTitle title="Name" />
-            <SuperSort sort={sortCards} value="grade" onChange={onChangeSort} />
+            <SuperSort sort={sortPacks} value="name" onChange={onChangeSort} />
           </th>
           <th>
             <SubTitle title="Cards" />
-            <SuperSort sort={sortCards} value="grade" onChange={onChangeSort} />
+            <SuperSort sort={sortPacks} value="cardsCount" onChange={onChangeSort} />
           </th>
           <th>
             <SubTitle title="Last Updated" />
@@ -78,7 +78,7 @@ export const PacksTable = () => {
                   <td>{p.user_name}</td>
 
                   <td className={s.actionsBlock}>
-                    {isMyPacks || p.user_id === '6352ce8810be8e0004d5b4f4' ? (
+                    {p.user_id === '6352ce8810be8e0004d5b4f4' ? (
                       <>
                         <button disabled={!p.cardsCount}>
                           <img src={learn} alt="learn" />

@@ -11,7 +11,7 @@ import {
   setPageAC,
   setPageCountAC,
   setSearchPacksAC,
-  setSortCardsAC,
+  setSortPacksAC,
 } from '../packs-reducer'
 
 import s from './Handler.module.scss'
@@ -28,7 +28,7 @@ export const Handlers = () => {
 
   const dispatch = useAppDispatch()
   const { isLoggedIn } = useAppSelector(state => state.auth)
-  const { page, pageCount, cardPacksTotalCount, packName, min, max, isMyPacks, sortCards } =
+  const { page, pageCount, cardPacksTotalCount, packName, min, max, isMyPacks, sortPacks } =
     useAppSelector(state => state.packs)
 
   const removeQueryParams = () => {
@@ -37,7 +37,7 @@ export const Handlers = () => {
     const queryPackName = searchParams.get('packName')
     const queryMin = searchParams.get('min')
     const queryMax = searchParams.get('max')
-    const querySort = searchParams.get('sortCards')
+    const querySort = searchParams.get('sortPacks')
 
     if (queryPage || queryPageCount || queryPackName || queryMin || queryMax || querySort) {
       searchParams.delete('page')
@@ -45,14 +45,14 @@ export const Handlers = () => {
       searchParams.delete('packName')
       searchParams.delete('min')
       searchParams.delete('max')
-      searchParams.delete('sortCards')
+      searchParams.delete('sortPacks')
 
       dispatch(setPageAC(1))
       dispatch(setPageCountAC(5))
       dispatch(setSearchPacksAC(''))
       dispatch(setMinCardsCountAC(0))
       dispatch(setMaxCardsCountAC(110))
-      dispatch(setSortCardsAC(''))
+      dispatch(setSortPacksAC(''))
 
       setSearchParams(searchParams)
     }
@@ -110,7 +110,7 @@ export const Handlers = () => {
     if (isLoggedIn) {
       dispatch(getPacksTC())
     }
-  }, [page, pageCount, min, max, isMyPacks, sortCards])
+  }, [page, pageCount, min, max, isMyPacks, sortPacks])
 
   return (
     <>

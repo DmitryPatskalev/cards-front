@@ -1,17 +1,18 @@
 .sortIconContainer {
-  display: block;
-  width: 10%;
-  flex-direction: column;
+position: relative;
 }
 
 .sortIconContainer button {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  top: 5px;
+  left: 2px;
   width: 12px;
   height: 12px;
   background: none;
-  border: none;
+  border: 1px solid green;
   margin-bottom: 4px;
   cursor: pointer;
 }

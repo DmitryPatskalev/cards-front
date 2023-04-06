@@ -13,7 +13,7 @@ const initialState = {
   min: 0,
   max: 110,
   packName: '',
-  sortCards: '',
+  sortPacks: '',
   isMyPacks: false,
   isLoading: false,
 }
@@ -52,8 +52,8 @@ export const packsReducer = (
     case 'cards/SET_IS_LOADING':
       return { ...state, isLoading: action.isLoading }
 
-    case 'cards/SET_SORT_CARDS':
-      return { ...state, sortCards: action.sortCards }
+    case 'cards/SET_SORT_PACKS':
+      return { ...state, sortPacks: action.sortPacks }
 
     default:
       return state
@@ -85,13 +85,13 @@ export const setIsMyPacks = (isMyPacks: boolean) =>
 export const setIsLoadingAC = (isLoading: boolean) =>
   ({ type: 'cards/SET_IS_LOADING', isLoading } as const)
 
-export const setSortCardsAC = (sortCards: string) =>
-  ({ type: 'cards/SET_SORT_CARDS', sortCards } as const)
+export const setSortPacksAC = (sortPacks: string) =>
+  ({ type: 'cards/SET_SORT_PACKS', sortPacks } as const)
 
 //thunks
 
 export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
-  const { page, pageCount, packName, min, max, isMyPacks } = getState().packs
+  const { page, pageCount, packName, min, max, isMyPacks, sortPacks } = getState().packs
   const { _id } = getState().auth
 
   try {
@@ -102,6 +102,7 @@ export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
       packName,
       min,
       max,
+      sortPacks,
       user_id: isMyPacks ? _id : '',
     })
 
@@ -162,4 +163,4 @@ export type ActionCardsType =
   | ReturnType<typeof setMaxCardsCountAC>
   | ReturnType<typeof setIsMyPacks>
   | ReturnType<typeof setIsLoadingAC>
-  | ReturnType<typeof setSortCardsAC>
+  | ReturnType<typeof setSortPacksAC>
