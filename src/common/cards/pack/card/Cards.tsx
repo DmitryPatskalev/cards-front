@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
+import { useAppDispatch } from '../../../../app/store'
 import { SuperButton } from '../../../../components/super-components/button/SuperButton'
 import { SuperDebounceInput } from '../../../../components/super-components/debounce/SuperDebounceInput'
 import style from '../../../auth/profile/Profile.module.scss'
@@ -12,10 +13,16 @@ import { SubTitle } from '../../../utils/SubTitle/SubTitle'
 import { Title } from '../../../utils/Title/Title'
 import pack from '../Packs.module.scss'
 
+import { getCardsTC } from './cards-reducer'
 import s from './Cards.module.scss'
 
 export const Cards = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(getCardsTC())
+  }, [])
 
   return (
     <div className={common.commonContainer}>

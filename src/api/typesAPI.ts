@@ -103,17 +103,17 @@ export type UpdatedPackType = {
 //cards
 
 export type CardsParamsType = {
-  cardAnswer: string // не обязательно
-  cardQuestion: string // не обязательно
-  cardsPack_id: string
-  min: number // не обязательно
-  max: number // не обязательно
-  sortCards: string // не обязательно
-  page: number // не обязательно
-  pageCount: number // не обязательно
+  cardAnswer?: string // не обязательно
+  cardQuestion?: string // не обязательно
+  cardsPack_id?: string
+  min?: number // не обязательно
+  max?: number // не обязательно
+  sortCards?: string // не обязательно
+  page?: number // не обязательно
+  pageCount?: number // не обязательно
 }
 
-export type CreatePacksType = {
+export type CreateCardsType = {
   card: {
     cardsPack_id: string
     question: string // если не отправить будет таким
@@ -127,7 +127,7 @@ export type CreatePacksType = {
   }
 }
 
-export type UpdatePacksType = {
+export type UpdateCardsType = {
   card: {
     _id: string
     question: string // не обязательно

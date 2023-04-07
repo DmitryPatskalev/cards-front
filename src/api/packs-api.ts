@@ -4,7 +4,7 @@ import {
   CardsDomainType,
   CardsPackDomainType,
   CardsParamsType,
-  CreatePacksType,
+  CreateCardsType,
   ForgotPasswordType,
   LoginType,
   LogoutType,
@@ -69,9 +69,9 @@ export const packsApi = {
 
 export const cardsAPI = {
   getCards(params?: CardsParamsType) {
-    return instance.get<CardsDomainType>('/cards/card', { params })
+    return instance.get<CardsDomainType>(`/cards/card/`, { params })
   },
-  postCards(data: CreatePacksType) {
+  postCards(data?: CreateCardsType) {
     return instance.post<CardsDomainType>('/cards/card', data)
   },
 }

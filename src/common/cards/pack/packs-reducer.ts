@@ -1,3 +1,4 @@
+import { setIsLoggedInAC } from '../../auth/login/login-reducer'
 import { errorUtils } from '../../utils/errors/error/error-utils'
 
 import { packsApi } from 'api/packs-api'
@@ -21,7 +22,7 @@ type InitialStateType = typeof initialState
 
 export const packsReducer = (
   state: InitialStateType = initialState,
-  action: ActionCardsType
+  action: ActionPacksType
 ): InitialStateType => {
   switch (action.type) {
     case 'cards/GET_PACKS':
@@ -152,7 +153,7 @@ export const deletePackTC = (): AppThunk => async dispatch => {
   }
 }
 
-export type ActionCardsType =
+export type ActionPacksType =
   | ReturnType<typeof getPacksAC>
   | ReturnType<typeof setPageAC>
   | ReturnType<typeof setPageCountAC>
