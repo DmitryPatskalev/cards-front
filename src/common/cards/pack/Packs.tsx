@@ -6,7 +6,7 @@ import { Title } from '../../utils/Title/Title'
 import { Handlers } from './handlers/Handlers'
 import { createNewPacksTC } from './packs-reducer'
 
-import { NewPackType } from 'api/typesAPI'
+import { NewPackType } from 'api/packs-api'
 import { useAppDispatch } from 'app/store'
 import s from 'common/cards/pack/Packs.module.scss'
 import { PacksTable } from 'common/cards/pack/table/PacksTable'

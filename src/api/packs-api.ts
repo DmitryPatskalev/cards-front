@@ -1,65 +1,17 @@
-import axios from 'axios'
+import { instance } from 'api/instance'
 
-import {
-  CardsDomainType,
-  CardsPackDomainType,
-  CardsParamsType,
-  CreateCardsType,
-  ForgotPasswordType,
-  LoginType,
-  LogoutType,
-  NewPackType,
-  NewPasswordType,
-  PacksParamsType,
-  UpdatedPackType,
-  UpdateUserType,
-  UserParamsType,
-} from './typesAPI'
-
-const instance = axios.create({
-  baseURL: 'https://neko-back.herokuapp.com/2.0',
-  withCredentials: true,
-})
-
-export const authAPI = {
-  register(data: LoginType) {
-    return instance.post<UserParamsType>('/auth/register', data)
-  },
-  login(data: LoginType) {
-    return instance.post<UserParamsType>('/auth/login', data)
-  },
-  logout() {
-    return instance.delete<LogoutType>('/auth/me', {})
-  },
-  me() {
-    return instance.post<UserParamsType>('/auth/me', {})
-  },
-  updateUserName(name: string) {
-    return instance.put<UpdateUserType>('/auth/me', { name })
-  },
-  recovery(data: ForgotPasswordType) {
-    return instance.post('/auth/forgot', data)
-  },
-  newPassword(password: string, resetPasswordToken: string) {
-    return instance.post<NewPasswordType>('/auth/set-new-password', {
-      password,
-      resetPasswordToken,
-    })
-  },
-}
-
-export const packsApi = {
+export const packsAPI = {
   getPacks(params?: PacksParamsType) {
-    return instance.get<CardsPackDomainType>('/cards/pack', { params })
+    return instance.get<PackResponseType>('/cards/pack', { params })
   },
   createPack(data: NewPackType) {
-    return instance.post<CardsPackDomainType>('/cards/pack', data)
+    return instance.post<PackResponseType>('/cards/pack', data)
   },
   updatedPack(data: UpdatedPackType) {
-    return instance.put<CardsPackDomainType>('/cards/pack', data)
+    return instance.put<PackResponseType>('/cards/pack', data)
   },
   deletePack() {
-    return instance.delete<CardsPackDomainType>('/cards/pack', {
+    return instance.delete<PackResponseType>('/cards/pack', {
       params: {
         id: '642aa7aca915a156406e9c6a',
       },
@@ -67,18 +19,56 @@ export const packsApi = {
   },
 }
 
-export const cardsAPI = {
-  getCards(params?: CardsParamsType) {
-    return instance.get<CardsDomainType>(`/cards/card/`, { params })
-  },
-  postCards(data?: CreateCardsType) {
-    return instance.post<CardsDomainType>('/cards/card', data)
-  },
+export type PackResponseType = {
+  cardPacks: PackType[]
+  page: number
+  pageCount: number
+  cardPacksTotalCount: number
+  minCardsCount: number
+  maxCardsCount: number
+  token: string
+  tokenDeathTime: number
+}
+export type PackType = {
+  _id: string
+  user_id: string
+  user_name: string
+  private: boolean
+  name: string
+  path: string
+  grade: number
+  shots: number
+  cardsCount: number
+  type: string
+  rating: number
+  created: string
+  updated: string
+  more_id: string
+  __v: number
 }
 
-// baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0',
-// baseURL:
-//   process.env.NODE_ENV === 'development'
-//     ? 'http://localhost:7542/2.0'
-//     : 'https://neko-back.herokuapp.com/2.0',
-// baseURL: 'http://localhost:7542/2.0',
+export type PacksParamsType = {
+  packName?: string
+  min?: number
+  max?: number
+  sortPacks?: string
+  page?: number
+  pageCount?: number
+  user_id?: string
+  block?: boolean
+}
+
+export type NewPackType = {
+  cardsPack: {
+    name: string // если не отправить будет таким
+    deckCover?: string // не обязателен
+    //private?: boolean // если не отправить будет такой
+  }
+}
+
+export type UpdatedPackType = {
+  cardsPack: {
+    _id: string
+    name: string
+  }
+}

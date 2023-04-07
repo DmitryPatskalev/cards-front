@@ -1,12 +1,10 @@
-import { setIsLoggedInAC } from '../../auth/login/login-reducer'
 import { errorUtils } from '../../utils/errors/error/error-utils'
 
-import { packsApi } from 'api/packs-api'
-import { CardsPackType, NewPackType, UpdatedPackType } from 'api/typesAPI'
+import { NewPackType, packsAPI, PackType, UpdatedPackType } from 'api/packs-api'
 import { AppThunk } from 'app/store'
 
 const initialState = {
-  packs: [] as CardsPackType[],
+  packs: [] as PackType[],
   page: 1,
   pageCount: 5,
   cardPacksTotalCount: 0,
@@ -60,7 +58,7 @@ export const packsReducer = (
   }
 }
 
-export const getPacksAC = (packs: CardsPackType[]) => ({ type: 'cards/GET_PACKS', packs } as const)
+export const getPacksAC = (packs: PackType[]) => ({ type: 'cards/GET_PACKS', packs } as const)
 
 export const setPageAC = (page: number) => ({ type: 'cards/SET_PAGE', page } as const)
 
@@ -90,13 +88,13 @@ export const setSortPacksAC = (sortPacks: string) =>
 
 //thunks
 
-export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
+export const fetchPacksTC = (): AppThunk => async (dispatch, getState) => {
   const { page, pageCount, packName, min, max, isMyPacks, sortPacks } = getState().packs
   const { _id } = getState().auth
 
   try {
     dispatch(setIsLoadingAC(true))
-    const res = await packsApi.getPacks({
+    const res = await packsAPI.getPacks({
       page,
       pageCount,
       packName,
@@ -106,11 +104,11 @@ export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
       user_id: isMyPacks ? _id : '',
     })
 
+    console.log(res.data)
     dispatch(getPacksAC(res.data.cardPacks))
     dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
-    dispatch(setIsLoadingAC(false))
-  } catch (e: any) {
-    errorUtils(e, dispatch)
+  } catch (error) {
+    errorUtils(error, dispatch)
   } finally {
     dispatch(setIsLoadingAC(false))
   }
@@ -121,11 +119,11 @@ export const createNewPacksTC =
   async dispatch => {
     try {
       dispatch(setIsLoadingAC(true))
-      await packsApi.createPack(data)
+      await packsAPI.createPack(data)
       dispatch(setIsLoadingAC(false))
-      dispatch(getPacksTC())
-    } catch (e: any) {
-      errorUtils(e, dispatch)
+      dispatch(fetchPacksTC())
+    } catch (error) {
+      errorUtils(error, dispatch)
     }
   }
 
@@ -134,22 +132,22 @@ export const updatePackTC =
   async dispatch => {
     try {
       dispatch(setIsLoadingAC(true))
-      await packsApi.updatedPack(data)
+      await packsAPI.updatedPack(data)
       dispatch(setIsLoadingAC(false))
-      dispatch(getPacksTC())
-    } catch (e: any) {
-      errorUtils(e, dispatch)
+      dispatch(fetchPacksTC())
+    } catch (error) {
+      errorUtils(error, dispatch)
     }
   }
 
 export const deletePackTC = (): AppThunk => async dispatch => {
   try {
     dispatch(setIsLoadingAC(true))
-    await packsApi.deletePack()
+    await packsAPI.deletePack()
     dispatch(setIsLoadingAC(false))
-    dispatch(getPacksTC())
-  } catch (e: any) {
-    errorUtils(e, dispatch)
+    dispatch(fetchPacksTC())
+  } catch (error) {
+    errorUtils(error, dispatch)
   }
 }
 

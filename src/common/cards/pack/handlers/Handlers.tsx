@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { getPacksTC } from '../packs-reducer'
+import { fetchPacksTC } from '../packs-reducer'
 
 import { RemoveQueryParams } from './clear-filters/RemoveQueryParams'
 import s from './Handler.module.scss'
@@ -19,7 +19,7 @@ export const Handlers = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch(getPacksTC())
+      dispatch(fetchPacksTC())
     }
   }, [page, pageCount, min, max, isMyPacks, sortPacks])
 

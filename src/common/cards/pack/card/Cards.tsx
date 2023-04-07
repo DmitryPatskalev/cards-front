@@ -1,27 +1,36 @@
 import React, { useEffect } from 'react'
 
+import { CircularProgress } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppDispatch } from '../../../../app/store'
-import { SuperButton } from '../../../../components/super-components/button/SuperButton'
-import { SuperDebounceInput } from '../../../../components/super-components/debounce/SuperDebounceInput'
 import style from '../../../auth/profile/Profile.module.scss'
 import common from '../../../common-css-style/common-container.module.scss'
 import table from '../../../common-css-style/Table.module.scss'
 import leftArrow from '../../../utils/img/leftArrow.svg'
-import { SubTitle } from '../../../utils/SubTitle/SubTitle'
-import { Title } from '../../../utils/Title/Title'
 import pack from '../Packs.module.scss'
 
-import { getCardsTC } from './cards-reducer'
+import { fetchCardsTC } from './cards-reducer'
 import s from './Cards.module.scss'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { SubTitle } from 'common/utils/SubTitle/SubTitle'
+import { Title } from 'common/utils/Title/Title'
+import { SuperButton } from 'components/super-components/button/SuperButton'
+import { SuperDebounceInput } from 'components/super-components/debounce/SuperDebounceInput'
 
 export const Cards = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const { isLoading } = useAppSelector(state => state.packs)
+  const { isLoggedIn } = useAppSelector(state => state.auth)
+  const { cards } = useAppSelector(state => state.cards)
+
+  console.log(cards)
 
   useEffect(() => {
-    dispatch(getCardsTC())
+    if (isLoggedIn) {
+      dispatch(fetchCardsTC())
+    }
   }, [])
 
   return (
@@ -68,6 +77,24 @@ export const Cards = () => {
             </th>
           </tr>
         </thead>
+        {isLoading ? (
+          <div className={table.circularProgress}>
+            <CircularProgress />
+          </div>
+        ) : (
+          <tbody>
+            {cards.map(card => {
+              return (
+                <tr key={card._id}>
+                  <td>{card.question}</td>
+                  <td>{card.answer}</td>
+                  <td>{card.updated}</td>
+                  <td>{card.grade}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        )}
       </table>
     </div>
   )

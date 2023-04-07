@@ -1,10 +1,10 @@
-import { cardsAPI } from '../../../../api/packs-api'
-import { CardsDomainType, CardsParamsType, CardType } from '../../../../api/typesAPI'
-import { AppThunk, store } from '../../../../app/store'
+import { cardsAPI, CardType } from 'api/cards-api'
+import { AppThunk } from 'app/store'
+import { errorUtils } from 'common/utils/errors/error/error-utils'
 
 const initialState = {
   cards: [] as CardType[],
-  cardsPack_id: '',
+  cardsPack_id: '642aa7d2a915a156406e9c76',
 }
 
 type InitialStateType = typeof initialState
@@ -15,26 +15,25 @@ export const cardsReducer = (
 ): InitialStateType => {
   switch (action.type) {
     case 'cards/GET_CARDS':
-      return { ...state, [action.cardsPack_id]: action.cards }
+      return { ...state, cards: action.cards }
+
     default:
       return state
   }
 }
 
-export const setCardsAC = (cardsPack_id: string, cards: CardType[]) =>
-  ({ type: 'cards/GET_CARDS', cardsPack_id, cards } as const)
+export const setCardsAC = (cards: CardType[]) => ({ type: 'cards/GET_CARDS', cards } as const)
 
-export const getCardsTC = (): AppThunk => async (dispatch, getState) => {
-  const { cardsPack_id, cards } = getState().cards
+export const fetchCardsTC = (): AppThunk => async (dispatch, getState) => {
+  const { cardsPack_id } = getState().cards
 
   try {
     const res = cardsAPI.getCards({ cardsPack_id })
 
+    //dispatch(setCardsAC(packId))
     console.log(res)
-    console.log(cards)
-    // dispatch(setCardsAC(cardsPack_id, res))
-  } catch (e) {
-    console.log(e)
+  } catch (error) {
+    errorUtils(error, dispatch)
   }
 }
 

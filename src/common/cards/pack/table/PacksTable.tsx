@@ -8,7 +8,7 @@ import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
 import { deletePackTC, setSortPacksAC, updatePackTC } from '../packs-reducer'
 
-import { UpdatedPackType } from 'api/typesAPI'
+import { UpdatedPackType } from 'api/packs-api'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import s from 'common/common-css-style/Table.module.scss'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'

@@ -52,7 +52,7 @@ export const NewPassword = () => {
             const token = location.pathname.slice(index)
 
             dispatch(setNewPasswordTC(values.password, token))
-            //await authAPI.newPassword(values.password, token)
+            //await authApi.newPassword(values.password, token)
           }}
         >
           <Form className={style.form}>

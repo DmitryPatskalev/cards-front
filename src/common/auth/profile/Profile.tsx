@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 
 import { SubTitle } from '../../utils/SubTitle/SubTitle'
 
+import { setIsInitializedAC } from 'app/app-reducer'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { logoutTC, updateUserTC } from 'common/auth/login/login-reducer'
 import style from 'common/auth/login/Login.module.scss'
@@ -40,6 +41,12 @@ export const Profile = () => {
     setNewName(e.currentTarget.value)
   }
 
+  const goToPackListHandler = () => {
+    dispatch(setIsInitializedAC(true))
+
+    return navigate('cards/pack')
+  }
+
   if (!isLoggedIn) {
     return <Navigate to={'/login'} />
   }
@@ -48,7 +55,7 @@ export const Profile = () => {
     <div className={`${commonStyle.commonContainer} ${style.loginContainer}`}>
       <div className={s.navigationToPack}>
         <img
-          onClick={() => navigate('cards/pack')}
+          onClick={goToPackListHandler}
           className={s.leftArrow}
           src={leftArrow}
           alt="leftArrow"

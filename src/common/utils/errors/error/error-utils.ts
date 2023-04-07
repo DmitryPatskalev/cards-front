@@ -1,12 +1,9 @@
 import axios, { AxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
-import { ActionsAuthType, setErrorAC } from 'common/auth/login/login-reducer'
+import { setErrorAC } from 'common/auth/login/login-reducer'
 
-export const errorUtils = (
-  e: Error | AxiosError<{ error: string }>,
-  dispatch: Dispatch<ActionsAuthType>
-) => {
+export const errorUtils = (e: unknown, dispatch: Dispatch) => {
   const err = e as Error | AxiosError<{ error: string }>
 
   if (axios.isAxiosError(err)) {

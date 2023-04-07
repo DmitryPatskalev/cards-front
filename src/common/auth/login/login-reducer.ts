@@ -1,6 +1,5 @@
-import { authAPI } from 'api/packs-api'
-import { ForgotPasswordType, LoginType } from 'api/typesAPI'
-import { setStatusAC } from 'app/app-reducer'
+import { authAPI, ForgotPasswordType, LoginType } from 'api/auth-api'
+import { initializedAppTC, setStatusAC } from 'app/app-reducer'
 import { AppThunk } from 'app/store'
 import { errorUtils } from 'common/utils/errors/error/error-utils'
 
@@ -83,7 +82,7 @@ export const registerTC =
       dispatch(setIsDisabledAC(true))
       await authAPI.register(data)
       dispatch(setRegisterAC(true))
-    } catch (error: any) {
+    } catch (error) {
       errorUtils(error, dispatch)
     } finally {
       dispatch(setIsDisabledAC(false))
@@ -100,8 +99,9 @@ export const loginTC =
 
       dispatch(updateUserNameAC(name))
       dispatch(setUserEmailAC(email))
-      dispatch(setIsLoggedInAC(true))
-    } catch (error: any) {
+
+      dispatch(initializedAppTC())
+    } catch (error) {
       errorUtils(error, dispatch)
     } finally {
       dispatch(setIsDisabledAC(false))
@@ -113,7 +113,7 @@ export const logoutTC = (): AppThunk => async dispatch => {
     dispatch(setIsDisabledAC(true))
     await authAPI.logout()
     dispatch(setIsLoggedInAC(false))
-  } catch (error: any) {
+  } catch (error) {
     errorUtils(error, dispatch)
   } finally {
     dispatch(setIsDisabledAC(false))
@@ -135,7 +135,7 @@ export const recoveryPasswordTC =
       } else {
         setErrorAC(res.data.error)
       }
-    } catch (error: any) {
+    } catch (error) {
       errorUtils(error, dispatch)
     } finally {
       dispatch(setIsDisabledAC(false))
@@ -150,7 +150,7 @@ export const updateUserTC =
       const res = await authAPI.updateUserName(name)
 
       dispatch(updateUserNameAC(res.data.updatedUser.name))
-    } catch (error: any) {
+    } catch (error) {
       errorUtils(error, dispatch)
     }
   }
@@ -166,7 +166,7 @@ export const setNewPasswordTC =
         dispatch(setNewPasswordAC(password, resetPasswordToken))
         dispatch(setIsSuccessAC(true))
       }
-    } catch (error: any) {
+    } catch (error) {
       errorUtils(error, dispatch)
     } finally {
       dispatch(setIsDisabledAC(false))

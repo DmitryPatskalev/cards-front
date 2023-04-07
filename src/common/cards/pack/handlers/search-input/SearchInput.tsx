@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { getPacksTC, setSearchPacksAC } from '../../packs-reducer'
+import { fetchPacksTC, setSearchPacksAC } from '../../packs-reducer'
 
 import s from './SearchInput.module.scss'
 
@@ -26,7 +26,7 @@ export const SearchInput = () => {
   }
 
   const querySearch = () => {
-    dispatch(getPacksTC())
+    dispatch(fetchPacksTC())
   }
 
   return (
