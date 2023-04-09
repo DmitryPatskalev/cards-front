@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
-import { CircularProgress } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { CircularProgress, Rating } from '@mui/material'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import style from '../../../auth/profile/Profile.module.scss'
 import common from '../../../common-css-style/common-container.module.scss'
@@ -9,10 +9,14 @@ import table from '../../../common-css-style/Table.module.scss'
 import leftArrow from '../../../utils/img/leftArrow.svg'
 import pack from '../Packs.module.scss'
 
-import { fetchCardsTC } from './cards-reducer'
+import { createNewCardTC, deleteCardTC, fetchCardsTC, updateCardTC } from './cards-reducer'
 import s from './Cards.module.scss'
 
+import { NewCardType, UpdateCardType } from 'api/cards-api'
 import { useAppDispatch, useAppSelector } from 'app/store'
+import { PacksCardsPagination } from 'common/cards/pack/handlers/packs-pagination/PacksCardsPagination'
+import pencil from 'common/utils/img/pencil-line-light.svg'
+import remove from 'common/utils/img/remove.svg'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 import { Title } from 'common/utils/Title/Title'
 import { SuperButton } from 'components/super-components/button/SuperButton'
@@ -21,17 +25,32 @@ import { SuperDebounceInput } from 'components/super-components/debounce/SuperDe
 export const Cards = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { isLoading } = useAppSelector(state => state.packs)
-  const { isLoggedIn } = useAppSelector(state => state.auth)
+
+  const { isLoading, isMyPacks, page, pageCount } = useAppSelector(state => state.packs)
+  const { isLoggedIn, isDisabled } = useAppSelector(state => state.auth)
   const { cards } = useAppSelector(state => state.cards)
 
-  console.log(cards)
+  const { cardsPack_id } = useParams()
+
+  const userId = '6352ce8810be8e0004d5b4f4'
+
+  const createNewCardHundler = (data: NewCardType) => {
+    dispatch(createNewCardTC(data))
+  }
+
+  const removeCardHandler = () => {
+    dispatch(deleteCardTC())
+  }
+
+  const updateCardHundler = (data: UpdateCardType) => {
+    dispatch(updateCardTC(data))
+  }
 
   useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(fetchCardsTC())
+    if (isLoggedIn && cardsPack_id) {
+      dispatch(fetchCardsTC(cardsPack_id))
     }
-  }, [])
+  }, [page, pageCount])
 
   return (
     <div className={common.commonContainer}>
@@ -45,8 +64,22 @@ export const Cards = () => {
         <SubTitle title="Back to Packs List" />
       </div>
       <div className={pack.navBlock}>
-        <Title title="Friend's Pack" />
-        <SuperButton xType="default">Learn to Pack</SuperButton>
+        <Title title={isMyPacks ? 'My cards' : "Friend's Pack"} />
+        <SuperButton
+          onClick={() =>
+            createNewCardHundler({
+              card: {
+                cardsPack_id,
+                question: 'What the hell is going on??',
+                answer: 'That is Ok!!',
+              },
+            })
+          }
+          xType={isDisabled ? 'disabled' : 'default'}
+          disabled={isDisabled}
+        >
+          Add new card
+        </SuperButton>
       </div>
 
       <div className={s.searchBlock}>
@@ -60,7 +93,8 @@ export const Cards = () => {
           placeholder="Provide your text"
         />
       </div>
-      <table className={table.table}>
+      <PacksCardsPagination />
+      <table className={`${table.table} ${s.table}`}>
         <thead>
           <tr>
             <th>
@@ -75,6 +109,9 @@ export const Cards = () => {
             <th>
               <SubTitle title="Grade" />
             </th>
+            <th>
+              <SubTitle title="Actions" />
+            </th>
           </tr>
         </thead>
         {isLoading ? (
@@ -83,13 +120,33 @@ export const Cards = () => {
           </div>
         ) : (
           <tbody>
-            {cards.map(card => {
+            {cards?.map(card => {
               return (
-                <tr key={card._id}>
+                <tr key={card.cardsPack_id}>
                   <td>{card.question}</td>
                   <td>{card.answer}</td>
-                  <td>{card.updated}</td>
-                  <td>{card.grade}</td>
+                  <td>{card.updated.slice(0, 10)}</td>
+                  <td>
+                    <Rating value={card.grade} />
+                  </td>
+                  <td className={table.actionsBlock}>
+                    <button
+                      onClick={() =>
+                        updateCardHundler({
+                          card: {
+                            _id: '6432d7c233c3ea8b4e684c90',
+                            question: 'new question',
+                            answer: 'new answer',
+                          },
+                        })
+                      }
+                    >
+                      <img src={pencil} alt="pencil" />
+                    </button>
+                    <button onClick={removeCardHandler}>
+                      <img src={remove} alt="remove" />
+                    </button>
+                  </td>
                 </tr>
               )
             })}

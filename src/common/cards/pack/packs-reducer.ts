@@ -2,6 +2,7 @@ import { errorUtils } from '../../utils/errors/error/error-utils'
 
 import { NewPackType, packsAPI, PackType, UpdatedPackType } from 'api/packs-api'
 import { AppThunk } from 'app/store'
+import { setIsDisabledAC } from 'common/auth/login/login-reducer'
 
 const initialState = {
   packs: [] as PackType[],
@@ -104,7 +105,6 @@ export const fetchPacksTC = (): AppThunk => async (dispatch, getState) => {
       user_id: isMyPacks ? _id : '',
     })
 
-    console.log(res.data)
     dispatch(getPacksAC(res.data.cardPacks))
     dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
   } catch (error) {
@@ -118,12 +118,15 @@ export const createNewPacksTC =
   (data: NewPackType): AppThunk =>
   async dispatch => {
     try {
+      dispatch(setIsDisabledAC(true))
       dispatch(setIsLoadingAC(true))
       await packsAPI.createPack(data)
-      dispatch(setIsLoadingAC(false))
       dispatch(fetchPacksTC())
     } catch (error) {
       errorUtils(error, dispatch)
+    } finally {
+      dispatch(setIsDisabledAC(false))
+      dispatch(setIsLoadingAC(false))
     }
   }
 
@@ -133,10 +136,11 @@ export const updatePackTC =
     try {
       dispatch(setIsLoadingAC(true))
       await packsAPI.updatedPack(data)
-      dispatch(setIsLoadingAC(false))
       dispatch(fetchPacksTC())
     } catch (error) {
       errorUtils(error, dispatch)
+    } finally {
+      dispatch(setIsLoadingAC(false))
     }
   }
 
@@ -144,10 +148,11 @@ export const deletePackTC = (): AppThunk => async dispatch => {
   try {
     dispatch(setIsLoadingAC(true))
     await packsAPI.deletePack()
-    dispatch(setIsLoadingAC(false))
     dispatch(fetchPacksTC())
   } catch (error) {
     errorUtils(error, dispatch)
+  } finally {
+    dispatch(setIsLoadingAC(false))
   }
 }
 

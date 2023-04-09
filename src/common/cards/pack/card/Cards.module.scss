@@ -13,3 +13,23 @@
     background: url('../../../utils/img/search-icon.svg') no-repeat 10px;
     background-size: auto 50%;
 }
+
+.table thead tr th:first-child {
+    border-radius: 8px 0 0 8px;
+    width: 30%;
+
+}
+.table thead tr th:nth-child(2){
+    width: 30%;
+
+}
+.table thead tr th:nth-child(3){
+    width: 15%;
+}
+.table thead tr th:nth-child(4){
+    width: 15%;
+}
+.table thead tr th:last-child {
+    border-radius: 0 8px 8px 0;
+    width: 10%;
+}

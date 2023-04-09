@@ -4,12 +4,12 @@ import { fetchPacksTC } from '../packs-reducer'
 
 import { RemoveQueryParams } from './clear-filters/RemoveQueryParams'
 import s from './Handler.module.scss'
-import { PacksPagination } from './packs-pagination/PacksPagination'
 import { SearchInput } from './search-input/SearchInput'
 import { Slider } from './slider/Slider'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { Buttons } from 'common/cards/pack/handlers/buttons/Buttons'
+import { PacksCardsPagination } from 'common/cards/pack/handlers/packs-pagination/PacksCardsPagination'
 
 export const Handlers = () => {
   const dispatch = useAppDispatch()
@@ -31,7 +31,7 @@ export const Handlers = () => {
         <Slider />
         <RemoveQueryParams />
       </div>
-      <PacksPagination />
+      <PacksCardsPagination />
     </>
   )
 }

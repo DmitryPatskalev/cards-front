@@ -7,7 +7,7 @@
 
 .table thead th {
   font-weight: bold;
-  text-align: left;
+  text-align: center;
   border: none;
   padding: 10px 15px;
   background: #d8d8d8;
@@ -21,6 +21,7 @@
 }
 .table thead tr th:nth-child(2){
   width: 10%;
+
 }
 .table thead tr th:nth-child(3){
   width: 15%;
@@ -33,14 +34,16 @@
   width: 15%;
 }
 .table tbody td {
-  text-align: left;
+  text-align: center;
   border: none;
   padding: 10px 15px;
   font-size: 14px;
   vertical-align: top;
+
 }
 .table tbody tr:nth-child(even){
   background: #f3f3f3;
+
 }
 .table tbody tr td:first-child {
   border-radius: 8px 0 0 8px;

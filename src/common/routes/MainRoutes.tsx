@@ -51,7 +51,7 @@ export const MainRoutes = () => {
         <Route path={'/stand'} element={<Stand />} />
 
         <Route path={'/cards/pack'} element={<Packs />} />
-        <Route path={'/cards/card'} element={<Cards />} />
+        <Route path={'/cards/card/:cardsPack_id'} element={<Cards />} />
       </Routes>
       <ErrorSnackBar />
     </div>

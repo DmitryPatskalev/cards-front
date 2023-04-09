@@ -41,6 +41,8 @@ export const PacksTable = () => {
     dispatch(deletePackTC())
   }
 
+  const myId = '6352ce8810be8e0004d5b4f4'
+
   return (
     <table className={s.table}>
       <thead>
@@ -80,16 +82,19 @@ export const PacksTable = () => {
                   <td>{p.user_name}</td>
 
                   <td className={s.actionsBlock}>
-                    {p.user_id === '6352ce8810be8e0004d5b4f4' ? (
+                    {p.user_id === myId ? (
                       <>
-                        <button onClick={() => navigate('/cards/card')} disabled={!p.cardsCount}>
+                        <button
+                          onClick={() => navigate(`/cards/card/${p._id}`)}
+                          disabled={!p.cardsCount}
+                        >
                           <img src={learn} alt="learn" />
                         </button>
                         <button
                           onClick={() =>
                             updatePackHandler({
                               cardsPack: {
-                                _id: '642a7ef4761a7a9b7c06e74c',
+                                _id: '6432d79033c3ea8b4e684c4c',
                                 name: 'Updated',
                               },
                             })
@@ -102,7 +107,10 @@ export const PacksTable = () => {
                         </button>
                       </>
                     ) : (
-                      <button onClick={() => navigate('/cards/card')} disabled={!p.cardsCount}>
+                      <button
+                        onClick={() => navigate(`/cards/card/${p._id}`)}
+                        disabled={!p.cardsCount}
+                      >
                         <img src={learn} alt="learn" />
                       </button>
                     )}

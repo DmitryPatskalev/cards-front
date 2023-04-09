@@ -4,8 +4,18 @@ export const cardsAPI = {
   getCards(params?: CardsParamsType) {
     return instance.get<CardsResponceType>('/cards/card', { params })
   },
-  postCards(data?: CreateCardsType) {
+  postCards(data: NewCardType) {
     return instance.post<CardsResponceType>('/cards/card', data)
+  },
+  deleteCard() {
+    return instance.delete('/cards/card', {
+      params: {
+        id: '6432d7c233c3ea8b4e684c90',
+      },
+    })
+  },
+  updateCard(data: UpdateCardType) {
+    return instance.put('cards/card', data)
   },
 }
 
@@ -58,23 +68,24 @@ export type CardType = {
   __v: number
 }
 
-export type CreateCardsType = {
+export type NewCardType = {
   card: {
-    cardsPack_id: string
-    question: string // если не отправить будет таким
-    answer: string // если не отправить будет таким
-    grade: number // 0..5, не обязателен
-    shots: number // не обязателен
-    answerImg: string // не обязателен
-    questionImg: string // не обязателен
-    questionVideo: string // не обязателен
-    answerVideo: string // не обязателен
+    cardsPack_id?: string
+    question?: string // если не отправить будет таким
+    answer?: string // если не отправить будет таким
+    grade?: number // 0..5, не обязателен
+    shots?: number // не обязателен
+    answerImg?: string // не обязателен
+    questionImg?: string // не обязателен
+    questionVideo?: string // не обязателен
+    answerVideo?: string // не обязателен
   }
 }
 
-export type UpdateCardsType = {
+export type UpdateCardType = {
   card: {
     _id: string
-    question: string // не обязательно
+    answer?: string
+    question?: string // не обязательно
   }
 }
