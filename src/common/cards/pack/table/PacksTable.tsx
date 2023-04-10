@@ -76,7 +76,13 @@ export const PacksTable = () => {
             packs.map(p => {
               return (
                 <tr key={p._id}>
-                  <td>{p.name.slice(0, 30)}</td>
+                  {!p.cardsCount && p.user_id === myId ? (
+                    <td onClick={() => navigate(`/cards/new-card/${p._id}`)}>
+                      <span className={s.tdLink}>{p.name.slice(0, 30)}</span>
+                    </td>
+                  ) : (
+                    <td>{p.name.slice(0, 30)}</td>
+                  )}
                   <td>{p.cardsCount}</td>
                   <td>{p.updated.slice(0, 10)}</td>
                   <td>{p.user_name}</td>

@@ -78,12 +78,10 @@ export const fetchCardsTC =
         cardQuestion,
       })
 
-      dispatch(setPackNameAC(res.data.packName))
       dispatch(setCardsAC(res.data.cards))
-      dispatch(setCardsTotalCountAC(res.data.cardsTotalCount))
-
       dispatch(setCardsPackIdAC(cardsPack_id))
-      console.log(res.data)
+      dispatch(setPackNameAC(res.data.packName))
+      dispatch(setCardsTotalCountAC(res.data.cardsTotalCount))
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
@@ -99,7 +97,8 @@ export const createNewCardTC =
     try {
       dispatch(setIsDisabledAC(true))
       dispatch(setIsLoadingAC(true))
-      await cardsAPI.postCards(data)
+      const res = await cardsAPI.postCards(data)
+
       dispatch(fetchCardsTC(cardsPack_id))
     } catch (error) {
       errorUtils(error, dispatch)

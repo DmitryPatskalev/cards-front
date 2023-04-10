@@ -122,6 +122,7 @@ export const createNewPacksTC =
       dispatch(setIsLoadingAC(true))
       await packsAPI.createPack(data)
       dispatch(fetchPacksTC())
+      dispatch(setIsLoadingAC(false))
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
