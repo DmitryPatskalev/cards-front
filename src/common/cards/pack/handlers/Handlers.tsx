@@ -4,7 +4,7 @@ import { fetchPacksTC } from '../packs-reducer'
 
 import { RemoveQueryParams } from './clear-filters/RemoveQueryParams'
 import s from './Handler.module.scss'
-import { SearchInput } from './search-input/SearchInput'
+import { SearchByPackName } from './search-input/SearchByPackName'
 import { Slider } from './slider/Slider'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
@@ -26,7 +26,7 @@ export const Handlers = () => {
   return (
     <>
       <div className={s.handlersContainer}>
-        <SearchInput />
+        <SearchByPackName />
         <Buttons />
         <Slider />
         <RemoveQueryParams />

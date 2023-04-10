@@ -16,6 +16,7 @@ export const Packs = () => {
   const dispatch = useAppDispatch()
 
   const { isDisabled } = useAppSelector(state => state.auth)
+  const { isMyPacks } = useAppSelector(state => state.packs)
 
   const createNewCards = (data: NewPackType) => {
     dispatch(createNewPacksTC(data))
@@ -24,7 +25,7 @@ export const Packs = () => {
   return (
     <div className={common.commonContainer}>
       <div className={s.navBlock}>
-        <Title title="Packs List" />
+        <Title title={isMyPacks ? 'My Packs List' : 'All Packs List'} />
         <SuperButton
           onClick={() => createNewCards({ cardsPack: { name: 'Loki' } })}
           className={s.button}

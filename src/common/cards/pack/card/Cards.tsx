@@ -7,6 +7,7 @@ import style from '../../../auth/profile/Profile.module.scss'
 import common from '../../../common-css-style/common-container.module.scss'
 import table from '../../../common-css-style/Table.module.scss'
 import leftArrow from '../../../utils/img/leftArrow.svg'
+import { SearchByQuestion } from '../handlers/search-input/SearchByQuestion'
 import pack from '../Packs.module.scss'
 
 import { createNewCardTC, deleteCardTC, fetchCardsTC, updateCardTC } from './cards-reducer'
@@ -20,21 +21,18 @@ import remove from 'common/utils/img/remove.svg'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 import { Title } from 'common/utils/Title/Title'
 import { SuperButton } from 'components/super-components/button/SuperButton'
-import { SuperDebounceInput } from 'components/super-components/debounce/SuperDebounceInput'
 
 export const Cards = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const { isLoading, isMyPacks, page, pageCount } = useAppSelector(state => state.packs)
+  const { isLoading } = useAppSelector(state => state.packs)
   const { isLoggedIn, isDisabled } = useAppSelector(state => state.auth)
-  const { cards } = useAppSelector(state => state.cards)
+  const { cards, packName, pageCard, pageCardCount } = useAppSelector(state => state.cards)
 
   const { cardsPack_id } = useParams()
 
-  const userId = '6352ce8810be8e0004d5b4f4'
-
-  const createNewCardHundler = (data: NewCardType) => {
+  const createNewCardHandler = (data: NewCardType) => {
     dispatch(createNewCardTC(data))
   }
 
@@ -42,15 +40,17 @@ export const Cards = () => {
     dispatch(deleteCardTC())
   }
 
-  const updateCardHundler = (data: UpdateCardType) => {
+  const updateCardHandler = (data: UpdateCardType) => {
     dispatch(updateCardTC(data))
   }
+
+  const myId = '6352ce8810be8e0004d5b4f4'
 
   useEffect(() => {
     if (isLoggedIn && cardsPack_id) {
       dispatch(fetchCardsTC(cardsPack_id))
     }
-  }, [page, pageCount])
+  }, [pageCard, pageCardCount])
 
   return (
     <div className={common.commonContainer}>
@@ -64,10 +64,10 @@ export const Cards = () => {
         <SubTitle title="Back to Packs List" />
       </div>
       <div className={pack.navBlock}>
-        <Title title={isMyPacks ? 'My cards' : "Friend's Pack"} />
+        <Title title={packName} />
         <SuperButton
           onClick={() =>
-            createNewCardHundler({
+            createNewCardHandler({
               card: {
                 cardsPack_id,
                 question: 'What the hell is going on??',
@@ -83,15 +83,7 @@ export const Cards = () => {
       </div>
 
       <div className={s.searchBlock}>
-        <SubTitle title="Search" />
-        <SuperDebounceInput
-          onChangeText={() => console.log('click')}
-          onDebounceChange={() => console.log('click')}
-          value={''}
-          className={s.searchInputCards}
-          type="text"
-          placeholder="Provide your text"
-        />
+        <SearchByQuestion />
       </div>
       <PacksCardsPagination />
       <table className={`${table.table} ${s.table}`}>
@@ -131,8 +123,9 @@ export const Cards = () => {
                   </td>
                   <td className={table.actionsBlock}>
                     <button
+                      disabled={card.user_id !== myId}
                       onClick={() =>
-                        updateCardHundler({
+                        updateCardHandler({
                           card: {
                             _id: '6432d7c233c3ea8b4e684c90',
                             question: 'new question',
@@ -143,7 +136,7 @@ export const Cards = () => {
                     >
                       <img src={pencil} alt="pencil" />
                     </button>
-                    <button onClick={removeCardHandler}>
+                    <button disabled={card.user_id !== myId} onClick={removeCardHandler}>
                       <img src={remove} alt="remove" />
                     </button>
                   </td>

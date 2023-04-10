@@ -8,6 +8,10 @@ const initialState = {
   cards: [] as CardType[],
   cardsPack_id: '',
   cardsTotalCount: 0,
+  pageCard: 1,
+  pageCardCount: 5,
+  packName: '',
+  cardQuestion: '',
 }
 
 type InitialStateType = typeof initialState
@@ -23,31 +27,63 @@ export const cardsReducer = (
       return { ...state, cardsPack_id: action.cardsPack_id }
     case 'cards/SET_CARDS_TOTAL_COUNT':
       return { ...state, cardsTotalCount: action.cardsTotalCount }
+    case 'cards/SET_PACK_NAME':
+      return { ...state, packName: action.packName }
+    case 'cards/SET_SEARCH_BY_QUESTION':
+      return { ...state, cardQuestion: action.cardQuestion }
+    case 'cards/SET_PAGE_CARD':
+      return { ...state, pageCard: action.pageCard }
+    case 'cards/SET_PAGE_CARD_COUNT':
+      return { ...state, pageCardCount: action.pageCardCount }
     default:
       return state
   }
 }
 
 export const setCardsAC = (cards: CardType[]) => ({ type: 'cards/GET_CARDS', cards } as const)
+
 export const setCardsPackIdAC = (cardsPack_id: string) =>
   ({ type: 'cards/SET_PACK_USER_ID', cardsPack_id } as const)
+
 export const createNewCardAC = (card: CardType) =>
   ({ type: 'cards/CREATE_NEW_CARD', card } as const)
+
 export const setCardsTotalCountAC = (cardsTotalCount: number) =>
   ({ type: 'cards/SET_CARDS_TOTAL_COUNT', cardsTotalCount } as const)
+
+export const setPackNameAC = (packName: string) =>
+  ({ type: 'cards/SET_PACK_NAME', packName } as const)
+
+export const setSearchByQuestionAC = (cardQuestion: string) =>
+  ({ type: 'cards/SET_SEARCH_BY_QUESTION', cardQuestion } as const)
+
+export const setPageCardAC = (pageCard: number) =>
+  ({ type: 'cards/SET_PAGE_CARD', pageCard } as const)
+
+export const setPageCardCountAC = (pageCardCount: number) =>
+  ({ type: 'cards/SET_PAGE_CARD_COUNT', pageCardCount } as const)
 
 export const fetchCardsTC =
   (cardsPack_id: string): AppThunk =>
   async (dispatch, getState) => {
-    const { page, pageCount } = getState().packs
+    const { cardQuestion, pageCard, pageCardCount } = getState().cards
 
     try {
       dispatch(setIsLoadingAC(true))
-      const res = await cardsAPI.getCards({ cardsPack_id, page, pageCount })
 
+      const res = await cardsAPI.getCards({
+        cardsPack_id,
+        page: pageCard,
+        pageCount: pageCardCount,
+        cardQuestion,
+      })
+
+      dispatch(setPackNameAC(res.data.packName))
       dispatch(setCardsAC(res.data.cards))
       dispatch(setCardsTotalCountAC(res.data.cardsTotalCount))
+
       dispatch(setCardsPackIdAC(cardsPack_id))
+      console.log(res.data)
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
@@ -108,3 +144,7 @@ export type ActionsCardsType =
   | ReturnType<typeof setCardsPackIdAC>
   | ReturnType<typeof createNewCardAC>
   | ReturnType<typeof setCardsTotalCountAC>
+  | ReturnType<typeof setPackNameAC>
+  | ReturnType<typeof setSearchByQuestionAC>
+  | ReturnType<typeof setPageCardAC>
+  | ReturnType<typeof setPageCardCountAC>

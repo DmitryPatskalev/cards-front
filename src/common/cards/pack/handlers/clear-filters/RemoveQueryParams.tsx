@@ -8,7 +8,7 @@ import {
   setMinCardsCountAC,
   setPageAC,
   setPageCountAC,
-  setSearchPacksAC,
+  setSearchByPackNameAC,
   setSortPacksAC,
 } from '../../packs-reducer'
 import s from '../Handler.module.scss'
@@ -38,7 +38,7 @@ export const RemoveQueryParams = () => {
 
       dispatch(setPageAC(1))
       dispatch(setPageCountAC(5))
-      dispatch(setSearchPacksAC(''))
+      dispatch(setSearchByPackNameAC(''))
       dispatch(setMinCardsCountAC(0))
       dispatch(setMaxCardsCountAC(110))
       dispatch(setSortPacksAC(''))
