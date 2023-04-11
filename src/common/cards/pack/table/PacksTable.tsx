@@ -6,6 +6,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import learn from '../../../utils/img/learn.svg'
 import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
+import { Title } from '../../../utils/Title/Title'
 import { deletePackTC, setSortPacksAC, updatePackTC } from '../packs-reducer'
 
 import { UpdatedPackType } from 'api/packs-api'
@@ -77,7 +78,7 @@ export const PacksTable = () => {
               return (
                 <tr key={p._id}>
                   {!p.cardsCount && p.user_id === myId ? (
-                    <td onClick={() => navigate(`/cards/new-card/${p._id}`)}>
+                    <td onClick={() => navigate(`/cards/card/${p._id}`)}>
                       <span className={s.tdLink}>{p.name.slice(0, 30)}</span>
                     </td>
                   ) : (
@@ -125,7 +126,10 @@ export const PacksTable = () => {
               )
             })
           ) : (
-            <h2 className={s.emptyPacks}>Packs not found. Try to change your search parameters</h2>
+            <Title
+              title="Packs not found. Try to change your search parameters"
+              className={s.emptyPacks}
+            />
           )}
         </tbody>
       )}

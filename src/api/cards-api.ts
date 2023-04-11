@@ -10,7 +10,7 @@ export const cardsAPI = {
   deleteCard() {
     return instance.delete('/cards/card', {
       params: {
-        id: '64345d4f7e4e33dfc01ad50c',
+        id: '643532aee26fcaa528bf02e1',
       },
     })
   },

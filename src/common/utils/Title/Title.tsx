@@ -4,6 +4,7 @@ import s from './Title.module.scss'
 
 type TitleNameType = {
   title: string
+  className?: React.ReactNode
 }
 
 export const Title: React.FC<TitleNameType> = ({ title }) => {

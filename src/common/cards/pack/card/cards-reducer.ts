@@ -10,7 +10,7 @@ const initialState = {
   cardsTotalCount: 0,
   pageCard: 1,
   pageCardCount: 5,
-  packName: '',
+  name: '',
   cardQuestion: '',
 }
 
@@ -28,7 +28,7 @@ export const cardsReducer = (
     case 'cards/SET_CARDS_TOTAL_COUNT':
       return { ...state, cardsTotalCount: action.cardsTotalCount }
     case 'cards/SET_PACK_NAME':
-      return { ...state, packName: action.packName }
+      return { ...state, name: action.name }
     case 'cards/SET_SEARCH_BY_QUESTION':
       return { ...state, cardQuestion: action.cardQuestion }
     case 'cards/SET_PAGE_CARD':
@@ -51,8 +51,7 @@ export const createNewCardAC = (card: CardType) =>
 export const setCardsTotalCountAC = (cardsTotalCount: number) =>
   ({ type: 'cards/SET_CARDS_TOTAL_COUNT', cardsTotalCount } as const)
 
-export const setPackNameAC = (packName: string) =>
-  ({ type: 'cards/SET_PACK_NAME', packName } as const)
+export const setPackNameAC = (name: string) => ({ type: 'cards/SET_PACK_NAME', name } as const)
 
 export const setSearchByQuestionAC = (cardQuestion: string) =>
   ({ type: 'cards/SET_SEARCH_BY_QUESTION', cardQuestion } as const)
@@ -80,8 +79,8 @@ export const fetchCardsTC =
 
       dispatch(setCardsAC(res.data.cards))
       dispatch(setCardsPackIdAC(cardsPack_id))
-      dispatch(setPackNameAC(res.data.packName))
       dispatch(setCardsTotalCountAC(res.data.cardsTotalCount))
+      dispatch(setPackNameAC(res.data.packName))
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
@@ -97,7 +96,7 @@ export const createNewCardTC =
     try {
       dispatch(setIsDisabledAC(true))
       dispatch(setIsLoadingAC(true))
-      const res = await cardsAPI.postCards(data)
+      await cardsAPI.postCards(data)
 
       dispatch(fetchCardsTC(cardsPack_id))
     } catch (error) {

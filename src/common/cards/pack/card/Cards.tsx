@@ -28,7 +28,7 @@ export const Cards = () => {
 
   const { isLoading } = useAppSelector(state => state.packs)
   const { isLoggedIn, isDisabled } = useAppSelector(state => state.auth)
-  const { cards, packName, pageCard, pageCardCount } = useAppSelector(state => state.cards)
+  const { cards, name, pageCard, pageCardCount } = useAppSelector(state => state.cards)
 
   const { cardsPack_id } = useParams()
 
@@ -64,7 +64,7 @@ export const Cards = () => {
         <SubTitle title="Back to Packs List" />
       </div>
       <div className={pack.navBlock}>
-        <Title title={packName} />
+        <Title title={name} />
         <SuperButton
           onClick={() =>
             createNewCardHandler({
@@ -86,6 +86,7 @@ export const Cards = () => {
         <SearchByQuestion />
       </div>
       <PacksCardsPagination />
+
       <table className={`${table.table} ${s.table}`}>
         <thead>
           <tr>
@@ -112,9 +113,9 @@ export const Cards = () => {
           </div>
         ) : (
           <tbody>
-            {cards?.map(card => {
+            {cards.map(card => {
               return (
-                <tr key={card.cardsPack_id}>
+                <tr key={card._id}>
                   <td>{card.question}</td>
                   <td>{card.answer}</td>
                   <td>{card.updated.slice(0, 10)}</td>

@@ -24,34 +24,34 @@ export const packsReducer = (
   action: ActionPacksType
 ): InitialStateType => {
   switch (action.type) {
-    case 'cards/GET_PACKS':
+    case 'packs/GET_PACKS':
       return { ...state, packs: action.packs }
 
-    case 'cards/SET_PAGE':
+    case 'packs/SET_PAGE':
       return { ...state, page: action.page }
 
-    case 'cards/SET_PAGE_COUNT':
+    case 'packs/SET_PAGE_COUNT':
       return { ...state, pageCount: action.pageCount }
 
-    case 'cards/SET_PACK_CARDS_TOTAL_COUNT':
+    case 'packs/SET_PACK_CARDS_TOTAL_COUNT':
       return { ...state, cardPacksTotalCount: action.cardPacksTotalCount }
 
-    case 'cards/SET_SEARCH_BY_PACK_NAME':
+    case 'packs/SET_SEARCH_BY_PACK_NAME':
       return { ...state, packName: action.packName }
 
-    case 'cards/SET-MIN-CARDS-COUNT':
+    case 'packs/SET-MIN-CARDS-COUNT':
       return { ...state, min: action.minCount }
 
-    case 'cards/SET-MAX-CARDS-COUNT':
+    case 'packs/SET-MAX-CARDS-COUNT':
       return { ...state, max: action.maxCount }
 
-    case 'cards/SET_IS_MY_PACKS':
+    case 'packs/SET_IS_MY_PACKS':
       return { ...state, isMyPacks: action.isMyPacks }
 
-    case 'cards/SET_IS_LOADING':
+    case 'packs/SET_IS_LOADING':
       return { ...state, isLoading: action.isLoading }
 
-    case 'cards/SET_SORT_PACKS':
+    case 'packs/SET_SORT_PACKS':
       return { ...state, sortPacks: action.sortPacks }
 
     default:
@@ -59,33 +59,33 @@ export const packsReducer = (
   }
 }
 
-export const getPacksAC = (packs: PackType[]) => ({ type: 'cards/GET_PACKS', packs } as const)
+export const getPacksAC = (packs: PackType[]) => ({ type: 'packs/GET_PACKS', packs } as const)
 
-export const setPageAC = (page: number) => ({ type: 'cards/SET_PAGE', page } as const)
+export const setPageAC = (page: number) => ({ type: 'packs/SET_PAGE', page } as const)
 
 export const setPageCountAC = (pageCount: number) =>
-  ({ type: 'cards/SET_PAGE_COUNT', pageCount } as const)
+  ({ type: 'packs/SET_PAGE_COUNT', pageCount } as const)
 
 export const setCardPacksTotalCountAC = (cardPacksTotalCount: number) =>
-  ({ type: 'cards/SET_PACK_CARDS_TOTAL_COUNT', cardPacksTotalCount } as const)
+  ({ type: 'packs/SET_PACK_CARDS_TOTAL_COUNT', cardPacksTotalCount } as const)
 
 export const setSearchByPackNameAC = (packName: string) =>
-  ({ type: 'cards/SET_SEARCH_BY_PACK_NAME', packName } as const)
+  ({ type: 'packs/SET_SEARCH_BY_PACK_NAME', packName } as const)
 
 export const setMinCardsCountAC = (minCount: number) =>
-  ({ type: 'cards/SET-MIN-CARDS-COUNT', minCount } as const)
+  ({ type: 'packs/SET-MIN-CARDS-COUNT', minCount } as const)
 
 export const setMaxCardsCountAC = (maxCount: number) =>
-  ({ type: 'cards/SET-MAX-CARDS-COUNT', maxCount } as const)
+  ({ type: 'packs/SET-MAX-CARDS-COUNT', maxCount } as const)
 
-export const setIsMyPacks = (isMyPacks: boolean) =>
-  ({ type: 'cards/SET_IS_MY_PACKS', isMyPacks } as const)
+export const setIsMyPacksAC = (isMyPacks: boolean) =>
+  ({ type: 'packs/SET_IS_MY_PACKS', isMyPacks } as const)
 
 export const setIsLoadingAC = (isLoading: boolean) =>
-  ({ type: 'cards/SET_IS_LOADING', isLoading } as const)
+  ({ type: 'packs/SET_IS_LOADING', isLoading } as const)
 
 export const setSortPacksAC = (sortPacks: string) =>
-  ({ type: 'cards/SET_SORT_PACKS', sortPacks } as const)
+  ({ type: 'packs/SET_SORT_PACKS', sortPacks } as const)
 
 //thunks
 
@@ -165,6 +165,6 @@ export type ActionPacksType =
   | ReturnType<typeof setSearchByPackNameAC>
   | ReturnType<typeof setMinCardsCountAC>
   | ReturnType<typeof setMaxCardsCountAC>
-  | ReturnType<typeof setIsMyPacks>
+  | ReturnType<typeof setIsMyPacksAC>
   | ReturnType<typeof setIsLoadingAC>
   | ReturnType<typeof setSortPacksAC>
