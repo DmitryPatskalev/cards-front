@@ -1,6 +1,7 @@
 import { authAPI, ForgotPasswordType, LoginType } from 'api/auth-api'
-import { initializedAppTC, setStatusAC } from 'app/app-reducer'
+import { initializedAppTC } from 'app/app-reducer'
 import { AppThunk } from 'app/store'
+import { setIsLoadingAC } from 'common/cards/pack/packs-reducer'
 import { errorUtils } from 'common/utils/errors/error/error-utils'
 
 const initialState = {
@@ -146,12 +147,14 @@ export const updateUserTC =
   (name: string): AppThunk =>
   async dispatch => {
     try {
-      dispatch(setStatusAC('succeeded'))
+      dispatch(setIsLoadingAC(true))
       const res = await authAPI.updateUserName(name)
 
       dispatch(updateUserNameAC(res.data.updatedUser.name))
     } catch (error) {
       errorUtils(error, dispatch)
+    } finally {
+      dispatch(setIsLoadingAC(false))
     }
   }
 

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 
-import { CircularProgress } from '@mui/material'
 import { Route, Routes, useParams } from 'react-router-dom'
 
 import { Login } from '../auth/login/Login'
@@ -17,6 +16,7 @@ import { initializedAppTC } from 'app/app-reducer'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { Packs } from 'common/cards/pack/Packs'
 import s from 'common/routes/MainRoutes.module.scss'
+import { Loading } from 'common/utils/loading/Loading'
 import { Stand } from 'components/stand/Stand'
 
 export const MainRoutes = () => {
@@ -32,7 +32,7 @@ export const MainRoutes = () => {
   if (status === 'loading') {
     return (
       <div className={s.spinnerBlock}>
-        <CircularProgress size={100} />
+        <Loading size={100} />
       </div>
     )
   }

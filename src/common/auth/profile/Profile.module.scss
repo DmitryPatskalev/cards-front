@@ -1,15 +1,4 @@
-.navigationToPack {
-  display: flex;
-  width: 100%;
-  margin-bottom: 12px;
-
-
-  .leftArrow {
-    padding-right: 10px;
-    cursor: pointer;
-  }
-}
-.nickName{
+.nickName {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: 13px;
@@ -17,6 +6,7 @@
   opacity: 0.5;
   margin-left: 20px;
 }
+
 .imgBlock {
   display: flex;
   justify-content: center;
@@ -107,3 +97,9 @@
 }
 
 
+.loading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 0;
+}

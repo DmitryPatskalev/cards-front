@@ -35,8 +35,6 @@ export const Navbar = () => {
           </div>
         )}
       </div>
-
-      {/*<TestComponent />*/}
     </div>
   )
 }

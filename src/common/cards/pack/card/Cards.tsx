@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 
-import { CircularProgress, Rating } from '@mui/material'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Rating } from '@mui/material'
+import { useParams } from 'react-router-dom'
 
-import style from '../../../auth/profile/Profile.module.scss'
 import common from '../../../common-css-style/common-container.module.scss'
 import table from '../../../common-css-style/Table.module.scss'
-import leftArrow from '../../../utils/img/leftArrow.svg'
 import { SearchByQuestion } from '../handlers/search-input/SearchByQuestion'
 import pack from '../Packs.module.scss'
 
@@ -18,12 +16,13 @@ import { useAppDispatch, useAppSelector } from 'app/store'
 import { PacksCardsPagination } from 'common/cards/pack/handlers/packs-pagination/PacksCardsPagination'
 import pencil from 'common/utils/img/pencil-line-light.svg'
 import remove from 'common/utils/img/remove.svg'
+import { Loading } from 'common/utils/loading/Loading'
+import { ImgNavigate } from 'common/utils/navigate/ImgNavigate'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 import { Title } from 'common/utils/Title/Title'
 import { SuperButton } from 'components/super-components/button/SuperButton'
 
 export const Cards = () => {
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
   const { isLoading } = useAppSelector(state => state.packs)
@@ -54,15 +53,7 @@ export const Cards = () => {
 
   return (
     <div className={common.commonContainer}>
-      <div className={style.navigationToPack}>
-        <img
-          onClick={() => navigate('/cards/pack')}
-          src={leftArrow}
-          alt="leftArrow"
-          className={style.leftArrow}
-        />
-        <SubTitle title="Back to Packs List" />
-      </div>
+      <ImgNavigate title="Back to Pack List" />
       <div className={pack.navBlock}>
         <Title title={name} />
         <SuperButton
@@ -108,9 +99,7 @@ export const Cards = () => {
           </tr>
         </thead>
         {isLoading ? (
-          <div className={table.circularProgress}>
-            <CircularProgress />
-          </div>
+          <Loading />
         ) : (
           <tbody>
             {cards.map(card => {
@@ -128,7 +117,7 @@ export const Cards = () => {
                       onClick={() =>
                         updateCardHandler({
                           card: {
-                            _id: '6432d7c233c3ea8b4e684c90',
+                            _id: '6435accee26fcaa528bf1717',
                             question: 'new question',
                             answer: 'new answer',
                           },

@@ -44,8 +44,8 @@ export type ActionsAppType = ReturnType<typeof setStatusAC> | ReturnType<typeof 
 
 //thunks
 export const initializedAppTC = (): AppThunk => async dispatch => {
-  dispatch(setStatusAC('loading'))
   try {
+    dispatch(setStatusAC('loading'))
     const res = await authAPI.me()
     const { name, email, _id } = res.data
 

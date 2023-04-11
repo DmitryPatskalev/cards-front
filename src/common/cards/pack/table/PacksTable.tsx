@@ -1,18 +1,18 @@
 import React from 'react'
 
-import { CircularProgress } from '@mui/material'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import learn from '../../../utils/img/learn.svg'
 import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
-import { Title } from '../../../utils/Title/Title'
 import { deletePackTC, setSortPacksAC, updatePackTC } from '../packs-reducer'
 
 import { UpdatedPackType } from 'api/packs-api'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import s from 'common/common-css-style/Table.module.scss'
+import { Loading } from 'common/utils/loading/Loading'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
+import { Title } from 'common/utils/Title/Title'
 import { SuperSort } from 'components/super-components/sort/SuperSort'
 
 export const PacksTable = () => {
@@ -68,9 +68,7 @@ export const PacksTable = () => {
         </tr>
       </thead>
       {isLoading ? (
-        <div className={s.circularProgress}>
-          <CircularProgress />
-        </div>
+        <Loading />
       ) : (
         <tbody>
           {packs.length ? (
