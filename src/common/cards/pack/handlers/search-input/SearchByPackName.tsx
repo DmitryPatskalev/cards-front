@@ -2,10 +2,11 @@ import React from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../../../app/store'
 import { fetchPacksTC, setSearchByPackNameAC } from '../../packs-reducer'
 
 import { SearchInput } from './SearchInput'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
 
 export const SearchByPackName = () => {
   const [searchParams, setSearchParams] = useSearchParams()

@@ -1,37 +1,24 @@
 import React from 'react'
 
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import learn from '../../../utils/img/learn.svg'
 import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
-import { deletePackTC, setSortPacksAC, updatePackTC } from '../packs-reducer'
+import { deletePackTC, updatePackTC } from '../packs-reducer'
 
 import { UpdatedPackType } from 'api/packs-api'
 import { useAppDispatch, useAppSelector } from 'app/store'
+import { SortPacks } from 'common/cards/pack/handlers/sort-packs/SortPacks'
 import s from 'common/common-css-style/Table.module.scss'
 import { Loading } from 'common/utils/loading/Loading'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 import { Title } from 'common/utils/Title/Title'
-import { SuperSort } from 'components/super-components/sort/SuperSort'
 
 export const PacksTable = () => {
   const { packs, isLoading, sortPacks } = useAppSelector(state => state.packs)
-  const [searchParams, setSearchParams] = useSearchParams()
 
   const navigate = useNavigate()
-
-  const onChangeSort = (newSort: string) => {
-    dispatch(setSortPacksAC(newSort))
-
-    const querySort = newSort !== '' ? { sortPacks: newSort } : {}
-    const { sortPacks, ...lastQueries } = Object.fromEntries(searchParams)
-
-    const allQuery: any = { ...lastQueries, ...querySort }
-
-    setSearchParams(allQuery)
-  }
-
   const dispatch = useAppDispatch()
 
   const updatePackHandler = (data: UpdatedPackType) => {
@@ -50,11 +37,11 @@ export const PacksTable = () => {
         <tr>
           <th>
             <SubTitle title="Name" />
-            <SuperSort sort={sortPacks} value="name" onChange={onChangeSort} />
+            <SortPacks sort={sortPacks} value="name" />
           </th>
           <th>
             <SubTitle title="Cards" />
-            <SuperSort sort={sortPacks} value="cardsCount" onChange={onChangeSort} />
+            <SortPacks sort={sortPacks} value="cardsCount" />
           </th>
           <th>
             <SubTitle title="Last Updated" />

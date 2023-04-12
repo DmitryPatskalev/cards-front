@@ -29,8 +29,6 @@ export const PacksCardsPagination = () => {
     setSearchParams(allQuery)
   }
 
-  console.log(page)
-
   return (
     <div className={s.paginationContainer}>
       <SuperPagination
