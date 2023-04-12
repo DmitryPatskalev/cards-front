@@ -28,6 +28,7 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = ({
   const onChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
     onChange(page, +event.currentTarget.value)
   }
+
   const numbers = [
     { id: 1, value: 5 },
     { id: 2, value: 10 },

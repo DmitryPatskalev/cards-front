@@ -43,8 +43,6 @@
 
 }
 
-
-
 .table tbody tr:nth-child(even){
   background: #f3f3f3;
 
@@ -57,7 +55,7 @@
   border-radius: 0 8px 8px 0;
 }
 
-.actionsBlock{
+.actionsBlock {
   display: flex;
   justify-content: space-evenly;
 }
@@ -73,33 +71,37 @@
   border: none;
 }
 
-.tdLink{
+.tdLink {
   cursor: pointer;
 }
 
 
-.actionsBlock img{
+.actionsBlock img {
   width: 20px;
   height: 20px;
 }
 
-.actionsBlock button:disabled{
+.actionsBlock button:disabled {
   cursor: auto;
   opacity: 0.3;
 }
 
-.actionsBlock button img:disabled{
+.actionsBlock button img:disabled {
   cursor: none;
 }
 
-.emptyPacks{
+.emptyPacks {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100px;
-  color: red;
-  font-weight: bold;
-  width: 300%
+  width: 300%;
+
+  div {
+    color: red;
+    font-weight: bold;
+  }
 }
+
 
 

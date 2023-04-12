@@ -2,10 +2,11 @@ import React from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../../../app/store'
 import { fetchCardsTC, setSearchByQuestionAC } from '../../card/cards-reducer'
 
 import { SearchInput } from './SearchInput'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
 
 export const SearchByQuestion = () => {
   const [searchParams, setSearchParams] = useSearchParams()

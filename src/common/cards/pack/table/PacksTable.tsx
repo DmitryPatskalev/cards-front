@@ -124,10 +124,9 @@ export const PacksTable = () => {
               )
             })
           ) : (
-            <Title
-              title="Packs not found. Try to change your search parameters"
-              className={s.emptyPacks}
-            />
+            <div className={s.emptyPacks}>
+              <Title title="Packs not found. Try to change your search parameters" />
+            </div>
           )}
         </tbody>
       )}
