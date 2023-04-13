@@ -30,8 +30,6 @@ export const SuperModal: React.FC<IModal> = ({
 
   if (!show) return null
 
-  console.log('render Modal')
-
   return (
     <>
       {enableBackground && (

@@ -16,7 +16,28 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   border-bottom: 1px solid #D9D9D9;
+
+  img{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+  }
+}
+
+.inputFieldBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+
+
+  .inputForm {
+    outline: none;
+    border: 0 solid #fff;
+  }
 }
 

@@ -16,7 +16,7 @@ import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 import { Title } from 'common/utils/Title/Title'
 
 export const PacksTable = () => {
-  const { packs, isLoading, sortPacks } = useAppSelector(state => state.packs)
+  const { packs, isLoading, sortPacks, packName } = useAppSelector(state => state.packs)
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -32,91 +32,93 @@ export const PacksTable = () => {
   const myId = '6352ce8810be8e0004d5b4f4'
 
   return (
-    <table className={s.table}>
-      <thead>
-        <tr>
-          <th>
-            <SubTitle title="Name" />
-            <SortPacks sort={sortPacks} value="name" />
-          </th>
-          <th>
-            <SubTitle title="Cards" />
-            <SortPacks sort={sortPacks} value="cardsCount" />
-          </th>
-          <th>
-            <SubTitle title="Last Updated" />
-          </th>
-          <th>
-            <SubTitle title="Created by" />
-          </th>
-          <th>
-            <SubTitle title="Actions" />
-          </th>
-        </tr>
-      </thead>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <tbody>
-          {packs.length ? (
-            packs.map(p => {
-              return (
-                <tr key={p._id}>
-                  {!p.cardsCount && p.user_id === myId ? (
-                    <td onClick={() => navigate(`/cards/card/${p._id}`)}>
-                      <span className={s.tdLink}>{p.name.slice(0, 30)}</span>
-                    </td>
-                  ) : (
-                    <td>{p.name.slice(0, 30)}</td>
-                  )}
-                  <td>{p.cardsCount}</td>
-                  <td>{p.updated.slice(0, 10)}</td>
-                  <td>{p.user_name}</td>
+    <>
+      <table className={s.table}>
+        <thead>
+          <tr>
+            <th>
+              <SubTitle title="Name" />
+              <SortPacks sort={sortPacks} value="name" />
+            </th>
+            <th>
+              <SubTitle title="Cards" />
+              <SortPacks sort={sortPacks} value="cardsCount" />
+            </th>
+            <th>
+              <SubTitle title="Last Updated" />
+            </th>
+            <th>
+              <SubTitle title="Created by" />
+            </th>
+            <th>
+              <SubTitle title="Actions" />
+            </th>
+          </tr>
+        </thead>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <tbody>
+            {packs.length ? (
+              packs.map(p => {
+                return (
+                  <tr key={p._id}>
+                    {!p.cardsCount && p.user_id === myId ? (
+                      <td onClick={() => navigate(`/cards/card/${p._id}`)}>
+                        <span className={s.tdLink}>{p.name.slice(0, 30)}</span>
+                      </td>
+                    ) : (
+                      <td>{p.name.slice(0, 30)}</td>
+                    )}
+                    <td>{p.cardsCount}</td>
+                    <td>{p.updated.slice(0, 10)}</td>
+                    <td>{p.user_name}</td>
 
-                  <td className={s.actionsBlock}>
-                    {p.user_id === myId ? (
-                      <>
+                    <td className={s.actionsBlock}>
+                      {p.user_id === myId ? (
+                        <>
+                          <button
+                            onClick={() => navigate(`/cards/card/${p._id}`)}
+                            disabled={!p.cardsCount}
+                          >
+                            <img src={learn} alt="learn" />
+                          </button>
+                          <button
+                            onClick={() =>
+                              updatePackHandler({
+                                cardsPack: {
+                                  _id: '6432d79033c3ea8b4e684c4c',
+                                  name: 'Updated',
+                                },
+                              })
+                            }
+                          >
+                            <img src={pencil} alt="pencil" />
+                          </button>
+                          <button onClick={deletePackHandler}>
+                            <img src={remove} alt="remove" />
+                          </button>
+                        </>
+                      ) : (
                         <button
                           onClick={() => navigate(`/cards/card/${p._id}`)}
                           disabled={!p.cardsCount}
                         >
                           <img src={learn} alt="learn" />
                         </button>
-                        <button
-                          onClick={() =>
-                            updatePackHandler({
-                              cardsPack: {
-                                _id: '6432d79033c3ea8b4e684c4c',
-                                name: 'Updated',
-                              },
-                            })
-                          }
-                        >
-                          <img src={pencil} alt="pencil" />
-                        </button>
-                        <button onClick={deletePackHandler}>
-                          <img src={remove} alt="remove" />
-                        </button>
-                      </>
-                    ) : (
-                      <button
-                        onClick={() => navigate(`/cards/card/${p._id}`)}
-                        disabled={!p.cardsCount}
-                      >
-                        <img src={learn} alt="learn" />
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              )
-            })
-          ) : (
-            <div className={s.emptyPacks}>
-              <Title title="Packs not found. Try to change your search parameters" />
-            </div>
-          )}
-        </tbody>
-      )}
-    </table>
+                      )}
+                    </td>
+                  </tr>
+                )
+              })
+            ) : (
+              <div className={s.emptyPacks}>
+                <Title title="Packs not found. Try to change your search parameters" />
+              </div>
+            )}
+          </tbody>
+        )}
+      </table>
+    </>
   )
 }

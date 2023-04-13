@@ -4,6 +4,7 @@ import s from './SubTitle.module.scss'
 
 type SubTitleType = {
   title: string
+  className?: React.ReactNode
 }
 export const SubTitle: React.FC<SubTitleType> = ({ title }) => {
   return (
