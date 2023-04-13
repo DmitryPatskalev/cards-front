@@ -56,7 +56,13 @@ export const PacksTable = () => {
           </tr>
         </thead>
         {isLoading ? (
-          <Loading />
+          <tbody>
+            <tr>
+              <td>
+                <Loading />
+              </td>
+            </tr>
+          </tbody>
         ) : (
           <tbody>
             {packs.length ? (
@@ -112,9 +118,11 @@ export const PacksTable = () => {
                 )
               })
             ) : (
-              <div className={s.emptyPacks}>
-                <Title title="Packs not found. Try to change your search parameters" />
-              </div>
+              <tr className={s.emptyPacks}>
+                <td>
+                  <Title title="PacksContainer not found. Try to change your search parameters" />
+                </td>
+              </tr>
             )}
           </tbody>
         )}

@@ -1,11 +1,11 @@
-import React, { ChangeEvent, FC } from 'react'
-
-import form from '../../../../utils/form/FormFields.module.scss'
-import close from '../../../../utils/img/icon-close.svg'
-
-import s from './ModalWindow.module.scss'
+import React, { ChangeEvent, useState } from 'react'
 
 import { NewPackType } from 'api/packs-api'
+import { useAppDispatch } from 'app/store'
+import s from 'common/cards/pack/handlers/modal-window/ModalWindow.module.scss'
+import { createNewPacksTC } from 'common/cards/pack/packs-reducer'
+import form from 'common/utils/form/FormFields.module.scss'
+import close from 'common/utils/img/icon-close.svg'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 import { Title } from 'common/utils/Title/Title'
 import { SuperButton } from 'components/super-components/button/SuperButton'
@@ -13,32 +13,30 @@ import { SuperCheckBox } from 'components/super-components/checkBox/SuperCheckBo
 import { SuperInput } from 'components/super-components/input/SuperInput'
 import { SuperModal } from 'components/super-components/modal/SuperModal'
 
-type ModalWindowPropsType = {
-  open: boolean
-  width?: number
-  height?: number
-  backgroundOnClick?: () => void
-  modalOnClick?: () => void
-  children?: React.ReactNode
+type AddPackModalPropsType = {
   title: string
-  addNewPack?: (data: NewPackType) => void
-  packName: string
-  onChangeNewPack: (e: ChangeEvent<HTMLInputElement>) => void
+  open: boolean
+  setOpen: (open: boolean) => void
 }
 
-export const ModalWindow: FC<ModalWindowPropsType> = ({
-  open,
+export const AddPackModal: React.FC<AddPackModalPropsType> = ({ title, open, setOpen }) => {
+  const [packName, setPackName] = useState('')
+  const [checkBox, setCheckBox] = useState(false)
 
-  width,
-  height,
-  backgroundOnClick,
-  modalOnClick,
-  title,
-  addNewPack,
-  packName,
-  onChangeNewPack,
-  children,
-}) => {
+  const dispatch = useAppDispatch()
+
+  const closeModalWindow = () => setOpen(false)
+
+  const addNewPack = (data: NewPackType) => {
+    closeModalWindow()
+    dispatch(createNewPacksTC(data))
+    setPackName('')
+  }
+
+  const onChangeNewPack = (e: ChangeEvent<HTMLInputElement>) => {
+    setPackName(e.currentTarget.value)
+  }
+
   return (
     <div>
       <SuperModal
@@ -46,14 +44,13 @@ export const ModalWindow: FC<ModalWindowPropsType> = ({
         height={280}
         show={open}
         enableBackground={open}
-        backgroundOnClick={backgroundOnClick}
+        backgroundOnClick={closeModalWindow}
         modalStyle={{}}
-        modalOnClick={modalOnClick}
       >
         <div className={s.modalContainer}>
           <div className={s.titleBlock}>
             <Title title={title} />
-            <img onClick={backgroundOnClick} src={close} alt="" />
+            <img onClick={closeModalWindow} src={close} alt="" />
           </div>
           <div className={`${form.inputFieldContainer} ${s.inputContainer}`}>
             <div className={form.titleFieldForm}>
@@ -70,17 +67,15 @@ export const ModalWindow: FC<ModalWindowPropsType> = ({
             </div>
           </div>
           <div className={s.checkboxBlock}>
-            <SuperCheckBox>Private pack</SuperCheckBox>
+            <SuperCheckBox onChangeChecked={setCheckBox}>Private pack</SuperCheckBox>
           </div>
           <SuperButton
-            onClick={() => (addNewPack ? addNewPack({ cardsPack: { name: packName } }) : {})}
+            onClick={() => addNewPack({ cardsPack: { name: packName, private: checkBox } })}
             xType={'default'}
           >
             Save
           </SuperButton>
         </div>
-
-        {children}
       </SuperModal>
     </div>
   )

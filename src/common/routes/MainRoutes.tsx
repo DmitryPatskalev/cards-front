@@ -14,7 +14,7 @@ import { ErrorSnackBar } from '../utils/errors/error-snack-bar/ErrorSnackBar'
 
 import { initializedAppTC } from 'app/app-reducer'
 import { useAppDispatch, useAppSelector } from 'app/store'
-import { Packs } from 'common/cards/pack/Packs'
+import { PacksContainer } from 'common/cards/pack/PacksContainer'
 import s from 'common/routes/MainRoutes.module.scss'
 import { Loading } from 'common/utils/loading/Loading'
 import { Stand } from 'components/stand/Stand'
@@ -50,7 +50,7 @@ export const MainRoutes = () => {
         <Route path={`/set-new-password/:${token}`} element={<NewPassword />} />
         <Route path={'/stand'} element={<Stand />} />
 
-        <Route path={'/cards/pack'} element={<Packs />} />
+        <Route path={'/cards/pack'} element={<PacksContainer />} />
         <Route path={'/cards/card/:cardsPack_id'} element={<Cards />} />
       </Routes>
       <ErrorSnackBar />

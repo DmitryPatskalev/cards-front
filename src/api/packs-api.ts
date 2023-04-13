@@ -13,7 +13,7 @@ export const packsAPI = {
   deletePack() {
     return instance.delete<PackResponseType>('/cards/pack', {
       params: {
-        id: '6437ee9f69477063c942cdb0',
+        id: '6438259469477063c942d872',
       },
     })
   },
