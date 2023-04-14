@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useState, KeyboardEvent } from 'react'
 
 import { NewPackType } from 'api/packs-api'
 import { useAppDispatch } from 'app/store'
@@ -22,18 +22,24 @@ type AddPackModalPropsType = {
 export const AddPackModal: React.FC<AddPackModalPropsType> = ({ title, open, setOpen }) => {
   const [packName, setPackName] = useState('')
   const [checkBox, setCheckBox] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const dispatch = useAppDispatch()
 
   const closeModalWindow = () => setOpen(false)
 
   const addNewPack = (data: NewPackType) => {
-    closeModalWindow()
-    dispatch(createNewPacksTC(data))
-    setPackName('')
+    if (packName.trim() !== '') {
+      dispatch(createNewPacksTC(data))
+      closeModalWindow()
+      setPackName('')
+    } else {
+      setError('Title is required! ')
+    }
   }
 
   const onChangeNewPack = (e: ChangeEvent<HTMLInputElement>) => {
+    setError(null)
     setPackName(e.currentTarget.value)
   }
 
@@ -63,6 +69,7 @@ export const AddPackModal: React.FC<AddPackModalPropsType> = ({ title, open, set
                 placeholder="Type pack name"
                 className={form.inputForm}
                 type="text"
+                error={error}
               />
             </div>
           </div>
