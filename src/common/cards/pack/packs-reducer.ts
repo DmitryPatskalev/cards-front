@@ -106,8 +106,6 @@ export const fetchPacksTC = (): AppThunk => async (dispatch, getState) => {
       user_id: isMyPacks ? _id : '',
     })
 
-    console.log(res.data)
-
     dispatch(getPacksAC(res.data.cardPacks))
     dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
   } catch (error) {
@@ -148,17 +146,19 @@ export const updatePackTC =
     }
   }
 
-export const deletePackTC = (): AppThunk => async dispatch => {
-  try {
-    dispatch(setIsLoadingAC(true))
-    await packsAPI.deletePack()
-    dispatch(fetchPacksTC())
-  } catch (error) {
-    errorUtils(error, dispatch)
-  } finally {
-    dispatch(setIsLoadingAC(false))
+export const deletePackTC =
+  (id: string): AppThunk =>
+  async dispatch => {
+    try {
+      dispatch(setIsLoadingAC(true))
+      await packsAPI.deletePack(id)
+      dispatch(fetchPacksTC())
+    } catch (error) {
+      errorUtils(error, dispatch)
+    } finally {
+      dispatch(setIsLoadingAC(false))
+    }
   }
-}
 
 export type ActionPacksType =
   | ReturnType<typeof getPacksAC>

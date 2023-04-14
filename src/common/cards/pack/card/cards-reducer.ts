@@ -65,7 +65,7 @@ export const setPageCardCountAC = (pageCardCount: number) =>
 export const fetchCardsTC =
   (cardsPack_id: string): AppThunk =>
   async (dispatch, getState) => {
-    const { cardQuestion, pageCard, pageCardCount } = getState().cards
+    const { cardQuestion, pageCard, pageCardCount, name } = getState().cards
 
     try {
       dispatch(setIsLoadingAC(true))

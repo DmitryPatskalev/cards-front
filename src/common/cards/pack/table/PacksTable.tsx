@@ -7,6 +7,7 @@ import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
 
 import { useAppSelector } from 'app/store'
+import { DeletePackModal } from 'common/cards/pack/handlers/modal-window/DeletePackModal'
 import { UpdatePackModal } from 'common/cards/pack/handlers/modal-window/UpdatePackModal'
 import { SortPacks } from 'common/cards/pack/handlers/sort-packs/SortPacks'
 import s from 'common/common-css-style/Table.module.scss'
@@ -16,6 +17,7 @@ import { Title } from 'common/utils/Title/Title'
 
 export const PacksTable = () => {
   const [open, setOpen] = useState(false)
+  const [openD, setOpenD] = useState(false)
   const { packs, isLoading, sortPacks } = useAppSelector(state => state.packs)
 
   const navigate = useNavigate()
@@ -83,7 +85,7 @@ export const PacksTable = () => {
                           <button onClick={() => setOpen(true)}>
                             <img src={pencil} alt="pencil" />
                           </button>
-                          <button>
+                          <button onClick={() => setOpenD(true)}>
                             <img src={remove} alt="remove" />
                           </button>
                         </>
@@ -96,18 +98,20 @@ export const PacksTable = () => {
                         </button>
                       )}
                     </td>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <UpdatePackModal
-                            title="Edit pack"
-                            open={open}
-                            setOpen={setOpen}
-                            id={p._id}
-                          />
-                        </td>
-                      </tr>
-                    </tbody>
+                    <UpdatePackModal
+                      title="Edit pack"
+                      open={open}
+                      setOpen={setOpen}
+                      name={p.name}
+                      id={p._id}
+                    />
+                    <DeletePackModal
+                      open={openD}
+                      setOpen={setOpenD}
+                      id={p._id}
+                      name={p.name}
+                      title="Delete Pack"
+                    />
                   </tr>
                 )
               })

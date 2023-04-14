@@ -17,6 +17,7 @@ type UpdatePackModalPropsType = {
   title: string
   open: boolean
   setOpen: (open: boolean) => void
+  name: string
   id: string
 }
 
@@ -24,9 +25,10 @@ export const UpdatePackModal: React.FC<UpdatePackModalPropsType> = ({
   title,
   open,
   setOpen,
+  name,
   id,
 }) => {
-  const [packName, setPackName] = useState('')
+  const [newName, setNewName] = useState('')
   const [checkBox, setCheckBox] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -34,14 +36,14 @@ export const UpdatePackModal: React.FC<UpdatePackModalPropsType> = ({
 
   const closeModalWindow = () => {
     setOpen(false)
-    setPackName('')
+    setNewName('')
   }
 
   const savePackHandler = (data: PackDomainType<UpdatedPackType>) => {
-    if (packName.trim() !== '') {
+    if (newName.trim() !== '') {
       dispatch(updatePackTC(data))
       closeModalWindow()
-      setPackName('')
+      setNewName('')
     } else {
       setError('Title is required! ')
     }
@@ -49,7 +51,7 @@ export const UpdatePackModal: React.FC<UpdatePackModalPropsType> = ({
 
   const onChangeNewPack = (e: ChangeEvent<HTMLInputElement>) => {
     setError(null)
-    setPackName(e.currentTarget.value)
+    setNewName(e.currentTarget.value)
   }
 
   return (
@@ -72,7 +74,7 @@ export const UpdatePackModal: React.FC<UpdatePackModalPropsType> = ({
             </div>
             <div className={form.inputFieldBlock}>
               <SuperInput
-                value={packName}
+                value={newName}
                 onChange={onChangeNewPack}
                 placeholder="Type pack name"
                 className={form.inputForm}
@@ -86,7 +88,7 @@ export const UpdatePackModal: React.FC<UpdatePackModalPropsType> = ({
           </div>
           <SuperButton
             onClick={() =>
-              savePackHandler({ cardsPack: { _id: id, name: packName, private: checkBox } })
+              savePackHandler({ cardsPack: { _id: id, name: newName, private: checkBox } })
             }
             xType={'default'}
           >

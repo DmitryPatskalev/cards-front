@@ -10,10 +10,10 @@ export const packsAPI = {
   updatedPack(data: PackDomainType<UpdatedPackType>) {
     return instance.put<PackResponseType>('/cards/pack', data)
   },
-  deletePack() {
+  deletePack(id: string) {
     return instance.delete<PackResponseType>('/cards/pack', {
       params: {
-        id: '64390b9c8817acfb959df303',
+        id,
       },
     })
   },
