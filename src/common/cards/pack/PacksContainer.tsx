@@ -26,7 +26,7 @@ export const PacksContainer = () => {
       </div>
       <Handlers />
       <PacksTable />
-      <AddPackModal title="Add new pack" open={open} setOpen={setOpen} />
+      <AddPackModal title="Add new pack" open={open} setOpen={setOpen}></AddPackModal>
     </div>
   )
 }

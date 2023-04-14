@@ -7,7 +7,7 @@ import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
 import { deletePackTC, updatePackTC } from '../packs-reducer'
 
-import { UpdatedPackType } from 'api/packs-api'
+import { PackDomainType, UpdatedPackType } from 'api/packs-api'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { SortPacks } from 'common/cards/pack/handlers/sort-packs/SortPacks'
 import s from 'common/common-css-style/Table.module.scss'
@@ -16,12 +16,13 @@ import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 import { Title } from 'common/utils/Title/Title'
 
 export const PacksTable = () => {
-  const { packs, isLoading, sortPacks, packName } = useAppSelector(state => state.packs)
+  const { packs, isLoading, sortPacks } = useAppSelector(state => state.packs)
+  const { cardsPack_id, name } = useAppSelector(state => state.cards)
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const updatePackHandler = (data: UpdatedPackType) => {
+  const updatePackHandler = (data: PackDomainType<UpdatedPackType>) => {
     dispatch(updatePackTC(data))
   }
 
@@ -93,7 +94,7 @@ export const PacksTable = () => {
                             onClick={() =>
                               updatePackHandler({
                                 cardsPack: {
-                                  _id: '6432d79033c3ea8b4e684c4c',
+                                  _id: '64390b9c8817acfb959df303',
                                   name: 'Updated',
                                 },
                               })

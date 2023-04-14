@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useState, KeyboardEvent } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
-import { NewPackType } from 'api/packs-api'
+import { PackDomainType, NewPackType } from 'api/packs-api'
 import { useAppDispatch } from 'app/store'
 import s from 'common/cards/pack/handlers/modal-window/ModalWindow.module.scss'
 import { createNewPacksTC } from 'common/cards/pack/packs-reducer'
@@ -17,18 +17,27 @@ type AddPackModalPropsType = {
   title: string
   open: boolean
   setOpen: (open: boolean) => void
+  children?: React.ReactNode
 }
 
-export const AddPackModal: React.FC<AddPackModalPropsType> = ({ title, open, setOpen }) => {
+export const AddPackModal: React.FC<AddPackModalPropsType> = ({
+  title,
+  open,
+  setOpen,
+  children,
+}) => {
   const [packName, setPackName] = useState('')
   const [checkBox, setCheckBox] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const dispatch = useAppDispatch()
 
-  const closeModalWindow = () => setOpen(false)
+  const closeModalWindow = () => {
+    setOpen(false)
+    setPackName('')
+  }
 
-  const addNewPack = (data: NewPackType) => {
+  const savePackHandler = (data: PackDomainType<NewPackType>) => {
     if (packName.trim() !== '') {
       dispatch(createNewPacksTC(data))
       closeModalWindow()
@@ -77,11 +86,12 @@ export const AddPackModal: React.FC<AddPackModalPropsType> = ({ title, open, set
             <SuperCheckBox onChangeChecked={setCheckBox}>Private pack</SuperCheckBox>
           </div>
           <SuperButton
-            onClick={() => addNewPack({ cardsPack: { name: packName, private: checkBox } })}
+            onClick={() => savePackHandler({ cardsPack: { name: packName, private: checkBox } })}
             xType={'default'}
           >
             Save
           </SuperButton>
+          {children}
         </div>
       </SuperModal>
     </div>

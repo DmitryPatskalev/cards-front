@@ -99,7 +99,13 @@ export const Cards = () => {
           </tr>
         </thead>
         {isLoading ? (
-          <Loading />
+          <tbody>
+            <tr>
+              <td>
+                <Loading />
+              </td>
+            </tr>
+          </tbody>
         ) : (
           <tbody>
             {cards.map(card => {

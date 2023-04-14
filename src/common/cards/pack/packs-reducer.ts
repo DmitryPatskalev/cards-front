@@ -1,6 +1,6 @@
 import { errorUtils } from '../../utils/errors/error/error-utils'
 
-import { NewPackType, packsAPI, PackType, UpdatedPackType } from 'api/packs-api'
+import { PackDomainType, NewPackType, packsAPI, PackType, UpdatedPackType } from 'api/packs-api'
 import { AppThunk } from 'app/store'
 import { setIsDisabledAC } from 'common/auth/login/login-reducer'
 
@@ -115,7 +115,7 @@ export const fetchPacksTC = (): AppThunk => async (dispatch, getState) => {
 }
 
 export const createNewPacksTC =
-  (data: NewPackType): AppThunk =>
+  (data: PackDomainType<NewPackType>): AppThunk =>
   async dispatch => {
     try {
       dispatch(setIsDisabledAC(true))
@@ -132,7 +132,7 @@ export const createNewPacksTC =
   }
 
 export const updatePackTC =
-  (data: UpdatedPackType): AppThunk =>
+  (data: PackDomainType<UpdatedPackType>): AppThunk =>
   async dispatch => {
     try {
       dispatch(setIsLoadingAC(true))

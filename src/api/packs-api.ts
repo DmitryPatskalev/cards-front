@@ -4,16 +4,16 @@ export const packsAPI = {
   getPacks(params?: PacksParamsType) {
     return instance.get<PackResponseType>('/cards/pack', { params })
   },
-  createPack(data: NewPackType) {
+  createPack(data: PackDomainType<NewPackType>) {
     return instance.post<PackResponseType>('/cards/pack', data)
   },
-  updatedPack(data: UpdatedPackType) {
+  updatedPack(data: PackDomainType<UpdatedPackType>) {
     return instance.put<PackResponseType>('/cards/pack', data)
   },
   deletePack() {
     return instance.delete<PackResponseType>('/cards/pack', {
       params: {
-        id: '6438259469477063c942d872',
+        id: '64390b9c8817acfb959df303',
       },
     })
   },
@@ -58,17 +58,17 @@ export type PacksParamsType = {
   block?: boolean
 }
 
+export type PackDomainType<T = {}> = {
+  cardsPack: T
+}
+
 export type NewPackType = {
-  cardsPack: {
-    name: string // если не отправить будет таким
-    deckCover?: string // не обязателен
-    private?: boolean // если не отправить будет такой
-  }
+  name: string // если не отправить будет таким
+  private?: boolean // если не отправить будет такой
 }
 
 export type UpdatedPackType = {
-  cardsPack: {
-    _id: string
-    name: string
-  }
+  _id: string
+  name: string
+  private?: boolean
 }
