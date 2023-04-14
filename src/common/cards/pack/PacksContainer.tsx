@@ -19,14 +19,14 @@ export const PacksContainer = () => {
   return (
     <div className={common.commonContainer}>
       <div className={s.navBlock}>
-        <Title title={isMyPacks ? 'My PacksContainer List' : 'All PacksContainer List'} />
+        <Title title={isMyPacks ? 'My Packs List' : 'All Packs List'} />
         <SuperButton onClick={() => setOpen(true)} xType={'default'}>
           Add new Packs
         </SuperButton>
       </div>
       <Handlers />
       <PacksTable />
-      <AddPackModal title="Add new pack" open={open} setOpen={setOpen}></AddPackModal>
+      <AddPackModal title="Add new pack" open={open} setOpen={setOpen} />
     </div>
   )
 }

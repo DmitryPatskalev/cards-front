@@ -1,14 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
 import learn from '../../../utils/img/learn.svg'
 import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
-import { deletePackTC, updatePackTC } from '../packs-reducer'
 
-import { PackDomainType, UpdatedPackType } from 'api/packs-api'
-import { useAppDispatch, useAppSelector } from 'app/store'
+import { useAppSelector } from 'app/store'
+import { UpdatePackModal } from 'common/cards/pack/handlers/modal-window/UpdatePackModal'
 import { SortPacks } from 'common/cards/pack/handlers/sort-packs/SortPacks'
 import s from 'common/common-css-style/Table.module.scss'
 import { Loading } from 'common/utils/loading/Loading'
@@ -16,19 +15,10 @@ import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 import { Title } from 'common/utils/Title/Title'
 
 export const PacksTable = () => {
+  const [open, setOpen] = useState(false)
   const { packs, isLoading, sortPacks } = useAppSelector(state => state.packs)
-  const { cardsPack_id, name } = useAppSelector(state => state.cards)
 
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-
-  const updatePackHandler = (data: PackDomainType<UpdatedPackType>) => {
-    dispatch(updatePackTC(data))
-  }
-
-  const deletePackHandler = () => {
-    dispatch(deletePackTC())
-  }
 
   const myId = '6352ce8810be8e0004d5b4f4'
 
@@ -90,19 +80,10 @@ export const PacksTable = () => {
                           >
                             <img src={learn} alt="learn" />
                           </button>
-                          <button
-                            onClick={() =>
-                              updatePackHandler({
-                                cardsPack: {
-                                  _id: '64390b9c8817acfb959df303',
-                                  name: 'Updated',
-                                },
-                              })
-                            }
-                          >
+                          <button onClick={() => setOpen(true)}>
                             <img src={pencil} alt="pencil" />
                           </button>
-                          <button onClick={deletePackHandler}>
+                          <button>
                             <img src={remove} alt="remove" />
                           </button>
                         </>
@@ -115,6 +96,18 @@ export const PacksTable = () => {
                         </button>
                       )}
                     </td>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <UpdatePackModal
+                            title="Edit pack"
+                            open={open}
+                            setOpen={setOpen}
+                            id={p._id}
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
                   </tr>
                 )
               })

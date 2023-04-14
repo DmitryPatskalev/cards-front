@@ -3,6 +3,7 @@ import { errorUtils } from '../../utils/errors/error/error-utils'
 import { PackDomainType, NewPackType, packsAPI, PackType, UpdatedPackType } from 'api/packs-api'
 import { AppThunk } from 'app/store'
 import { setIsDisabledAC } from 'common/auth/login/login-reducer'
+import { setPackNameAC } from 'common/cards/pack/card/cards-reducer'
 
 const initialState = {
   packs: [] as PackType[],
@@ -104,6 +105,8 @@ export const fetchPacksTC = (): AppThunk => async (dispatch, getState) => {
       sortPacks,
       user_id: isMyPacks ? _id : '',
     })
+
+    console.log(res.data)
 
     dispatch(getPacksAC(res.data.cardPacks))
     dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))

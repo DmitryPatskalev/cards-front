@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState } from 'react'
 
-import { PackDomainType, NewPackType } from 'api/packs-api'
+import { PackDomainType, UpdatedPackType } from 'api/packs-api'
 import { useAppDispatch } from 'app/store'
 import s from 'common/cards/pack/handlers/modal-window/ModalWindow.module.scss'
-import { createNewPacksTC } from 'common/cards/pack/packs-reducer'
+import { updatePackTC } from 'common/cards/pack/packs-reducer'
 import form from 'common/utils/form/FormFields.module.scss'
 import close from 'common/utils/img/icon-close.svg'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
@@ -13,18 +13,18 @@ import { SuperCheckBox } from 'components/super-components/checkBox/SuperCheckBo
 import { SuperInput } from 'components/super-components/input/SuperInput'
 import { SuperModal } from 'components/super-components/modal/SuperModal'
 
-type AddPackModalPropsType = {
+type UpdatePackModalPropsType = {
   title: string
   open: boolean
   setOpen: (open: boolean) => void
-  children?: React.ReactNode
+  id: string
 }
 
-export const AddPackModal: React.FC<AddPackModalPropsType> = ({
+export const UpdatePackModal: React.FC<UpdatePackModalPropsType> = ({
   title,
   open,
   setOpen,
-  children,
+  id,
 }) => {
   const [packName, setPackName] = useState('')
   const [checkBox, setCheckBox] = useState(false)
@@ -37,9 +37,9 @@ export const AddPackModal: React.FC<AddPackModalPropsType> = ({
     setPackName('')
   }
 
-  const savePackHandler = (data: PackDomainType<NewPackType>) => {
+  const savePackHandler = (data: PackDomainType<UpdatedPackType>) => {
     if (packName.trim() !== '') {
-      dispatch(createNewPacksTC(data))
+      dispatch(updatePackTC(data))
       closeModalWindow()
       setPackName('')
     } else {
@@ -85,12 +85,13 @@ export const AddPackModal: React.FC<AddPackModalPropsType> = ({
             <SuperCheckBox onChangeChecked={setCheckBox}>Private pack</SuperCheckBox>
           </div>
           <SuperButton
-            onClick={() => savePackHandler({ cardsPack: { name: packName, private: checkBox } })}
+            onClick={() =>
+              savePackHandler({ cardsPack: { _id: id, name: packName, private: checkBox } })
+            }
             xType={'default'}
           >
             Save
           </SuperButton>
-          {children}
         </div>
       </SuperModal>
     </div>
