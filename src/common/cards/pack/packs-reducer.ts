@@ -122,7 +122,7 @@ export const fetchPacksTC = (): AppThunk => async (dispatch, getState) => {
 }
 
 export const createNewPacksTC =
-  (data: PackDomainType<NewPackType>): AppThunk =>
+  (data: NewPackType): AppThunk =>
   async dispatch => {
     try {
       dispatch(setIsDisabledAC(true))
@@ -140,7 +140,7 @@ export const createNewPacksTC =
   }
 
 export const updatePackTC =
-  (data: PackDomainType<UpdatedPackType>): AppThunk =>
+  (data: UpdatedPackType): AppThunk =>
   async dispatch => {
     try {
       dispatch(setIsLoadingAC(true))

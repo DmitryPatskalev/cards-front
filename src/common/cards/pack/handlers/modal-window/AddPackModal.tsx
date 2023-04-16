@@ -37,7 +37,7 @@ export const AddPackModal: React.FC<AddPackModalPropsType> = ({
     setPackName('')
   }
 
-  const savePackHandler = (data: PackDomainType<NewPackType>) => {
+  const savePackHandler = (data: NewPackType) => {
     if (packName.trim() !== '') {
       dispatch(createNewPacksTC(data))
       closeModalWindow()

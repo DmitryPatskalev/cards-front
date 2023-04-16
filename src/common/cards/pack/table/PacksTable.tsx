@@ -85,7 +85,7 @@ export const PacksTable = () => {
                           <button onClick={() => setOpen(true)}>
                             <img src={pencil} alt="pencil" />
                           </button>
-                          <button onClick={() => setOpenD(true)}>
+                          <button onClick={() => console.log(p._id, p.name)}>
                             <img src={remove} alt="remove" />
                           </button>
                         </>
@@ -102,8 +102,8 @@ export const PacksTable = () => {
                       title="Edit pack"
                       open={open}
                       setOpen={setOpen}
-                      name={p.name}
                       id={p._id}
+                      name={p.name}
                     />
                     <DeletePackModal
                       open={openD}

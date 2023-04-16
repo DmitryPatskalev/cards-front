@@ -39,7 +39,7 @@ export const UpdatePackModal: React.FC<UpdatePackModalPropsType> = ({
     setNewName('')
   }
 
-  const savePackHandler = (data: PackDomainType<UpdatedPackType>) => {
+  const savePackHandler = (data: UpdatedPackType) => {
     if (newName.trim() !== '') {
       dispatch(updatePackTC(data))
       closeModalWindow()

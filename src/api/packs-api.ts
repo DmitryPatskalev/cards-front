@@ -4,10 +4,10 @@ export const packsAPI = {
   getPacks(params?: PacksParamsType) {
     return instance.get<PackResponseType>('/cards/pack', { params })
   },
-  createPack(data: PackDomainType<NewPackType>) {
+  createPack(data: NewPackType) {
     return instance.post<PackResponseType>('/cards/pack', data)
   },
-  updatedPack(data: PackDomainType<UpdatedPackType>) {
+  updatedPack(data: UpdatedPackType) {
     return instance.put<PackResponseType>('/cards/pack', data)
   },
   deletePack(id: string) {
@@ -63,12 +63,16 @@ export type PackDomainType<T = {}> = {
 }
 
 export type NewPackType = {
-  name: string // если не отправить будет таким
-  private?: boolean // если не отправить будет такой
+  cardsPack: {
+    name: string // если не отправить будет таким
+    private?: boolean // если не отправить будет такой
+  }
 }
 
 export type UpdatedPackType = {
-  _id: string
-  name: string
-  private?: boolean
+  cardsPack: {
+    _id: string
+    name: string
+    private?: boolean
+  }
 }
