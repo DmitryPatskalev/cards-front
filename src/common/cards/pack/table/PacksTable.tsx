@@ -18,7 +18,7 @@ import { Title } from 'common/utils/Title/Title'
 export const PacksTable = () => {
   const [open, setOpen] = useState(false)
   const [openD, setOpenD] = useState(false)
-  const { packs, isLoading, sortPacks } = useAppSelector(state => state.packs)
+  const { cardPacks, isLoading, sortPacks } = useAppSelector(state => state.packs)
 
   const navigate = useNavigate()
 
@@ -58,8 +58,8 @@ export const PacksTable = () => {
           </tbody>
         ) : (
           <tbody>
-            {packs.length ? (
-              packs.map(p => {
+            {cardPacks.length ? (
+              cardPacks.map(p => {
                 return (
                   <tr key={p._id}>
                     {!p.cardsCount && p.user_id === myId ? (

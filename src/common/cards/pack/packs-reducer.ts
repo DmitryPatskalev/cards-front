@@ -5,7 +5,7 @@ import { AppThunk } from 'app/store'
 import { setIsDisabledAC } from 'common/auth/login/login-reducer'
 
 const initialState = {
-  packs: [] as PackType[],
+  cardPacks: [] as PackType[],
   page: 1,
   pageCount: 5,
   cardPacksTotalCount: 0,
@@ -17,7 +17,7 @@ const initialState = {
   isLoading: false,
 }
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 export const packsReducer = (
   state: InitialStateType = initialState,
@@ -25,7 +25,7 @@ export const packsReducer = (
 ): InitialStateType => {
   switch (action.type) {
     case 'packs/GET_PACKS':
-      return { ...state, packs: action.packs }
+      return { ...state, cardPacks: action.cardPacks }
 
     case 'packs/SET_PAGE':
       return { ...state, page: action.page }
@@ -54,12 +54,16 @@ export const packsReducer = (
     case 'packs/SET_SORT_PACKS':
       return { ...state, sortPacks: action.sortPacks }
 
+    case 'packs/CREATE_PACK':
+      return { ...action.data, ...state }
+
     default:
       return state
   }
 }
 
-export const getPacksAC = (packs: PackType[]) => ({ type: 'packs/GET_PACKS', packs } as const)
+export const getPacksAC = (cardPacks: PackType[]) =>
+  ({ type: 'packs/GET_PACKS', cardPacks } as const)
 
 export const setPageAC = (page: number) => ({ type: 'packs/SET_PAGE', page } as const)
 
@@ -87,6 +91,8 @@ export const setIsLoadingAC = (isLoading: boolean) =>
 export const setSortPacksAC = (sortPacks: string) =>
   ({ type: 'packs/SET_SORT_PACKS', sortPacks } as const)
 
+export const createPackAC = (data: PackType[]) => ({ type: 'packs/CREATE_PACK', data } as const)
+
 //thunks
 
 export const fetchPacksTC = (): AppThunk => async (dispatch, getState) => {
@@ -105,6 +111,7 @@ export const fetchPacksTC = (): AppThunk => async (dispatch, getState) => {
       user_id: isMyPacks ? _id : '',
     })
 
+    console.log(res)
     dispatch(getPacksAC(res.data.cardPacks))
     dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
   } catch (error) {
@@ -120,7 +127,8 @@ export const createNewPacksTC =
     try {
       dispatch(setIsDisabledAC(true))
       dispatch(setIsLoadingAC(true))
-      await packsAPI.createPack(data)
+      const res = await packsAPI.createPack(data)
+
       dispatch(fetchPacksTC())
       dispatch(setIsLoadingAC(false))
     } catch (error) {
@@ -170,3 +178,4 @@ export type ActionPacksType =
   | ReturnType<typeof setIsMyPacksAC>
   | ReturnType<typeof setIsLoadingAC>
   | ReturnType<typeof setSortPacksAC>
+  | ReturnType<typeof createPackAC>
