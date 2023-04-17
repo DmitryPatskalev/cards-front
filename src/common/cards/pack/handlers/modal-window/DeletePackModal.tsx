@@ -9,20 +9,20 @@ import { Title } from 'common/utils/Title/Title'
 import { SuperButton } from 'components/super-components/button/SuperButton'
 import { SuperModal } from 'components/super-components/modal/SuperModal'
 
-type UpdatePackModalPropsType = {
+type DeletePackModalPropsType = {
+  title: string
   open: boolean
   setOpen: (open: boolean) => void
   name: string
   id: string
-  title: string
 }
 
-export const DeletePackModal: React.FC<UpdatePackModalPropsType> = ({
+export const DeletePackModal: React.FC<DeletePackModalPropsType> = ({
+  title,
   open,
   setOpen,
   name,
   id,
-  title,
 }) => {
   const dispatch = useAppDispatch()
 

@@ -6,10 +6,11 @@ import learn from '../../../utils/img/learn.svg'
 import pencil from '../../../utils/img/pencil-line-light.svg'
 import remove from '../../../utils/img/remove.svg'
 
-import { useAppSelector } from 'app/store'
+import { useAppDispatch, useAppSelector } from 'app/store'
 import { DeletePackModal } from 'common/cards/pack/handlers/modal-window/DeletePackModal'
 import { UpdatePackModal } from 'common/cards/pack/handlers/modal-window/UpdatePackModal'
 import { SortPacks } from 'common/cards/pack/handlers/sort-packs/SortPacks'
+import { deletePackTC } from 'common/cards/pack/packs-reducer'
 import s from 'common/common-css-style/Table.module.scss'
 import { Loading } from 'common/utils/loading/Loading'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
@@ -17,7 +18,6 @@ import { Title } from 'common/utils/Title/Title'
 
 export const PacksTable = () => {
   const [open, setOpen] = useState(false)
-  const [openD, setOpenD] = useState(false)
   const { cardPacks, isLoading, sortPacks } = useAppSelector(state => state.packs)
 
   const navigate = useNavigate()
@@ -85,7 +85,7 @@ export const PacksTable = () => {
                           <button onClick={() => setOpen(true)}>
                             <img src={pencil} alt="pencil" />
                           </button>
-                          <button onClick={() => console.log(p._id, p.name)}>
+                          <button onClick={() => setOpen(true)}>
                             <img src={remove} alt="remove" />
                           </button>
                         </>
@@ -106,11 +106,11 @@ export const PacksTable = () => {
                       name={p.name}
                     />
                     <DeletePackModal
-                      open={openD}
-                      setOpen={setOpenD}
+                      title="Delete Pack"
+                      open={open}
+                      setOpen={setOpen}
                       id={p._id}
                       name={p.name}
-                      title="Delete Pack"
                     />
                   </tr>
                 )

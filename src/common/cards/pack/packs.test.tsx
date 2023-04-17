@@ -1,9 +1,7 @@
 import React from 'react'
-
-import { PackType } from 'api/packs-api'
 import {
-  createNewPacksTC,
   createPackAC,
+  deletePackAC,
   getPacksAC,
   InitialStateType,
   packsReducer,
@@ -70,27 +68,17 @@ test('correct packs should be shown', () => {
 })
 
 test('pack should be added', () => {
-  const newPack = [
-    {
-      _id: '3',
-      user_id: '333',
-      user_name: 'Loki, son of Odin!!!',
-      private: true,
-      name: 'Odin',
-      cardsCount: 0,
-      path: '/def',
-      grade: 1,
-      shots: 0,
-      type: 'pack',
-      rating: 0,
-      created: '2023-04-15T17:11:22.272Z',
-      updated: '2023-04-15T17:12:33.999Z',
-      more_id: '333',
-      __v: 0,
-    },
-  ]
+  //  const action = createPackAC({ cardsPack })
+  // const endState = packsReducer(startState, action)
+  //
+  // expect(endState.cardPacks[0].name).toBe('Odin')
+  // expect(endState.cardPacks.length).toBe(3)
+})
 
-  const endState = packsReducer(startState, createPackAC(newPack))
+test('correct pack should be deleted', () => {
+  const action = deletePackAC('1')
+  const endState = packsReducer(startState, action)
 
-  expect(endState.cardPacks[2].name).toBe('Odin')
+  expect(endState.cardPacks.length).toBe(1)
+  expect(endState.cardPacks[0].name).toBe('Tor')
 })

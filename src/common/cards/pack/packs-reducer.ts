@@ -55,7 +55,10 @@ export const packsReducer = (
       return { ...state, sortPacks: action.sortPacks }
 
     case 'packs/CREATE_PACK':
-      return { ...action.data, ...state }
+      return <InitialStateType>{ ...state, cardPacks: [{ name: action.data }, ...state.cardPacks] }
+
+    case 'packs/DELETE_PACK':
+      return { ...state, cardPacks: state.cardPacks.filter(p => p._id !== action.id) }
 
     default:
       return state
@@ -91,7 +94,8 @@ export const setIsLoadingAC = (isLoading: boolean) =>
 export const setSortPacksAC = (sortPacks: string) =>
   ({ type: 'packs/SET_SORT_PACKS', sortPacks } as const)
 
-export const createPackAC = (data: PackType[]) => ({ type: 'packs/CREATE_PACK', data } as const)
+export const createPackAC = (data: NewPackType) => ({ type: 'packs/CREATE_PACK', data } as const)
+export const deletePackAC = (id: string) => ({ type: 'packs/DELETE_PACK', id } as const)
 
 //thunks
 
@@ -159,6 +163,7 @@ export const deletePackTC =
     try {
       dispatch(setIsLoadingAC(true))
       await packsAPI.deletePack(id)
+
       dispatch(fetchPacksTC())
     } catch (error) {
       errorUtils(error, dispatch)
@@ -179,3 +184,4 @@ export type ActionPacksType =
   | ReturnType<typeof setIsLoadingAC>
   | ReturnType<typeof setSortPacksAC>
   | ReturnType<typeof createPackAC>
+  | ReturnType<typeof deletePackAC>
