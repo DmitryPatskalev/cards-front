@@ -17,11 +17,11 @@ interface IModal {
 export const SuperModal: React.FC<IModal> = ({
   enableBackground,
   backgroundStyle,
-  backgroundOnClick = () => {},
+  backgroundOnClick,
   width,
   height,
   modalStyle,
-  modalOnClick = () => {},
+  modalOnClick,
   show,
   children,
 }) => {

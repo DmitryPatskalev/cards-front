@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -76,18 +76,20 @@ export const PacksTable = () => {
                     <td className={s.actionsBlock}>
                       {p.user_id === myId ? (
                         <>
-                          <button
-                            onClick={() => navigate(`/cards/card/${p._id}`)}
-                            disabled={!p.cardsCount}
-                          >
-                            <img src={learn} alt="learn" />
-                          </button>
-                          <button onClick={() => setOpen(true)}>
-                            <img src={pencil} alt="pencil" />
-                          </button>
-                          <button onClick={() => setOpen(true)}>
-                            <img src={remove} alt="remove" />
-                          </button>
+                          <TableActions data={p} />
+
+                          {/*<button*/}
+                          {/*  onClick={() => navigate(`/cards/card/${p._id}`)}*/}
+                          {/*  disabled={!p.cardsCount}*/}
+                          {/*>*/}
+                          {/*  <img src={learn} alt="learn" />*/}
+                          {/*</button>*/}
+                          {/*<button onClick={() => setOpen(true)}>*/}
+                          {/*  <img src={pencil} alt="pencil" />*/}
+                          {/*</button>*/}
+                          {/*<button onClick={() => setOpen(true)}>*/}
+                          {/*  <img src={remove} alt="remove" />*/}
+                          {/*</button>*/}
                         </>
                       ) : (
                         <button
@@ -98,20 +100,20 @@ export const PacksTable = () => {
                         </button>
                       )}
                     </td>
-                    <UpdatePackModal
-                      title="Edit pack"
-                      open={open}
-                      setOpen={setOpen}
-                      id={p._id}
-                      name={p.name}
-                    />
-                    <DeletePackModal
-                      title="Delete Pack"
-                      open={open}
-                      setOpen={setOpen}
-                      id={p._id}
-                      name={p.name}
-                    />
+                    {/*<UpdatePackModal*/}
+                    {/*  title="Edit pack"*/}
+                    {/*  open={open}*/}
+                    {/*  setOpen={setOpen}*/}
+                    {/*  id={p._id}*/}
+                    {/*  name={p.name}*/}
+                    {/*/>*/}
+                    {/*<DeletePackModal*/}
+                    {/*  title="Delete Pack"*/}
+                    {/*  open={open}*/}
+                    {/*  setOpen={setOpen}*/}
+                    {/*  id={p._id}*/}
+                    {/*  name={p.name}*/}
+                    {/*/>*/}
                   </tr>
                 )
               })
@@ -125,6 +127,48 @@ export const PacksTable = () => {
           </tbody>
         )}
       </table>
+    </>
+  )
+}
+
+type Props = {
+  data: any // твой тип элемента таблицы
+}
+
+export const TableActions: FC<Props> = ({ data }) => {
+  const [modalNameOpen, setModalNameOpen] = useState<boolean>(false)
+
+  const navigate = useNavigate()
+
+  const handleOpenModal = () => setModalNameOpen(true)
+
+  return (
+    <>
+      <button onClick={() => navigate(`/cards/card/${data._id}`)} disabled={!data.cardsCount}>
+        <img src={learn} alt="learn" />
+      </button>
+      <button onClick={handleOpenModal}>
+        <img src={pencil} alt="pencil" />
+      </button>
+      <button onClick={handleOpenModal}>
+        <img src={remove} alt="remove" />
+      </button>
+
+      <UpdatePackModal
+        title="Edit pack"
+        open={modalNameOpen}
+        setOpen={handleOpenModal}
+        id={data._id}
+        name={data.name}
+      />
+
+      <DeletePackModal
+        title="Delete Pack"
+        open={modalNameOpen}
+        setOpen={handleOpenModal}
+        id={data._id}
+        name={data.name}
+      />
     </>
   )
 }
