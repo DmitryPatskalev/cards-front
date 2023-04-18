@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { createPortal } from 'react-dom'
+
 import { useAppDispatch } from 'app/store'
 import s from 'common/cards/pack/handlers/modal-window/ModalWindow.module.scss'
 import { deletePackTC } from 'common/cards/pack/packs-reducer'
@@ -37,29 +39,34 @@ export const DeletePackModal: React.FC<DeletePackModalPropsType> = ({
 
   return (
     <div>
-      <SuperModal
-        width={360}
-        height={280}
-        show={open}
-        enableBackground={open}
-        backgroundOnClick={closeModalWindow}
-      >
-        <div className={s.modalContainer}>
-          <div className={s.titleBlock}>
-            <Title title={title} />
-            <img onClick={closeModalWindow} src={close} alt="close" />
-          </div>
-          <div className={`${form.inputFieldContainer} ${s.inputContainer}`}>
-            <div className={s.title}>
-              <Title title={`Do you really want to remove ${name}. All cards will be deleted.`} />
-            </div>
-          </div>
+      {open &&
+        createPortal(
+          <SuperModal
+            width={360}
+            height={280}
+            show={open}
+            enableBackground={open}
+            backgroundOnClick={closeModalWindow}
+          >
+            <div className={s.modalContainer}>
+              <div className={s.titleBlock}>
+                <Title title={title} />
+                <img onClick={closeModalWindow} src={close} alt="close" />
+              </div>
+              <div className={`${form.inputFieldContainer} ${s.inputContainer}`}>
+                <div className={s.packNameBlock}>
+                  Do you really want to remove <span className={s.namePack}>{name}</span>. All cards
+                  will be deleted.
+                </div>
+              </div>
 
-          <SuperButton onClick={() => deletePackHandler(id)} xType={'red'}>
-            Delete
-          </SuperButton>
-        </div>
-      </SuperModal>
+              <SuperButton onClick={() => deletePackHandler(id)} xType={'red'}>
+                Delete
+              </SuperButton>
+            </div>
+          </SuperModal>,
+          document.body
+        )}
     </div>
   )
 }

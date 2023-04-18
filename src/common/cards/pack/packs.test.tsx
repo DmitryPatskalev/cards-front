@@ -2,6 +2,7 @@ import React from 'react'
 import {
   createPackAC,
   deletePackAC,
+  deletePackTC,
   getPacksAC,
   InitialStateType,
   packsReducer,
@@ -76,7 +77,8 @@ test('pack should be added', () => {
 })
 
 test('correct pack should be deleted', () => {
-  const action = deletePackAC('1')
+  const thunk = deletePackTC('1')
+  const action = getPacksAC(startState.cardPacks)
   const endState = packsReducer(startState, action)
 
   expect(endState.cardPacks.length).toBe(1)

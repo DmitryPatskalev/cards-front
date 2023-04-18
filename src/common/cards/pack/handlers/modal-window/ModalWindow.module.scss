@@ -21,6 +21,7 @@
   }
   .inputContainer{
     width: 100%;
+
   }
   .checkboxBlock{
     display: flex;
@@ -32,12 +33,21 @@
   }
 }
 
-.title {
+.packNameBlock {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
   font-family: Andale Mono, monospace;
   font-style: normal;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 27px;
 
   color: #000000;
+}
+.namePack{
+  margin-left: 5px;
+  font-weight: bold;
+  font-size: 20px;
+  color: red;
 }

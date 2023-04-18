@@ -115,7 +115,6 @@ export const fetchPacksTC = (): AppThunk => async (dispatch, getState) => {
       user_id: isMyPacks ? _id : '',
     })
 
-    console.log(res)
     dispatch(getPacksAC(res.data.cardPacks))
     dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
   } catch (error) {

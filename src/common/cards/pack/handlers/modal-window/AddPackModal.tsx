@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 
-import { PackDomainType, NewPackType } from 'api/packs-api'
+import { NewPackType } from 'api/packs-api'
 import { useAppDispatch } from 'app/store'
 import s from 'common/cards/pack/handlers/modal-window/ModalWindow.module.scss'
 import { createNewPacksTC } from 'common/cards/pack/packs-reducer'
@@ -78,6 +78,7 @@ export const AddPackModal: React.FC<AddPackModalPropsType> = ({
                 className={form.inputForm}
                 type="text"
                 error={error}
+                autoFocus
               />
             </div>
           </div>
