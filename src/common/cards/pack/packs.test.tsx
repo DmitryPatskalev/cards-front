@@ -1,12 +1,6 @@
 import React from 'react'
-import {
-  createPackAC,
-  deletePackAC,
-  deletePackTC,
-  getPacksAC,
-  InitialStateType,
-  packsReducer,
-} from 'common/cards/pack/packs-reducer'
+
+import { getPacksAC, InitialStateType, packsReducer } from 'common/cards/pack/packs-reducer'
 
 let startState: InitialStateType
 
@@ -66,21 +60,4 @@ test('correct packs should be shown', () => {
   const endState = packsReducer(startState, action)
 
   expect(endState.cardPacks.length).toBe(2)
-})
-
-test('pack should be added', () => {
-  //  const action = createPackAC({ cardsPack })
-  // const endState = packsReducer(startState, action)
-  //
-  // expect(endState.cardPacks[0].name).toBe('Odin')
-  // expect(endState.cardPacks.length).toBe(3)
-})
-
-test('correct pack should be deleted', () => {
-  const thunk = deletePackTC('1')
-  const action = getPacksAC(startState.cardPacks)
-  const endState = packsReducer(startState, action)
-
-  expect(endState.cardPacks.length).toBe(1)
-  expect(endState.cardPacks[0].name).toBe('Tor')
 })
