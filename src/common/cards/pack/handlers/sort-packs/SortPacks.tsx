@@ -3,7 +3,7 @@ import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { useAppDispatch } from 'app/store'
-import { setSortPacksAC } from 'common/cards/pack/packs-reducer'
+import { setSortPacks } from 'common/cards/pack/packs-reducer'
 import { SuperSort } from 'components/super-components/sort/SuperSort'
 
 type SortPacksPropsType = {
@@ -16,7 +16,7 @@ export const SortPacks: React.FC<SortPacksPropsType> = ({ sort, value }) => {
   const dispatch = useAppDispatch()
 
   const onChangeSort = (newSort: string) => {
-    dispatch(setSortPacksAC(newSort))
+    dispatch(setSortPacks(newSort))
 
     const querySort = newSort !== '' ? { sortPacks: newSort } : {}
     const { sortPacks, ...lastQueries } = Object.fromEntries(searchParams)

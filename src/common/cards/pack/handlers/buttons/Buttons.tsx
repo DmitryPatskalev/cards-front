@@ -1,10 +1,8 @@
 import React from 'react'
 
-import { useNavigate, useParams } from 'react-router-dom'
-
 import { useAppDispatch, useAppSelector } from 'app/store'
 import s from 'common/cards/pack/handlers/Handler.module.scss'
-import { fetchPacksTC, setIsMyPacksAC } from 'common/cards/pack/packs-reducer'
+import { setIsMyPacks } from 'common/cards/pack/packs-reducer'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 import { SuperButton } from 'components/super-components/button/SuperButton'
 
@@ -14,11 +12,11 @@ export const Buttons = () => {
   const dispatch = useAppDispatch()
 
   const getMyPacksHandler = () => {
-    dispatch(setIsMyPacksAC(true))
+    dispatch(setIsMyPacks(true))
   }
 
   const getAllPacksHandler = () => {
-    dispatch(setIsMyPacksAC(false))
+    dispatch(setIsMyPacks(false))
   }
 
   return (

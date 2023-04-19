@@ -4,7 +4,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
-import { setErrorAC } from 'common/auth/login/login-reducer'
+import { setError } from 'common/auth/login/login-reducer'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
@@ -20,7 +20,7 @@ export function ErrorSnackBar() {
     if (reason === 'clickaway') {
       return
     }
-    dispatch(setErrorAC(null))
+    dispatch(setError(null))
   }
 
   return (

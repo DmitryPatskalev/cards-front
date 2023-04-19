@@ -3,10 +3,10 @@ import { AppThunk } from './store'
 import { authAPI } from 'api/auth-api'
 import { PropertiesType } from 'app/ActionsTypeUtils'
 import {
-  setIsLoggedInAC,
-  setUserEmailAC,
+  setIsLoggedIn,
+  setUserEmail,
   setUserId,
-  updateUserNameAC,
+  updateUserName,
 } from 'common/auth/login/login-reducer'
 import { errorUtils } from 'common/utils/errors/error/error-utils'
 
@@ -36,7 +36,7 @@ export const appReducer = (
   }
 }
 
-export const appActions = {
+const appActions = {
   setStatus: (status: RequestStatusType) => ({ type: 'app/SET_STATUS', status } as const),
 
   setIsInitialized: (isInitialized: boolean) =>
@@ -46,21 +46,22 @@ export const appActions = {
 //thunks
 export const initializedAppTC = (): AppThunk => async dispatch => {
   try {
-    dispatch(appActions.setStatus('loading'))
+    dispatch(setStatus('loading'))
     const res = await authAPI.me()
     const { name, email, _id } = res.data
 
-    dispatch(appActions.setStatus('succeeded'))
+    dispatch(setStatus('succeeded'))
 
     dispatch(setUserId(_id))
-    dispatch(updateUserNameAC(name))
-    dispatch(setUserEmailAC(email))
-    dispatch(setIsLoggedInAC(true))
-    dispatch(appActions.setIsInitialized(true))
+    dispatch(updateUserName(name))
+    dispatch(setUserEmail(email))
+    dispatch(setIsLoggedIn(true))
+    dispatch(setIsInitialized(true))
   } catch (e: any) {
     errorUtils(e, dispatch)
-    dispatch(appActions.setStatus('failed'))
+    dispatch(setStatus('failed'))
   }
 }
 
 export type AppActionsType = ReturnType<PropertiesType<typeof appActions>>
+export const { setStatus, setIsInitialized } = appActions

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { fetchCardsTC, setSearchByQuestionAC } from '../../card/cards-reducer'
+import { fetchCardsTC, setSearchByQuestion } from '../../card/cards-reducer'
 
 import { SearchInput } from './SearchInput'
 
@@ -15,7 +15,7 @@ export const SearchByQuestion = () => {
   const { cardQuestion, cardsPack_id } = useAppSelector(state => state.cards)
 
   const onChangeText = (newQuestion: string) => {
-    dispatch(setSearchByQuestionAC(newQuestion))
+    dispatch(setSearchByQuestion(newQuestion))
     const querySearch = newQuestion !== '' ? { cardQuestion: newQuestion + '' } : {}
     const { cardQuestion, ...lastQueries } = Object.fromEntries(searchParams)
     const allQuery: any = { ...lastQueries, ...querySearch }

@@ -1,8 +1,9 @@
 import { errorUtils } from '../../utils/errors/error/error-utils'
 
 import { NewPackType, packsAPI, PackType, UpdatedPackType } from 'api/packs-api'
+import { PropertiesType } from 'app/ActionsTypeUtils'
 import { AppThunk } from 'app/store'
-import { setIsDisabledAC } from 'common/auth/login/login-reducer'
+import { setIsDisabled } from 'common/auth/login/login-reducer'
 
 const initialState = {
   cardPacks: [] as PackType[],
@@ -58,35 +59,31 @@ export const packsReducer = (
       return state
   }
 }
+const packsActions = {
+  getPacks: (cardPacks: PackType[]) => ({ type: 'packs/GET_PACKS', cardPacks } as const),
 
-export const getPacksAC = (cardPacks: PackType[]) =>
-  ({ type: 'packs/GET_PACKS', cardPacks } as const)
+  setPage: (page: number) => ({ type: 'packs/SET_PAGE', page } as const),
 
-export const setPageAC = (page: number) => ({ type: 'packs/SET_PAGE', page } as const)
+  setPageCount: (pageCount: number) => ({ type: 'packs/SET_PAGE_COUNT', pageCount } as const),
 
-export const setPageCountAC = (pageCount: number) =>
-  ({ type: 'packs/SET_PAGE_COUNT', pageCount } as const)
+  setCardPacksTotalCount: (cardPacksTotalCount: number) =>
+    ({ type: 'packs/SET_PACK_CARDS_TOTAL_COUNT', cardPacksTotalCount } as const),
 
-export const setCardPacksTotalCountAC = (cardPacksTotalCount: number) =>
-  ({ type: 'packs/SET_PACK_CARDS_TOTAL_COUNT', cardPacksTotalCount } as const)
+  setSearchByPackName: (packName: string) =>
+    ({ type: 'packs/SET_SEARCH_BY_PACK_NAME', packName } as const),
 
-export const setSearchByPackNameAC = (packName: string) =>
-  ({ type: 'packs/SET_SEARCH_BY_PACK_NAME', packName } as const)
+  setMinCardsCount: (minCount: number) =>
+    ({ type: 'packs/SET-MIN-CARDS-COUNT', minCount } as const),
 
-export const setMinCardsCountAC = (minCount: number) =>
-  ({ type: 'packs/SET-MIN-CARDS-COUNT', minCount } as const)
+  setMaxCardsCount: (maxCount: number) =>
+    ({ type: 'packs/SET-MAX-CARDS-COUNT', maxCount } as const),
 
-export const setMaxCardsCountAC = (maxCount: number) =>
-  ({ type: 'packs/SET-MAX-CARDS-COUNT', maxCount } as const)
+  setIsMyPacks: (isMyPacks: boolean) => ({ type: 'packs/SET_IS_MY_PACKS', isMyPacks } as const),
 
-export const setIsMyPacksAC = (isMyPacks: boolean) =>
-  ({ type: 'packs/SET_IS_MY_PACKS', isMyPacks } as const)
+  setIsLoading: (isLoading: boolean) => ({ type: 'packs/SET_IS_LOADING', isLoading } as const),
 
-export const setIsLoadingAC = (isLoading: boolean) =>
-  ({ type: 'packs/SET_IS_LOADING', isLoading } as const)
-
-export const setSortPacksAC = (sortPacks: string) =>
-  ({ type: 'packs/SET_SORT_PACKS', sortPacks } as const)
+  setSortPacks: (sortPacks: string) => ({ type: 'packs/SET_SORT_PACKS', sortPacks } as const),
+}
 
 //thunks
 
@@ -95,7 +92,7 @@ export const fetchPacksTC = (): AppThunk => async (dispatch, getState) => {
   const { _id } = getState().auth
 
   try {
-    dispatch(setIsLoadingAC(true))
+    dispatch(setIsLoading(true))
     const res = await packsAPI.getPacks({
       page,
       pageCount,
@@ -106,12 +103,12 @@ export const fetchPacksTC = (): AppThunk => async (dispatch, getState) => {
       user_id: isMyPacks ? _id : '',
     })
 
-    dispatch(getPacksAC(res.data.cardPacks))
-    dispatch(setCardPacksTotalCountAC(res.data.cardPacksTotalCount))
+    dispatch(getPacks(res.data.cardPacks))
+    dispatch(setCardPacksTotalCount(res.data.cardPacksTotalCount))
   } catch (error) {
     errorUtils(error, dispatch)
   } finally {
-    dispatch(setIsLoadingAC(false))
+    dispatch(setIsLoading(false))
   }
 }
 
@@ -119,17 +116,17 @@ export const createNewPacksTC =
   (data: NewPackType): AppThunk =>
   async dispatch => {
     try {
-      dispatch(setIsDisabledAC(true))
-      dispatch(setIsLoadingAC(true))
+      dispatch(setIsDisabled(true))
+      dispatch(setIsLoading(true))
       const res = await packsAPI.createPack(data)
 
       dispatch(fetchPacksTC())
-      dispatch(setIsLoadingAC(false))
+      dispatch(setIsLoading(false))
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setIsDisabledAC(false))
-      dispatch(setIsLoadingAC(false))
+      dispatch(setIsDisabled(false))
+      dispatch(setIsLoading(false))
     }
   }
 
@@ -137,13 +134,13 @@ export const updatePackTC =
   (data: UpdatedPackType): AppThunk =>
   async dispatch => {
     try {
-      dispatch(setIsLoadingAC(true))
+      dispatch(setIsLoading(true))
       await packsAPI.updatedPack(data)
       dispatch(fetchPacksTC())
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setIsLoadingAC(false))
+      dispatch(setIsLoading(false))
     }
   }
 
@@ -151,25 +148,28 @@ export const deletePackTC =
   (id: string): AppThunk =>
   async dispatch => {
     try {
-      dispatch(setIsLoadingAC(true))
+      dispatch(setIsLoading(true))
       await packsAPI.deletePack(id)
 
       dispatch(fetchPacksTC())
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setIsLoadingAC(false))
+      dispatch(setIsLoading(false))
     }
   }
 
-export type ActionPacksType =
-  | ReturnType<typeof getPacksAC>
-  | ReturnType<typeof setPageAC>
-  | ReturnType<typeof setPageCountAC>
-  | ReturnType<typeof setCardPacksTotalCountAC>
-  | ReturnType<typeof setSearchByPackNameAC>
-  | ReturnType<typeof setMinCardsCountAC>
-  | ReturnType<typeof setMaxCardsCountAC>
-  | ReturnType<typeof setIsMyPacksAC>
-  | ReturnType<typeof setIsLoadingAC>
-  | ReturnType<typeof setSortPacksAC>
+export type ActionPacksType = ReturnType<PropertiesType<typeof packsActions>>
+
+export const {
+  setSortPacks,
+  setIsMyPacks,
+  setCardPacksTotalCount,
+  setMaxCardsCount,
+  setMinCardsCount,
+  setPageCount,
+  setPage,
+  setSearchByPackName,
+  getPacks,
+  setIsLoading,
+} = packsActions

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { fetchPacksTC, setSearchByPackNameAC } from '../../packs-reducer'
+import { fetchPacksTC, setSearchByPackName } from '../../packs-reducer'
 
 import { SearchInput } from './SearchInput'
 
@@ -15,7 +15,7 @@ export const SearchByPackName = () => {
   const { packName } = useAppSelector(state => state.packs)
 
   const onChangeText = (newPackName: string) => {
-    dispatch(setSearchByPackNameAC(newPackName))
+    dispatch(setSearchByPackName(newPackName))
     const querySearch = newPackName !== '' ? { packName: newPackName + '' } : {}
     const { packName, ...lastQueries } = Object.fromEntries(searchParams)
     const allQuery: any = { ...lastQueries, ...querySearch }

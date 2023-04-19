@@ -2,11 +2,12 @@ import React, { SyntheticEvent } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../../../app/store'
-import { Range } from '../../../../../components/super-components/range/Range'
-import { SubTitle } from '../../../../utils/SubTitle/SubTitle'
-import { setMaxCardsCountAC, setMinCardsCountAC } from '../../packs-reducer'
+import { setMaxCardsCount, setMinCardsCount } from '../../packs-reducer'
 import s from '../Handler.module.scss'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { SubTitle } from 'common/utils/SubTitle/SubTitle'
+import { Range } from 'components/super-components/range/Range'
 
 export const Slider = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -18,8 +19,8 @@ export const Slider = () => {
     newValue: number | number[]
   ) => {
     if (Array.isArray(newValue)) {
-      dispatch(setMinCardsCountAC(newValue[0]))
-      dispatch(setMaxCardsCountAC(newValue[1]))
+      dispatch(setMinCardsCount(newValue[0]))
+      dispatch(setMaxCardsCount(newValue[1]))
       const queryMin = newValue[0] !== 0 ? { min: newValue[0] + '' } : {}
       const queryMax = newValue[1] !== 110 ? { max: newValue[1] + '' } : {}
       const { min, max, ...lastQueries } = Object.fromEntries(searchParams)

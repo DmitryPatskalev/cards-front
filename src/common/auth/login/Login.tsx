@@ -101,6 +101,3 @@ export const Login = () => {
     </div>
   )
 }
-
-//email: "nya-admin@nya.nya"
-// password: "1qazxcvBG"

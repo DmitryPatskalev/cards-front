@@ -1,8 +1,9 @@
 import { authAPI, ForgotPasswordType, LoginType } from 'api/auth-api'
 import { initializedAppTC } from 'app/app-reducer'
 import { AppThunk } from 'app/store'
-import { setIsLoadingAC } from 'common/cards/pack/packs-reducer'
+import { setIsLoading } from 'common/cards/pack/packs-reducer'
 import { errorUtils } from 'common/utils/errors/error/error-utils'
+import { PropertiesType } from 'app/ActionsTypeUtils'
 
 const initialState = {
   error: null as string | null,
@@ -22,7 +23,7 @@ type InitialStateType = typeof initialState
 
 export const loginReducer = (
   state: InitialStateType = initialState,
-  action: ActionsAuthType
+  action: AuthActionsType
 ): InitialStateType => {
   switch (action.type) {
     case 'auth/SET_ERROR':
@@ -49,44 +50,41 @@ export const loginReducer = (
       return state
   }
 }
+export const loginActions = {
+  setError: (error: string | null) => ({ type: 'auth/SET_ERROR', error } as const),
 
-export const setErrorAC = (error: string | null) => ({ type: 'auth/SET_ERROR', error } as const)
+  setIsLoggedIn: (isLoggedIn: boolean) => ({ type: 'auth/SET_IS_LOGGED_IN', isLoggedIn } as const),
 
-export const setIsLoggedInAC = (isLoggedIn: boolean) =>
-  ({ type: 'auth/SET_IS_LOGGED_IN', isLoggedIn } as const)
+  setIsDisabled: (isDisabled: boolean) => ({ type: 'auth/SET_IS_DISABLED', isDisabled } as const),
 
-export const setIsDisabledAC = (isDisabled: boolean) =>
-  ({ type: 'auth/SET_IS_DISABLED', isDisabled } as const)
+  setRegister: (isRegistered: boolean) => ({ type: 'auth/SET_REGISTER', isRegistered } as const),
 
-export const setRegisterAC = (isRegistered: boolean) =>
-  ({ type: 'auth/SET_REGISTER', isRegistered } as const)
+  recoveryPassword: (email: string, message: string) =>
+    ({ type: 'auth/RECOVERY_PASSWORD', email, message } as const),
 
-export const recoveryPasswordAC = (email: string, message: string) =>
-  ({ type: 'auth/RECOVERY_PASSWORD', email, message } as const)
+  updateUserName: (name: string) => ({ type: 'auth/UPDATE_USER_NAME', name } as const),
 
-export const updateUserNameAC = (name: string) => ({ type: 'auth/UPDATE_USER_NAME', name } as const)
+  setUserEmail: (email: string) => ({ type: 'auth/SET_USER_EMAIL', email } as const),
 
-export const setUserEmailAC = (email: string) => ({ type: 'auth/SET_USER_EMAIL', email } as const)
+  setIsSuccess: (isSuccess: boolean) => ({ type: 'auth/IS_SUCCESS', isSuccess } as const),
 
-export const setIsSuccessAC = (isSuccess: boolean) =>
-  ({ type: 'auth/IS_SUCCESS', isSuccess } as const)
+  setNewPassword: (password: string, resetPasswordToken: string) =>
+    ({ type: 'auth/SET_NEW_PASSWORD', password, resetPasswordToken } as const),
 
-export const setNewPasswordAC = (password: string, resetPasswordToken: string) =>
-  ({ type: 'auth/SET_NEW_PASSWORD', password, resetPasswordToken } as const)
-
-export const setUserId = (_id: string) => ({ type: 'auth/SET_USER_ID', _id } as const)
+  setUserId: (_id: string) => ({ type: 'auth/SET_USER_ID', _id } as const),
+}
 
 export const registerTC =
   (data: LoginType): AppThunk =>
   async dispatch => {
     try {
-      dispatch(setIsDisabledAC(true))
+      dispatch(setIsDisabled(true))
       await authAPI.register(data)
-      dispatch(setRegisterAC(true))
+      dispatch(setRegister(true))
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setIsDisabledAC(false))
+      dispatch(setIsDisabled(false))
     }
   }
 
@@ -94,30 +92,30 @@ export const loginTC =
   (data: LoginType): AppThunk =>
   async dispatch => {
     try {
-      dispatch(setIsDisabledAC(true))
+      dispatch(setIsDisabled(true))
       const res = await authAPI.login(data)
       const { name, email } = res.data
 
-      dispatch(updateUserNameAC(name))
-      dispatch(setUserEmailAC(email))
+      dispatch(updateUserName(name))
+      dispatch(setUserEmail(email))
 
       dispatch(initializedAppTC())
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setIsDisabledAC(false))
+      dispatch(setIsDisabled(false))
     }
   }
 
 export const logoutTC = (): AppThunk => async dispatch => {
   try {
-    dispatch(setIsDisabledAC(true))
+    dispatch(setIsDisabled(true))
     await authAPI.logout()
-    dispatch(setIsLoggedInAC(false))
+    dispatch(setIsLoggedIn(false))
   } catch (error) {
     errorUtils(error, dispatch)
   } finally {
-    dispatch(setIsDisabledAC(false))
+    dispatch(setIsDisabled(false))
   }
 }
 
@@ -125,21 +123,21 @@ export const recoveryPasswordTC =
   (data: ForgotPasswordType): AppThunk =>
   async dispatch => {
     try {
-      dispatch(setIsDisabledAC(true))
+      dispatch(setIsDisabled(true))
       const res = await authAPI.recovery(data)
       const { email, message } = res.data
 
       if (res.data.success) {
-        dispatch(setIsSuccessAC(true))
-        dispatch(recoveryPasswordAC(email, message))
-        dispatch(setUserEmailAC(data.email))
+        dispatch(setIsSuccess(true))
+        dispatch(recoveryPassword(email, message))
+        dispatch(setUserEmail(data.email))
       } else {
-        setErrorAC(res.data.error)
+        setError(res.data.error)
       }
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setIsDisabledAC(false))
+      dispatch(setIsDisabled(false))
     }
   }
 
@@ -147,14 +145,14 @@ export const updateUserTC =
   (name: string): AppThunk =>
   async dispatch => {
     try {
-      dispatch(setIsLoadingAC(true))
+      dispatch(setIsLoading(true))
       const res = await authAPI.updateUserName(name)
 
-      dispatch(updateUserNameAC(res.data.updatedUser.name))
+      dispatch(updateUserName(res.data.updatedUser.name))
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setIsLoadingAC(false))
+      dispatch(setIsLoading(false))
     }
   }
 
@@ -162,28 +160,30 @@ export const setNewPasswordTC =
   (password: string, resetPasswordToken: string): AppThunk =>
   async dispatch => {
     try {
-      dispatch(setIsDisabledAC(true))
+      dispatch(setIsDisabled(true))
       const res = await authAPI.newPassword(password, resetPasswordToken)
 
       if (res.data.info) {
-        dispatch(setNewPasswordAC(password, resetPasswordToken))
-        dispatch(setIsSuccessAC(true))
+        dispatch(setNewPassword(password, resetPasswordToken))
+        dispatch(setIsSuccess(true))
       }
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setIsDisabledAC(false))
+      dispatch(setIsDisabled(false))
     }
   }
 
-export type ActionsAuthType =
-  | ReturnType<typeof setErrorAC>
-  | ReturnType<typeof setIsLoggedInAC>
-  | ReturnType<typeof setIsDisabledAC>
-  | ReturnType<typeof setRegisterAC>
-  | ReturnType<typeof recoveryPasswordAC>
-  | ReturnType<typeof updateUserNameAC>
-  | ReturnType<typeof setUserEmailAC>
-  | ReturnType<typeof setIsSuccessAC>
-  | ReturnType<typeof setNewPasswordAC>
-  | ReturnType<typeof setUserId>
+export type AuthActionsType = ReturnType<PropertiesType<typeof loginActions>>
+export const {
+  recoveryPassword,
+  setNewPassword,
+  setIsDisabled,
+  setIsSuccess,
+  setIsLoggedIn,
+  setRegister,
+  setUserId,
+  updateUserName,
+  setUserEmail,
+  setError,
+} = loginActions

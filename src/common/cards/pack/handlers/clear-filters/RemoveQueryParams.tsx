@@ -4,12 +4,12 @@ import { useSearchParams } from 'react-router-dom'
 
 import clearFilter from '../../../../utils/img/clear-filter.svg'
 import {
-  setMaxCardsCountAC,
-  setMinCardsCountAC,
-  setPageAC,
-  setPageCountAC,
-  setSearchByPackNameAC,
-  setSortPacksAC,
+  setMaxCardsCount,
+  setMinCardsCount,
+  setPage,
+  setPageCount,
+  setSearchByPackName,
+  setSortPacks,
 } from '../../packs-reducer'
 import s from '../Handler.module.scss'
 
@@ -36,12 +36,12 @@ export const RemoveQueryParams = () => {
       searchParams.delete('max')
       searchParams.delete('sortPacks')
 
-      dispatch(setPageAC(1))
-      dispatch(setPageCountAC(5))
-      dispatch(setSearchByPackNameAC(''))
-      dispatch(setMinCardsCountAC(0))
-      dispatch(setMaxCardsCountAC(110))
-      dispatch(setSortPacksAC(''))
+      dispatch(setPage(1))
+      dispatch(setPageCount(5))
+      dispatch(setSearchByPackName(''))
+      dispatch(setMinCardsCount(0))
+      dispatch(setMaxCardsCount(110))
+      dispatch(setSortPacks(''))
 
       setSearchParams(searchParams)
     }

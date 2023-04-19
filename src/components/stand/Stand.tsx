@@ -14,7 +14,7 @@ export const Stand = () => {
     setValue(e.currentTarget.value)
   }
 
-  const setErrorInputHundler = () => {
+  const setErrorInputHandler = () => {
     setError(stateForAllInputs.trim() ? '' : 'Error')
     setValue('')
   }
@@ -35,7 +35,7 @@ export const Stand = () => {
             value={stateForAllInputs}
             onChange={onChangeInputHandler}
             error={error}
-            onEnter={setErrorInputHundler}
+            onEnter={setErrorInputHandler}
           />
         </div>
       </div>

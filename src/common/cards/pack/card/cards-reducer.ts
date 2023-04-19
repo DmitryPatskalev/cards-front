@@ -1,7 +1,8 @@
 import { cardsAPI, CardType, NewCardType, UpdateCardType } from 'api/cards-api'
+import { PropertiesType } from 'app/ActionsTypeUtils'
 import { AppThunk } from 'app/store'
-import { setIsDisabledAC } from 'common/auth/login/login-reducer'
-import { setIsLoadingAC } from 'common/cards/pack/packs-reducer'
+import { setIsDisabled } from 'common/auth/login/login-reducer'
+import { setIsLoading } from 'common/cards/pack/packs-reducer'
 import { errorUtils } from 'common/utils/errors/error/error-utils'
 
 const initialState = {
@@ -18,7 +19,7 @@ type InitialStateType = typeof initialState
 
 export const cardsReducer = (
   state: InitialStateType = initialState,
-  action: ActionsCardsType
+  action: CardsActionsType
 ): InitialStateType => {
   switch (action.type) {
     case 'cards/GET_CARDS':
@@ -39,36 +40,36 @@ export const cardsReducer = (
       return state
   }
 }
+const cardsActions = {
+  setCards: (cards: CardType[]) => ({ type: 'cards/GET_CARDS', cards } as const),
 
-export const setCardsAC = (cards: CardType[]) => ({ type: 'cards/GET_CARDS', cards } as const)
+  setCardsPackId: (cardsPack_id: string) =>
+    ({ type: 'cards/SET_PACK_USER_ID', cardsPack_id } as const),
 
-export const setCardsPackIdAC = (cardsPack_id: string) =>
-  ({ type: 'cards/SET_PACK_USER_ID', cardsPack_id } as const)
+  createNewCard: (card: CardType) => ({ type: 'cards/CREATE_NEW_CARD', card } as const),
 
-export const createNewCardAC = (card: CardType) =>
-  ({ type: 'cards/CREATE_NEW_CARD', card } as const)
+  setCardsTotalCount: (cardsTotalCount: number) =>
+    ({ type: 'cards/SET_CARDS_TOTAL_COUNT', cardsTotalCount } as const),
 
-export const setCardsTotalCountAC = (cardsTotalCount: number) =>
-  ({ type: 'cards/SET_CARDS_TOTAL_COUNT', cardsTotalCount } as const)
+  setPackName: (name: string) => ({ type: 'cards/SET_PACK_NAME', name } as const),
 
-export const setPackNameAC = (name: string) => ({ type: 'cards/SET_PACK_NAME', name } as const)
+  setSearchByQuestion: (cardQuestion: string) =>
+    ({ type: 'cards/SET_SEARCH_BY_QUESTION', cardQuestion } as const),
 
-export const setSearchByQuestionAC = (cardQuestion: string) =>
-  ({ type: 'cards/SET_SEARCH_BY_QUESTION', cardQuestion } as const)
+  setPageCard: (pageCard: number) => ({ type: 'cards/SET_PAGE_CARD', pageCard } as const),
 
-export const setPageCardAC = (pageCard: number) =>
-  ({ type: 'cards/SET_PAGE_CARD', pageCard } as const)
+  setPageCardCount: (pageCardCount: number) =>
+    ({ type: 'cards/SET_PAGE_CARD_COUNT', pageCardCount } as const),
+}
 
-export const setPageCardCountAC = (pageCardCount: number) =>
-  ({ type: 'cards/SET_PAGE_CARD_COUNT', pageCardCount } as const)
-
+//thunks
 export const fetchCardsTC =
   (cardsPack_id: string): AppThunk =>
   async (dispatch, getState) => {
     const { cardQuestion, pageCard, pageCardCount, name } = getState().cards
 
     try {
-      dispatch(setIsLoadingAC(true))
+      dispatch(setIsLoading(true))
 
       const res = await cardsAPI.getCards({
         cardsPack_id,
@@ -77,14 +78,14 @@ export const fetchCardsTC =
         cardQuestion,
       })
 
-      dispatch(setCardsAC(res.data.cards))
-      dispatch(setCardsPackIdAC(cardsPack_id))
-      dispatch(setCardsTotalCountAC(res.data.cardsTotalCount))
-      dispatch(setPackNameAC(res.data.packName))
+      dispatch(setCards(res.data.cards))
+      dispatch(setCardsPackId(cardsPack_id))
+      dispatch(setCardsTotalCount(res.data.cardsTotalCount))
+      dispatch(setPackName(res.data.packName))
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setIsLoadingAC(false))
+      dispatch(setIsLoading(false))
     }
   }
 
@@ -94,16 +95,16 @@ export const createNewCardTC =
     const { cardsPack_id } = getState().cards
 
     try {
-      dispatch(setIsDisabledAC(true))
-      dispatch(setIsLoadingAC(true))
+      dispatch(setIsDisabled(true))
+      dispatch(setIsLoading(true))
       await cardsAPI.postCards(data)
 
       dispatch(fetchCardsTC(cardsPack_id))
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setIsDisabledAC(false))
-      dispatch(setIsLoadingAC(false))
+      dispatch(setIsDisabled(false))
+      dispatch(setIsLoading(false))
     }
   }
 
@@ -111,13 +112,13 @@ export const deleteCardTC = (): AppThunk => async (dispatch, getState) => {
   const { cardsPack_id } = getState().cards
 
   try {
-    dispatch(setIsLoadingAC(true))
+    dispatch(setIsLoading(true))
     await cardsAPI.deleteCard()
     dispatch(fetchCardsTC(cardsPack_id))
   } catch (error) {
     errorUtils(error, dispatch)
   } finally {
-    dispatch(setIsLoadingAC(false))
+    dispatch(setIsLoading(false))
   }
 }
 
@@ -127,22 +128,25 @@ export const updateCardTC =
     const { cardsPack_id } = getState().cards
 
     try {
-      dispatch(setIsLoadingAC(true))
+      dispatch(setIsLoading(true))
       await cardsAPI.updateCard(data)
       dispatch(fetchCardsTC(cardsPack_id))
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setIsLoadingAC(false))
+      dispatch(setIsLoading(false))
     }
   }
 
-export type ActionsCardsType =
-  | ReturnType<typeof setCardsAC>
-  | ReturnType<typeof setCardsPackIdAC>
-  | ReturnType<typeof createNewCardAC>
-  | ReturnType<typeof setCardsTotalCountAC>
-  | ReturnType<typeof setPackNameAC>
-  | ReturnType<typeof setSearchByQuestionAC>
-  | ReturnType<typeof setPageCardAC>
-  | ReturnType<typeof setPageCardCountAC>
+export type CardsActionsType = ReturnType<PropertiesType<typeof cardsActions>>
+
+export const {
+  setCards,
+  setCardsPackId,
+  setCardsTotalCount,
+  setPageCardCount,
+  setPageCard,
+  setPackName,
+  createNewCard,
+  setSearchByQuestion,
+} = cardsActions

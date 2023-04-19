@@ -2,8 +2,8 @@ import React from 'react'
 
 import { useParams, useSearchParams } from 'react-router-dom'
 
-import { setPageCardAC, setPageCardCountAC } from '../../card/cards-reducer'
-import { setPageAC, setPageCountAC } from '../../packs-reducer'
+import { setPageCard, setPageCardCount } from '../../card/cards-reducer'
+import { setPage, setPageCount } from '../../packs-reducer'
 import s from '../Handler.module.scss'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
@@ -19,8 +19,8 @@ export const PacksCardsPagination = () => {
   const { cardsPack_id } = useParams()
 
   const onChangePagination = (newPage: number, newPageCount: number) => {
-    dispatch(cardsPack_id ? setPageCardAC(newPage) : setPageAC(newPage))
-    dispatch(cardsPack_id ? setPageCardCountAC(newPageCount) : setPageCountAC(newPageCount))
+    dispatch(cardsPack_id ? setPageCard(newPage) : setPage(newPage))
+    dispatch(cardsPack_id ? setPageCardCount(newPageCount) : setPageCount(newPageCount))
     const queryPage = newPage !== 1 ? { page: newPage + '' } : {}
     const queryCount = newPageCount !== 5 ? { pageCount: newPageCount + '' } : {}
     const { page, pageCount, ...lastQueries } = Object.fromEntries(searchParams)

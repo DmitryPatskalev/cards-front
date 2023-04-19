@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { getPacksAC, InitialStateType, packsReducer } from 'common/cards/pack/packs-reducer'
+import { getPacks, InitialStateType, packsReducer } from 'common/cards/pack/packs-reducer'
 
 let startState: InitialStateType
 
@@ -56,7 +56,7 @@ beforeEach(() => {
 })
 
 test('correct packs should be shown', () => {
-  const action = getPacksAC(startState.cardPacks)
+  const action = getPacks(startState.cardPacks)
   const endState = packsReducer(startState, action)
 
   expect(endState.cardPacks.length).toBe(2)

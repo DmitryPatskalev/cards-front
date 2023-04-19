@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
-import { setErrorAC } from 'common/auth/login/login-reducer'
+import { setError } from 'common/auth/login/login-reducer'
 
 export const errorUtils = (e: unknown, dispatch: Dispatch) => {
   const err = e as Error | AxiosError<{ error: string }>
@@ -9,8 +9,8 @@ export const errorUtils = (e: unknown, dispatch: Dispatch) => {
   if (axios.isAxiosError(err)) {
     const error = err.response?.data ? err.response.data.error : err.message
 
-    dispatch(setErrorAC(error))
+    dispatch(setError(error))
   } else {
-    dispatch(setErrorAC(`Native error ${err.message}`))
+    dispatch(setError(`Native error ${err.message}`))
   }
 }

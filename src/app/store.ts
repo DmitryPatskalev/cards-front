@@ -4,8 +4,8 @@ import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { AppActionsType, appReducer } from './app-reducer'
 
-import { ActionsAuthType, loginReducer } from 'common/auth/login/login-reducer'
-import { ActionsCardsType, cardsReducer } from 'common/cards/pack/card/cards-reducer'
+import { AuthActionsType, loginReducer } from 'common/auth/login/login-reducer'
+import { CardsActionsType, cardsReducer } from 'common/cards/pack/card/cards-reducer'
 import { ActionPacksType, packsReducer } from 'common/cards/pack/packs-reducer'
 
 export const rootReducer = combineReducers({
@@ -18,7 +18,7 @@ export const rootReducer = combineReducers({
 export const store = createStore(rootReducer, applyMiddleware(thunk))
 
 export type RootStateType = ReturnType<typeof store.getState>
-export type ActionsType = ActionsAuthType | AppActionsType | ActionPacksType | ActionsCardsType
+export type ActionsType = AuthActionsType | AppActionsType | ActionPacksType | CardsActionsType
 export type AppDispatch = ThunkDispatch<RootStateType, unknown, ActionsType>
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
