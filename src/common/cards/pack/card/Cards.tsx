@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Rating } from '@mui/material'
 import { useParams } from 'react-router-dom'
@@ -8,10 +8,16 @@ import table from '../../../common-css-style/Table.module.scss'
 import { SearchByQuestion } from '../handlers/search-input/SearchByQuestion'
 import pack from '../Packs.module.scss'
 
-import { createNewCardTC, deleteCardTC, fetchCardsTC, updateCardTC } from './cards-reducer'
+import {
+  createNewCardTC,
+  deleteCardTC,
+  fetchCardsTC,
+  setGradeTC,
+  updateCardTC,
+} from './cards-reducer'
 import s from './Cards.module.scss'
 
-import { NewCardType, UpdateCardType } from 'api/cards-api'
+import { GradeCardType, NewCardType, UpdateCardType } from 'api/cards-api'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { PacksCardsPagination } from 'common/cards/pack/handlers/packs-pagination/PacksCardsPagination'
 import pencil from 'common/utils/img/pencil-line-light.svg'
@@ -41,6 +47,10 @@ export const Cards = () => {
 
   const updateCardHandler = (data: UpdateCardType) => {
     dispatch(updateCardTC(data))
+  }
+
+  const setGradeOnChange = (data: GradeCardType) => {
+    dispatch(setGradeTC(data))
   }
 
   const myId = '6352ce8810be8e0004d5b4f4'
@@ -115,7 +125,10 @@ export const Cards = () => {
                   <td>{card.answer}</td>
                   <td>{card.updated.slice(0, 10)}</td>
                   <td>
-                    <Rating value={card.grade} />
+                    <Rating
+                      value={card.grade}
+                      onChange={() => setGradeOnChange({ card_id: card._id, grade: card.grade })}
+                    />
                   </td>
                   <td className={table.actionsBlock}>
                     <button

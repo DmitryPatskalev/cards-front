@@ -1,9 +1,9 @@
 import { errorUtils } from '../../utils/errors/error/error-utils'
 
 import { NewPackType, packsAPI, PackType, UpdatedPackType } from 'api/packs-api'
-import { PropertiesType } from 'app/ActionsTypeUtils'
 import { AppThunk } from 'app/store'
 import { setIsDisabled } from 'common/auth/login/login-reducer'
+import { PropertiesType } from 'common/utils/ActionsTypeUtils'
 
 const initialState = {
   cardPacks: [] as PackType[],

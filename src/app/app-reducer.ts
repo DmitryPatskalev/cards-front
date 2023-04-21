@@ -1,13 +1,13 @@
 import { AppThunk } from './store'
 
 import { authAPI } from 'api/auth-api'
-import { PropertiesType } from 'app/ActionsTypeUtils'
 import {
   setIsLoggedIn,
   setUserEmail,
   setUserId,
   updateUserName,
 } from 'common/auth/login/login-reducer'
+import { PropertiesType } from 'common/utils/ActionsTypeUtils'
 import { errorUtils } from 'common/utils/errors/error/error-utils'
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'

@@ -55,7 +55,7 @@ export const DeletePackModal: React.FC<DeletePackModalPropsType> = ({
               </div>
               <div className={`${form.inputFieldContainer} ${s.inputContainer}`}>
                 <div className={s.packNameBlock}>
-                  Do you really want to remove <span className={s.namePack}>{name}</span>. All cards
+                  Do you really want to remove <span className={s.namePack}>{name}.</span> All cards
                   will be deleted.
                 </div>
               </div>

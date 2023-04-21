@@ -2,8 +2,8 @@ import { authAPI, ForgotPasswordType, LoginType } from 'api/auth-api'
 import { initializedAppTC } from 'app/app-reducer'
 import { AppThunk } from 'app/store'
 import { setIsLoading } from 'common/cards/pack/packs-reducer'
+import { PropertiesType } from 'common/utils/ActionsTypeUtils'
 import { errorUtils } from 'common/utils/errors/error/error-utils'
-import { PropertiesType } from 'app/ActionsTypeUtils'
 
 const initialState = {
   error: null as string | null,

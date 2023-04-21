@@ -56,7 +56,6 @@ export const SuperModal: React.FC<IModal> = ({
           top,
           left,
           width,
-          height,
           borderRadius: '5px',
           background: '#FFFFFF',
           padding: '20px',
