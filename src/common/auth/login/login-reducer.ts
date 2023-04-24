@@ -141,7 +141,7 @@ export const recoveryPasswordTC =
     }
   }
 
-export const updateUserTC =
+export const updateUserNameTC =
   (name: string): AppThunk =>
   async dispatch => {
     try {

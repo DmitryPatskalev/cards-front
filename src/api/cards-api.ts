@@ -5,17 +5,17 @@ export const cardsAPI = {
     return instance.get<CardsResponceType>('/cards/card', { params })
   },
   postCards(data: NewCardType) {
-    return instance.post<CardsResponceType>('/cards/card', data)
+    return instance.post<CardDomainResponseType<CardType>>('/cards/card', data)
   },
   deleteCard() {
-    return instance.delete('/cards/card', {
+    return instance.delete<CardDomainResponseType<CardType>>('/cards/card', {
       params: {
-        id: '6435accee26fcaa528bf1717',
+        id: '6443fe02b79de1d01ec0c4b5',
       },
     })
   },
   updateCard(data: UpdateCardType) {
-    return instance.put('cards/card', data)
+    return instance.put<CardDomainResponseType<CardType>>('cards/card', data)
   },
   setGradeCard(data: GradeCardType) {
     return instance.put('cards/grade', data)
@@ -71,6 +71,12 @@ export type CardType = {
   __v: number
 }
 
+export type CardDomainResponseType<T = {}> = {
+  cards: T
+  token: string
+  tokenDeathTime: number
+}
+
 export type NewCardType = {
   card: {
     cardsPack_id?: string
@@ -92,25 +98,44 @@ export type UpdateCardType = {
     question?: string // не обязательно
   }
 }
+
 export type GradeCardType = {
   grade: number
   card_id: string
 }
 
 export type CardGradeResponceType = {
-  updatedGrade: CardGrade
+  updatedGrade: SetGradeType
   token: string
   tokenDeathTime: number
 }
-export type CardGrade = {
-  _id: string
+export type SetGradeType = {
   card_id: string
   user_id: string
   cardsPack_id: string
   grade: number
   shots: number
   more_id: string
+  _id: string
   created: string
   updated: string
   __v: number
 }
+
+//
+// export type UpdateCardResponceType = {
+//   updatedCard: CardType
+//   token: string
+//   tokenDeathTime: number
+// }
+//
+// export type NewCardResponceType = {
+//   newCard: CardType
+//   token: string
+//   tokenDeathTime: number
+// }
+// export type DeleteCardResponseType = {
+//   deletedCard: CardType
+//   token: string
+//   tokenDeathTime: number
+// }

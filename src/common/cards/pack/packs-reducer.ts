@@ -18,12 +18,12 @@ const initialState = {
   isLoading: false,
 }
 
-export type InitialStateType = typeof initialState
+export type InitialPacksStateType = typeof initialState
 
 export const packsReducer = (
-  state: InitialStateType = initialState,
+  state: InitialPacksStateType = initialState,
   action: ActionPacksType
-): InitialStateType => {
+): InitialPacksStateType => {
   switch (action.type) {
     case 'packs/GET_PACKS':
       return { ...state, cardPacks: action.cardPacks }
@@ -118,7 +118,7 @@ export const createNewPacksTC =
     try {
       dispatch(setIsDisabled(true))
       dispatch(setIsLoading(true))
-      const res = await packsAPI.createPack(data)
+      await packsAPI.createPack(data)
 
       dispatch(fetchPacksTC())
       dispatch(setIsLoading(false))

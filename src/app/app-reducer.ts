@@ -12,7 +12,7 @@ import { errorUtils } from 'common/utils/errors/error/error-utils'
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
-type InitialAppStateType = {
+export type InitialAppStateType = {
   status: RequestStatusType
   isInitialized: boolean
 }

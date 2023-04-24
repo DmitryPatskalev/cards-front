@@ -3,7 +3,7 @@ import React, { ChangeEvent, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
-import { logoutTC, updateUserTC } from 'common/auth/login/login-reducer'
+import { logoutTC, updateUserNameTC } from 'common/auth/login/login-reducer'
 import style from 'common/auth/login/Login.module.scss'
 import s from 'common/auth/profile/Profile.module.scss'
 import commonStyle from 'common/common-css-style/common-container.module.scss'
@@ -33,7 +33,7 @@ export const Profile = () => {
     setEdit(true)
   }
   const activateViewMode = () => {
-    dispatch(updateUserTC(newName))
+    dispatch(updateUserNameTC(newName))
     setEdit(false)
   }
   const onChangeNameHandler = (e: ChangeEvent<HTMLInputElement>) => {

@@ -15,12 +15,12 @@ const initialState = {
   cardQuestion: '',
 }
 
-type InitialStateType = typeof initialState
+export type InitialCardsStateType = typeof initialState
 
 export const cardsReducer = (
-  state: InitialStateType = initialState,
+  state: InitialCardsStateType = initialState,
   action: CardsActionsType
-): InitialStateType => {
+): InitialCardsStateType => {
   switch (action.type) {
     case 'cards/GET_CARDS':
       return { ...state, cards: action.cards }
@@ -44,8 +44,6 @@ export const cardsReducer = (
       return { ...state, pageCardCount: action.pageCardCount }
 
     case 'cards/SET_GRADE':
-      console.log(action, 'action')
-
       return {
         ...state,
         cards: state.cards.map(card =>
@@ -83,7 +81,7 @@ const cardsActions = {
 export const fetchCardsTC =
   (cardsPack_id: string): AppThunk =>
   async (dispatch, getState) => {
-    const { cardQuestion, pageCard, pageCardCount, name } = getState().cards
+    const { cardQuestion, pageCard, pageCardCount } = getState().cards
 
     try {
       dispatch(setIsLoading(true))
@@ -161,7 +159,9 @@ export const setGradeTC =
     try {
       const res = await cardsAPI.setGradeCard(data)
 
-      dispatch(setGrade(res.data.updatedGrade))
+      console.log(res.data)
+
+      dispatch(setGrade(res.data.cards))
     } catch (error) {
       errorUtils(error, dispatch)
     }

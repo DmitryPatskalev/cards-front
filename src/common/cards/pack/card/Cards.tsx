@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { SyntheticEvent, useEffect } from 'react'
 
 import { Rating } from '@mui/material'
 import { useParams } from 'react-router-dom'
@@ -49,7 +49,7 @@ export const Cards = () => {
     dispatch(updateCardTC(data))
   }
 
-  const setGradeOnChange = (data: GradeCardType) => {
+  const setGradeOnChange = (event: SyntheticEvent, data: GradeCardType) => {
     dispatch(setGradeTC(data))
   }
 
@@ -127,7 +127,9 @@ export const Cards = () => {
                   <td>
                     <Rating
                       value={card.grade}
-                      onChange={() => setGradeOnChange({ card_id: card._id, grade: card.grade })}
+                      onChange={event =>
+                        setGradeOnChange(event, { card_id: card._id, grade: card.grade })
+                      }
                     />
                   </td>
                   <td className={table.actionsBlock}>
