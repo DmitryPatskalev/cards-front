@@ -56,7 +56,7 @@ export const PacksTable = () => {
             cardPacks.map(p => {
               return (
                 <tr key={p._id}>
-                  {!p.cardsCount && p.user_id === myId ? (
+                  {(!p.cardsCount && p.user_id === myId) || p.cardsCount ? (
                     <td onClick={() => navigate(`/cards/card/${p._id}`)}>
                       <span className={s.tdLink}>{p.name.slice(0, 30)}</span>
                     </td>
@@ -85,7 +85,7 @@ export const PacksTable = () => {
           ) : (
             <tr className={s.emptyPacks}>
               <td>
-                <Title title="PacksContainer not found. Try to change your search parameters" />
+                <Title title="Packs not found. Try to change your search parameters" />
               </td>
             </tr>
           )}

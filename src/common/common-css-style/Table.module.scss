@@ -1,4 +1,3 @@
-
 .table {
   width: 100%;
   border: none;
@@ -14,20 +13,17 @@
   font-size: 14px;
 }
 
-
 .table thead tr th:first-child {
   border-radius: 8px 0 0 8px;
   width: 30%;
-
 }
-.table thead tr th:nth-child(2){
+.table thead tr th:nth-child(2) {
   width: 20%;
-
 }
-.table thead tr th:nth-child(3){
+.table thead tr th:nth-child(3) {
   width: 15%;
 }
-.table thead tr th:nth-child(4){
+.table thead tr th:nth-child(4) {
   width: 20%;
 }
 .table thead tr th:last-child {
@@ -40,16 +36,13 @@
   padding: 10px 15px;
   font-size: 14px;
   vertical-align: top;
-
 }
 
-.table tbody tr:nth-child(even){
+.table tbody tr:nth-child(even) {
   background: #f3f3f3;
-
 }
 .table tbody tr td:first-child {
   border-radius: 8px 0 0 8px;
-
 }
 .table tbody tr td:last-child {
   border-radius: 0 8px 8px 0;
@@ -74,7 +67,10 @@
 .tdLink {
   cursor: pointer;
 }
-
+.tdLink:hover {
+  color: red;
+  font-weight: 400;
+}
 
 .actionsBlock img {
   width: 20px;
@@ -102,6 +98,3 @@
     font-weight: bold;
   }
 }
-
-
-

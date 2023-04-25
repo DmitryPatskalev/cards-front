@@ -8,7 +8,6 @@ import { SuperButton } from 'components/super-components/button/SuperButton'
 
 export const Buttons = () => {
   const { isMyPacks } = useAppSelector(state => state.packs)
-  const { isDisabled } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()
 
   const getMyPacksHandler = () => {
@@ -24,7 +23,6 @@ export const Buttons = () => {
       <SubTitle title="Show packs cards" />
       <div className={s.buttons}>
         <SuperButton
-          disabled={isDisabled}
           onClick={getMyPacksHandler}
           className={s.switch}
           xType={isMyPacks ? 'default' : 'secondary'}
@@ -33,7 +31,6 @@ export const Buttons = () => {
         </SuperButton>
 
         <SuperButton
-          disabled={isDisabled}
           onClick={getAllPacksHandler}
           className={s.switch}
           xType={isMyPacks ? 'secondary' : 'default'}

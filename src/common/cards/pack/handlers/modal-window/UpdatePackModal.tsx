@@ -30,7 +30,7 @@ export const UpdatePackModal: React.FC<UpdatePackModalPropsType> = ({
   id,
   name,
 }) => {
-  const [newName, setNewName] = useState('')
+  const [newName, setNewName] = useState(name)
   const [checkBox, setCheckBox] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -38,14 +38,14 @@ export const UpdatePackModal: React.FC<UpdatePackModalPropsType> = ({
 
   const closeModalWindow = () => {
     setOpen(false)
-    setNewName('')
+    setNewName(newName)
   }
 
   const savePackHandler = (data: UpdatedPackType) => {
     if (newName.trim() !== '') {
       dispatch(updatePackTC(data))
+      setOpen(false)
       closeModalWindow()
-      setNewName('')
     } else {
       setError('Title is required! ')
     }

@@ -59,6 +59,7 @@ export const packsReducer = (
       return state
   }
 }
+
 const packsActions = {
   getPacks: (cardPacks: PackType[]) => ({ type: 'packs/GET_PACKS', cardPacks } as const),
 
@@ -118,6 +119,7 @@ export const createNewPacksTC =
     try {
       dispatch(setIsDisabled(true))
       dispatch(setIsLoading(true))
+
       await packsAPI.createPack(data)
 
       dispatch(fetchPacksTC())
@@ -136,6 +138,7 @@ export const updatePackTC =
     try {
       dispatch(setIsLoading(true))
       await packsAPI.updatedPack(data)
+
       dispatch(fetchPacksTC())
     } catch (error) {
       errorUtils(error, dispatch)
