@@ -6,7 +6,7 @@ import { Title } from '../../utils/Title/Title'
 import { Handlers } from './handlers/Handlers'
 
 import { useAppSelector } from 'app/store'
-import { AddPackModal } from 'common/cards/pack/handlers/modal-window/AddPackModal'
+import { AddPackModal } from 'common/cards/pack/handlers/packs-modal-window/AddPackModal'
 import s from 'common/cards/pack/Packs.module.scss'
 import { PacksTable } from 'common/cards/pack/table/PacksTable'
 import { SuperButton } from 'components/super-components/button/SuperButton'

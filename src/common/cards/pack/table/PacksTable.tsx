@@ -6,7 +6,7 @@ import learn from '../../../utils/img/learn.svg'
 
 import { useAppSelector } from 'app/store'
 import { SortPacks } from 'common/cards/pack/handlers/sort-packs/SortPacks'
-import { TableActions } from 'common/cards/pack/table/TableActions'
+import { PacksModalActions } from 'common/cards/pack/table/PacksModalActions'
 import s from 'common/common-css-style/Table.module.scss'
 import { Loading } from 'common/utils/loading/Loading'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
@@ -69,7 +69,7 @@ export const PacksTable = () => {
 
                   <td className={s.actionsBlock}>
                     {p.user_id === myId ? (
-                      <TableActions data={p} />
+                      <PacksModalActions data={p} />
                     ) : (
                       <button
                         onClick={() => navigate(`/cards/card/${p._id}`)}

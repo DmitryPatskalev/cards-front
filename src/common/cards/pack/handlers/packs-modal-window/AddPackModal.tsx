@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react'
 
 import { NewPackType } from 'api/packs-api'
 import { useAppDispatch } from 'app/store'
-import s from 'common/cards/pack/handlers/modal-window/ModalWindow.module.scss'
+import s from 'common/cards/pack/handlers/packs-modal-window/ModalWindow.module.scss'
 import { createNewPacksTC } from 'common/cards/pack/packs-reducer'
 import form from 'common/utils/form/FormFields.module.scss'
 import close from 'common/utils/img/icon-close.svg'
