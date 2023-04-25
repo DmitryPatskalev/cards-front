@@ -7,10 +7,10 @@ export const cardsAPI = {
   postCards(data: NewCardType) {
     return instance.post<CardDomainResponseType<CardType>>('/cards/card', data)
   },
-  deleteCard() {
+  deleteCard(id: string) {
     return instance.delete<CardDomainResponseType<CardType>>('/cards/card', {
       params: {
-        id: '6443fe02b79de1d01ec0c4b5',
+        id,
       },
     })
   },

@@ -8,17 +8,12 @@ import table from '../../../common-css-style/Table.module.scss'
 import { SearchByQuestion } from '../handlers/search-input/SearchByQuestion'
 import pack from '../Packs.module.scss'
 
-import {
-  createNewCardTC,
-  deleteCardTC,
-  fetchCardsTC,
-  setGradeTC,
-  updateCardTC,
-} from './cards-reducer'
+import { fetchCardsTC, setGradeTC, updateCardTC } from './cards-reducer'
 import s from './Cards.module.scss'
 
-import { GradeCardType, NewCardType, UpdateCardType } from 'api/cards-api'
+import { GradeCardType, UpdateCardType } from 'api/cards-api'
 import { useAppDispatch, useAppSelector } from 'app/store'
+import { CardsModalActions } from 'common/cards/pack/card/cards-modal-window/CardsModalActions'
 import { PacksCardsPagination } from 'common/cards/pack/handlers/packs-pagination/PacksCardsPagination'
 import pencil from 'common/utils/img/pencil-line-light.svg'
 import remove from 'common/utils/img/remove.svg'
@@ -33,18 +28,10 @@ export const Cards = () => {
   const dispatch = useAppDispatch()
 
   const { isLoading } = useAppSelector(state => state.packs)
-  const { isLoggedIn, isDisabled } = useAppSelector(state => state.auth)
+  const { isLoggedIn, _id } = useAppSelector(state => state.auth)
   const { cards, name, pageCard, pageCardCount } = useAppSelector(state => state.cards)
 
   const { cardsPack_id } = useParams()
-
-  const createNewCardHandler = (data: NewCardType) => {
-    dispatch(createNewCardTC(data))
-  }
-
-  const removeCardHandler = () => {
-    dispatch(deleteCardTC())
-  }
 
   const updateCardHandler = (data: UpdateCardType) => {
     dispatch(updateCardTC(data))
@@ -53,8 +40,6 @@ export const Cards = () => {
   const setGradeOnChange = (event: SyntheticEvent, data: GradeCardType) => {
     dispatch(setGradeTC(data))
   }
-
-  const myId = '6352ce8810be8e0004d5b4f4'
 
   useEffect(() => {
     if (isLoggedIn && cardsPack_id) {
@@ -123,8 +108,9 @@ export const Cards = () => {
                       />
                     </td>
                     <td className={table.actionsBlock}>
+                      <CardsModalActions card={card} />
                       <button
-                        disabled={card.user_id !== myId}
+                        disabled={card.user_id !== _id}
                         onClick={() =>
                           updateCardHandler({
                             card: {
@@ -137,7 +123,7 @@ export const Cards = () => {
                       >
                         <img src={pencil} alt="pencil" />
                       </button>
-                      <button disabled={card.user_id !== myId} onClick={removeCardHandler}>
+                      <button disabled={card.user_id !== _id}>
                         <img src={remove} alt="remove" />
                       </button>
                     </td>

@@ -14,10 +14,9 @@ import { Title } from 'common/utils/Title/Title'
 
 export const PacksTable = () => {
   const { cardPacks, isLoading, sortPacks } = useAppSelector(state => state.packs)
+  const { _id } = useAppSelector(state => state.auth)
 
   const navigate = useNavigate()
-
-  const myId = '6352ce8810be8e0004d5b4f4'
 
   return (
     <table className={s.table}>
@@ -56,7 +55,7 @@ export const PacksTable = () => {
             cardPacks.map(p => {
               return (
                 <tr key={p._id}>
-                  {(!p.cardsCount && p.user_id === myId) || p.cardsCount ? (
+                  {(!p.cardsCount && p.user_id === _id) || p.cardsCount ? (
                     <td onClick={() => navigate(`/cards/card/${p._id}`)}>
                       <span className={s.tdLink}>{p.name.slice(0, 30)}</span>
                     </td>
@@ -68,8 +67,8 @@ export const PacksTable = () => {
                   <td>{p.user_name}</td>
 
                   <td className={s.actionsBlock}>
-                    {p.user_id === myId ? (
-                      <PacksModalActions data={p} />
+                    {p.user_id === _id ? (
+                      <PacksModalActions pack={p} />
                     ) : (
                       <button
                         onClick={() => navigate(`/cards/card/${p._id}`)}

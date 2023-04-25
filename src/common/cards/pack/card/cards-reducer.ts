@@ -123,19 +123,21 @@ export const createNewCardTC =
     }
   }
 
-export const deleteCardTC = (): AppThunk => async (dispatch, getState) => {
-  const { cardsPack_id } = getState().cards
+export const deleteCardTC =
+  (id: string): AppThunk =>
+  async (dispatch, getState) => {
+    const { cardsPack_id } = getState().cards
 
-  try {
-    dispatch(setIsLoading(true))
-    await cardsAPI.deleteCard()
-    dispatch(fetchCardsTC(cardsPack_id))
-  } catch (error) {
-    errorUtils(error, dispatch)
-  } finally {
-    dispatch(setIsLoading(false))
+    try {
+      dispatch(setIsLoading(true))
+      await cardsAPI.deleteCard(id)
+      dispatch(fetchCardsTC(cardsPack_id))
+    } catch (error) {
+      errorUtils(error, dispatch)
+    } finally {
+      dispatch(setIsLoading(false))
+    }
   }
-}
 
 export const updateCardTC =
   (data: UpdateCardType): AppThunk =>

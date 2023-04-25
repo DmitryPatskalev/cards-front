@@ -17,6 +17,7 @@ type DeletePackModalPropsType = {
   setOpen: (open: boolean) => void
   name: string
   id: string
+  deleteHandler: (id: string) => void
 }
 
 export const DeletePackModal: React.FC<DeletePackModalPropsType> = ({
@@ -25,15 +26,16 @@ export const DeletePackModal: React.FC<DeletePackModalPropsType> = ({
   setOpen,
   name,
   id,
+  deleteHandler,
 }) => {
-  const dispatch = useAppDispatch()
+  // const dispatch = useAppDispatch()
 
   const closeModalWindow = () => {
     setOpen(false)
   }
 
-  const deletePackHandler = (id: string) => {
-    dispatch(deletePackTC(id))
+  const deletePackHandler = () => {
+    deleteHandler(id)
     closeModalWindow()
   }
 
@@ -60,7 +62,7 @@ export const DeletePackModal: React.FC<DeletePackModalPropsType> = ({
                   All cards will be deleted
                 </div>
               </div>
-              <SuperButton onClick={() => deletePackHandler(id)} xType={'red'}>
+              <SuperButton onClick={deletePackHandler} xType={'red'}>
                 Delete
               </SuperButton>
             </div>
