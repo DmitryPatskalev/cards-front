@@ -27,7 +27,7 @@ export const PacksTable = () => {
             <SortPacks sort={sortPacks} value="name" />
           </th>
           <th>
-            <SubTitle title="CardsTable" />
+            <SubTitle title="Cards" />
             <SortPacks sort={sortPacks} value="cardsCount" />
           </th>
           <th>
