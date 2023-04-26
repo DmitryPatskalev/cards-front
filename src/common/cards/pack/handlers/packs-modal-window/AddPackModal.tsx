@@ -17,15 +17,9 @@ type AddPackModalPropsType = {
   title: string
   open: boolean
   setOpen: (open: boolean) => void
-  children?: React.ReactNode
 }
 
-export const AddPackModal: React.FC<AddPackModalPropsType> = ({
-  title,
-  open,
-  setOpen,
-  children,
-}) => {
+export const AddPackModal: React.FC<AddPackModalPropsType> = ({ title, open, setOpen }) => {
   const [packName, setPackName] = useState('')
   const [checkBox, setCheckBox] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -87,11 +81,11 @@ export const AddPackModal: React.FC<AddPackModalPropsType> = ({
           </div>
           <SuperButton
             onClick={() => savePackHandler({ cardsPack: { name: packName, private: checkBox } })}
-            xType={'default'}
+            xType={!error ? 'default' : 'disabled'}
+            disabled={!!error}
           >
             Save
           </SuperButton>
-          {children}
         </div>
       </SuperModal>
     </div>

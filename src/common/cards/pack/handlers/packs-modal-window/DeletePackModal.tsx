@@ -2,10 +2,7 @@ import React from 'react'
 
 import { createPortal } from 'react-dom'
 
-import { useAppDispatch } from 'app/store'
 import s from 'common/cards/pack/handlers/packs-modal-window/ModalWindow.module.scss'
-import { deletePackTC } from 'common/cards/pack/packs-reducer'
-import form from 'common/utils/form/FormFields.module.scss'
 import close from 'common/utils/img/icon-close.svg'
 import { Title } from 'common/utils/Title/Title'
 import { SuperButton } from 'components/super-components/button/SuperButton'
@@ -28,8 +25,6 @@ export const DeletePackModal: React.FC<DeletePackModalPropsType> = ({
   id,
   deleteHandler,
 }) => {
-  // const dispatch = useAppDispatch()
-
   const closeModalWindow = () => {
     setOpen(false)
   }
@@ -55,10 +50,10 @@ export const DeletePackModal: React.FC<DeletePackModalPropsType> = ({
                 <Title title={title} />
                 <img onClick={closeModalWindow} src={close} alt="close" />
               </div>
-              <div className={`${form.inputFieldContainer} ${s.inputContainer}`}>
+              <div className={s.deleteModalBlock}>
                 <div className={s.packNameBlock}>
                   Do you really want to remove
-                  <span className={s.namePack}>{name.slice(0, 30)}.</span>
+                  <span className={s.namePack}>{name.slice(0, 30)}</span>
                   All cards will be deleted
                 </div>
               </div>

@@ -95,7 +95,8 @@ export const UpdatePackModal: React.FC<UpdatePackModalPropsType> = ({
                 onClick={() =>
                   savePackHandler({ cardsPack: { _id: id, name: newName, private: checkBox } })
                 }
-                xType={'default'}
+                xType={!error ? 'default' : 'disabled'}
+                disabled={!!error}
               >
                 Save
               </SuperButton>

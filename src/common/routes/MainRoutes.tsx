@@ -8,12 +8,13 @@ import { CheckEmail } from '../auth/password-recovery/CheckEmail'
 import { PasswordRecovery } from '../auth/password-recovery/PasswordRecovery'
 import { Profile } from '../auth/profile/Profile'
 import { Register } from '../auth/register/Register'
-import { Cards } from '../cards/pack/card/Cards'
 import Error from '../utils/errors/404/Error404'
 import { ErrorSnackBar } from '../utils/errors/error-snack-bar/ErrorSnackBar'
 
 import { initializedAppTC } from 'app/app-reducer'
 import { useAppDispatch, useAppSelector } from 'app/store'
+import { CardsContainer } from 'common/cards/pack/card/CardsContainer'
+import { CardsTable } from 'common/cards/pack/card/CardsTable'
 import { PacksContainer } from 'common/cards/pack/PacksContainer'
 import s from 'common/routes/MainRoutes.module.scss'
 import { Loading } from 'common/utils/loading/Loading'
@@ -51,7 +52,7 @@ export const MainRoutes = () => {
         <Route path={'/stand'} element={<Stand />} />
 
         <Route path={'/cards/pack'} element={<PacksContainer />} />
-        <Route path={'/cards/card/:cardsPack_id'} element={<Cards />} />
+        <Route path={'/cards/card/:cardsPack_id'} element={<CardsContainer />} />
       </Routes>
       <ErrorSnackBar />
     </div>

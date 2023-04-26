@@ -12,7 +12,7 @@ import pencil from 'common/utils/img/pencil-line-light.svg'
 import remove from 'common/utils/img/remove.svg'
 
 type TableActionsPropsType = {
-  pack: PackType // твой тип элемента таблицы
+  pack: PackType
 }
 
 export const PacksModalActions: React.FC<TableActionsPropsType> = ({ pack }) => {
