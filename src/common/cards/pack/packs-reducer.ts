@@ -2,7 +2,6 @@ import { errorUtils } from '../../utils/errors/error/error-utils'
 
 import { NewPackType, packsAPI, PackType, UpdatedPackType } from 'api/packs-api'
 import { AppThunk } from 'app/store'
-import { setIsDisabled } from 'common/auth/login/login-reducer'
 import { PropertiesType } from 'common/utils/ActionsTypeUtils'
 
 const initialState = {
@@ -117,18 +116,11 @@ export const createNewPacksTC =
   (data: NewPackType): AppThunk =>
   async dispatch => {
     try {
-      dispatch(setIsDisabled(true))
-      dispatch(setIsLoading(true))
-
       await packsAPI.createPack(data)
 
       dispatch(fetchPacksTC())
-      dispatch(setIsLoading(false))
     } catch (error) {
       errorUtils(error, dispatch)
-    } finally {
-      dispatch(setIsDisabled(false))
-      dispatch(setIsLoading(false))
     }
   }
 
@@ -136,14 +128,11 @@ export const updatePackTC =
   (data: UpdatedPackType): AppThunk =>
   async dispatch => {
     try {
-      dispatch(setIsLoading(true))
       await packsAPI.updatedPack(data)
 
       dispatch(fetchPacksTC())
     } catch (error) {
       errorUtils(error, dispatch)
-    } finally {
-      dispatch(setIsLoading(false))
     }
   }
 
@@ -151,14 +140,11 @@ export const deletePackTC =
   (id: string): AppThunk =>
   async dispatch => {
     try {
-      dispatch(setIsLoading(true))
       await packsAPI.deletePack(id)
 
       dispatch(fetchPacksTC())
     } catch (error) {
       errorUtils(error, dispatch)
-    } finally {
-      dispatch(setIsLoading(false))
     }
   }
 

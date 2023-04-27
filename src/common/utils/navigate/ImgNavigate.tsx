@@ -9,18 +9,16 @@ import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 
 type ImgNavigatePropsType = {
   title: string
+  onClick?: () => void
 }
-export const ImgNavigate: React.FC<ImgNavigatePropsType> = ({ title }) => {
+export const ImgNavigate: React.FC<ImgNavigatePropsType> = ({ title, onClick }) => {
   const navigate = useNavigate()
+
+  const onBack = () => navigate('/cards/pack')
 
   return (
     <div className={s.navigationToPack}>
-      <img
-        onClick={() => navigate('/cards/pack')}
-        className={s.leftArrow}
-        src={leftArrow}
-        alt="leftArrow"
-      />
+      <img onClick={onClick || onBack} className={s.leftArrow} src={leftArrow} alt="leftArrow" />
       <SubTitle title={title} />
     </div>
   )

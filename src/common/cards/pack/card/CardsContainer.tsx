@@ -1,11 +1,10 @@
-import React, { SyntheticEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import { GradeCardType, UpdateCardType } from 'api/cards-api'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { AddCardModal } from 'common/cards/pack/card/cards-modal-window/AddCardModal'
-import { fetchCardsTC, setGradeTC, updateCardTC } from 'common/cards/pack/card/cards-reducer'
+import { fetchCardsTC, setPackName } from 'common/cards/pack/card/cards-reducer'
 import s from 'common/cards/pack/card/Cards.module.scss'
 import { CardsTable } from 'common/cards/pack/card/CardsTable'
 import { PacksCardsPagination } from 'common/cards/pack/handlers/packs-pagination/PacksCardsPagination'
@@ -24,13 +23,11 @@ export const CardsContainer = () => {
   const { name, pageCard, pageCardCount } = useAppSelector(state => state.cards)
 
   const { cardsPack_id } = useParams()
+  const navigate = useNavigate()
 
-  const updateCardHandler = (data: UpdateCardType) => {
-    dispatch(updateCardTC(data))
-  }
-
-  const setGradeOnChange = (event: SyntheticEvent, data: GradeCardType) => {
-    dispatch(setGradeTC(data))
+  const onBack = () => {
+    navigate('/cards/pack')
+    dispatch(setPackName(''))
   }
 
   useEffect(() => {
@@ -41,7 +38,7 @@ export const CardsContainer = () => {
 
   return (
     <div className={common.commonContainer}>
-      <ImgNavigate title="Back to Pack List" />
+      <ImgNavigate title="Back to Pack List" onClick={onBack} />
       <div className={pack.navBlock}>
         <Title title={name} />
         <SuperButton onClick={() => setOpen(true)} xType={'default'}>

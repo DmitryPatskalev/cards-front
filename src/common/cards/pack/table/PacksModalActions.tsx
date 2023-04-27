@@ -13,18 +13,22 @@ import remove from 'common/utils/img/remove.svg'
 
 type TableActionsPropsType = {
   pack: PackType
+  id: string
 }
 
-export const PacksModalActions: React.FC<TableActionsPropsType> = ({ pack }) => {
-  const [showLearnModal, setShowLearnModal] = useState<boolean>(false)
+export const PacksModalActions: React.FC<TableActionsPropsType> = ({ pack, id }) => {
   const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false)
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
 
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
   const handleOpenUpdateModal = () => setShowUpdateModal(true)
   const handleOpenDeleteModal = () => setShowDeleteModal(true)
 
-  const dispatch = useAppDispatch()
+  const handleOpenLearnPack = () => {
+    navigate(`/cards/learn/${pack._id}`)
+  }
 
   const deletePackHandler = (id: string) => {
     dispatch(deletePackTC(id))
@@ -32,15 +36,25 @@ export const PacksModalActions: React.FC<TableActionsPropsType> = ({ pack }) => 
 
   return (
     <>
-      <button onClick={() => navigate(`/cards/card/${pack._id}`)} disabled={!pack.cardsCount}>
-        <img src={learn} alt="learn" />
-      </button>
-      <button onClick={handleOpenUpdateModal}>
-        <img src={pencil} alt="pencil" />
-      </button>
-      <button onClick={handleOpenDeleteModal}>
-        <img src={remove} alt="remove" />
-      </button>
+      {pack.user_id === id && pack.cardsCount ? (
+        <>
+          <button onClick={handleOpenLearnPack} disabled={!pack.cardsCount}>
+            <img src={learn} alt="learn" />
+          </button>
+          <button onClick={handleOpenUpdateModal}>
+            <img src={pencil} alt="pencil" />
+          </button>
+          <button onClick={handleOpenDeleteModal}>
+            <img src={remove} alt="remove" />
+          </button>
+        </>
+      ) : (
+        <>
+          <button onClick={handleOpenLearnPack} disabled={!pack.cardsCount}>
+            <img src={learn} alt="learn" />
+          </button>
+        </>
+      )}
 
       <UpdatePackModal
         title="Edit pack"

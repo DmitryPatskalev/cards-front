@@ -2,8 +2,6 @@ import React from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
-import learn from '../../../utils/img/learn.svg'
-
 import { useAppSelector } from 'app/store'
 import { SortPacks } from 'common/cards/pack/handlers/sort-packs/SortPacks'
 import { PacksModalActions } from 'common/cards/pack/table/PacksModalActions'
@@ -67,16 +65,7 @@ export const PacksTable = () => {
                   <td>{p.user_name.slice(0, 40)}</td>
 
                   <td className={s.actionsBlock}>
-                    {p.user_id === _id ? (
-                      <PacksModalActions pack={p} />
-                    ) : (
-                      <button
-                        onClick={() => navigate(`/cards/card/${p._id}`)}
-                        disabled={!p.cardsCount}
-                      >
-                        <img src={learn} alt="learn" />
-                      </button>
-                    )}
+                    <PacksModalActions pack={p} id={_id} />
                   </td>
                 </tr>
               )

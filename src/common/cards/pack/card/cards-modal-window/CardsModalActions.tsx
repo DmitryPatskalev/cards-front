@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react'
 
 import { CardType } from 'api/cards-api'
 import { useAppDispatch, useAppSelector } from 'app/store'
+import { UpdateCardModal } from 'common/cards/pack/card/cards-modal-window/UpdateCardModal'
 import { deleteCardTC } from 'common/cards/pack/card/cards-reducer'
 import { DeleteItemModal } from 'common/cards/pack/handlers/packs-modal-window/DeleteItemModal'
 import pencil from 'common/utils/img/pencil-line-light.svg'
@@ -12,12 +13,14 @@ type CardsModalActionsPropsType = {
 }
 
 export const CardsModalActions: FC<CardsModalActionsPropsType> = ({ card }) => {
+  const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false)
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
 
   const { _id } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()
 
   const handleOpenDeleteModal = () => setShowDeleteModal(true)
+  const handleOpenUpdateModal = () => setShowUpdateModal(true)
 
   const deleteCardHandler = (id: string) => {
     dispatch(deleteCardTC(id))
@@ -25,13 +28,21 @@ export const CardsModalActions: FC<CardsModalActionsPropsType> = ({ card }) => {
 
   return (
     <>
-      <button disabled={card.user_id !== _id} onClick={() => console.log('update')}>
+      <button disabled={card.user_id !== _id} onClick={handleOpenUpdateModal}>
         <img src={pencil} alt="pencil" />
       </button>
 
       <button disabled={card.user_id !== _id} onClick={handleOpenDeleteModal}>
         <img src={remove} alt="remove" />
       </button>
+
+      <UpdateCardModal
+        id={card._id}
+        question={card.question}
+        answer={card.answer}
+        open={showUpdateModal}
+        setOpen={setShowUpdateModal}
+      />
 
       <DeleteItemModal
         title="Delete Card"

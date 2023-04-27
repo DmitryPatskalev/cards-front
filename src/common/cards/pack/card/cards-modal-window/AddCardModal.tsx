@@ -101,7 +101,6 @@ export const AddCardModal: FC<AddCardModalPropsType> = ({ open, setOpen }) => {
               className={style.inputForm}
               type="text"
               error={errorAnswer}
-              autoFocus
             />
           </div>
           <div className={style.actionButtonBlock}>

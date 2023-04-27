@@ -67,7 +67,7 @@ export const CardsTable = () => {
           ) : (
             <tr className={table.emptyPacks}>
               <td>
-                <Title title="CardsTable don't exist. Please create new card." />
+                <Title title="Cards don't exist. Please create new card." />
               </td>
             </tr>
           )}

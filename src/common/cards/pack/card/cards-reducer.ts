@@ -1,6 +1,5 @@
 import { cardsAPI, CardType, GradeCardType, NewCardType, UpdateCardType } from 'api/cards-api'
 import { AppThunk } from 'app/store'
-import { setIsDisabled } from 'common/auth/login/login-reducer'
 import { setIsLoading } from 'common/cards/pack/packs-reducer'
 import { PropertiesType } from 'common/utils/ActionsTypeUtils'
 import { errorUtils } from 'common/utils/errors/error/error-utils'
@@ -93,10 +92,10 @@ export const fetchCardsTC =
         cardQuestion,
       })
 
+      dispatch(setPackName(res.data.packName))
       dispatch(setCards(res.data.cards))
       dispatch(setCardsPackId(cardsPack_id))
       dispatch(setCardsTotalCount(res.data.cardsTotalCount))
-      dispatch(setPackName(res.data.packName))
     } catch (error) {
       errorUtils(error, dispatch)
     } finally {
@@ -110,16 +109,10 @@ export const createNewCardTC =
     const { cardsPack_id } = getState().cards
 
     try {
-      dispatch(setIsDisabled(true))
-      dispatch(setIsLoading(true))
       await cardsAPI.postCards(data)
-
       dispatch(fetchCardsTC(cardsPack_id))
     } catch (error) {
       errorUtils(error, dispatch)
-    } finally {
-      dispatch(setIsDisabled(false))
-      dispatch(setIsLoading(false))
     }
   }
 
@@ -129,13 +122,10 @@ export const deleteCardTC =
     const { cardsPack_id } = getState().cards
 
     try {
-      dispatch(setIsLoading(true))
       await cardsAPI.deleteCard(id)
       dispatch(fetchCardsTC(cardsPack_id))
     } catch (error) {
       errorUtils(error, dispatch)
-    } finally {
-      dispatch(setIsLoading(false))
     }
   }
 
@@ -145,13 +135,10 @@ export const updateCardTC =
     const { cardsPack_id } = getState().cards
 
     try {
-      dispatch(setIsLoading(true))
       await cardsAPI.updateCard(data)
       dispatch(fetchCardsTC(cardsPack_id))
     } catch (error) {
       errorUtils(error, dispatch)
-    } finally {
-      dispatch(setIsLoading(false))
     }
   }
 

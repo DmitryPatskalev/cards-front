@@ -14,8 +14,8 @@ import { ErrorSnackBar } from '../utils/errors/error-snack-bar/ErrorSnackBar'
 import { initializedAppTC } from 'app/app-reducer'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { CardsContainer } from 'common/cards/pack/card/CardsContainer'
-import { CardsTable } from 'common/cards/pack/card/CardsTable'
 import { PacksContainer } from 'common/cards/pack/PacksContainer'
+import { LearnPackContainer } from 'common/cards/pack/table/LearnPackContainer'
 import s from 'common/routes/MainRoutes.module.scss'
 import { Loading } from 'common/utils/loading/Loading'
 import { Stand } from 'components/stand/Stand'
@@ -53,6 +53,7 @@ export const MainRoutes = () => {
 
         <Route path={'/cards/pack'} element={<PacksContainer />} />
         <Route path={'/cards/card/:cardsPack_id'} element={<CardsContainer />} />
+        <Route path={'cards/learn/:_id'} element={<LearnPackContainer />} />
       </Routes>
       <ErrorSnackBar />
     </div>
