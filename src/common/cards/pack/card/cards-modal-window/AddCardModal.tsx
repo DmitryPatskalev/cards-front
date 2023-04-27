@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 
 import style from '../../handlers/packs-modal-window/ModalStyle.module.scss'
 
-import { NewCardType } from 'api/cards-api'
 import { useAppDispatch } from 'app/store'
 import { createNewCardTC } from 'common/cards/pack/card/cards-reducer'
 import close from 'common/utils/img/icon-close.svg'
@@ -33,9 +32,13 @@ export const AddCardModal: FC<AddCardModalPropsType> = ({ open, setOpen }) => {
     setOpen(false)
   }
 
-  const saveCardHandler = (data: NewCardType) => {
+  const saveCardHandler = () => {
     if (newQuestion.trim() !== '' && newAnswer.trim() !== '') {
-      dispatch(createNewCardTC(data))
+      dispatch(
+        createNewCardTC({
+          card: { cardsPack_id, question: newQuestion, answer: newAnswer },
+        })
+      )
       closeModalWindow()
     } else {
       setErrorQuestion('Title is required!')
@@ -104,11 +107,7 @@ export const AddCardModal: FC<AddCardModalPropsType> = ({ open, setOpen }) => {
           <div className={style.actionButtonBlock}>
             <SuperButton
               className={style.button}
-              onClick={() =>
-                saveCardHandler({
-                  card: { cardsPack_id, question: newQuestion, answer: newAnswer },
-                })
-              }
+              onClick={saveCardHandler}
               xType={!errorQuestion || !errorAnswer ? 'default' : 'disabled'}
               disabled={!!errorQuestion && !!errorAnswer}
             >

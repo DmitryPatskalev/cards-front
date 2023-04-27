@@ -2,7 +2,6 @@ import React, { ChangeEvent, useState } from 'react'
 
 import s from './ModalStyle.module.scss'
 
-import { NewPackType } from 'api/packs-api'
 import { useAppDispatch } from 'app/store'
 import { createNewPacksTC } from 'common/cards/pack/packs-reducer'
 import close from 'common/utils/img/icon-close.svg'
@@ -31,9 +30,9 @@ export const AddPackModal: React.FC<AddPackModalPropsType> = ({ title, open, set
     setPackName('')
   }
 
-  const savePackHandler = (data: NewPackType) => {
+  const savePackHandler = () => {
     if (packName.trim() !== '') {
-      dispatch(createNewPacksTC(data))
+      dispatch(createNewPacksTC({ cardsPack: { name: packName, private: checkBox } }))
       closeModalWindow()
       setPackName('')
     } else {
@@ -80,7 +79,7 @@ export const AddPackModal: React.FC<AddPackModalPropsType> = ({ title, open, set
           <div className={s.actionButtonBlock}>
             <SuperButton
               className={s.button}
-              onClick={() => savePackHandler({ cardsPack: { name: packName, private: checkBox } })}
+              onClick={savePackHandler}
               xType={!error ? 'default' : 'disabled'}
               disabled={!!error}
             >

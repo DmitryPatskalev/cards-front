@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom'
 
 import s from './ModalStyle.module.scss'
 
-import { UpdatedPackType } from 'api/packs-api'
 import { useAppDispatch } from 'app/store'
 import { updatePackTC } from 'common/cards/pack/packs-reducer'
 import close from 'common/utils/img/icon-close.svg'
@@ -41,9 +40,9 @@ export const UpdatePackModal: React.FC<UpdatePackModalPropsType> = ({
     setNewName(newName)
   }
 
-  const savePackHandler = (data: UpdatedPackType) => {
+  const savePackHandler = () => {
     if (newName.trim() !== '') {
-      dispatch(updatePackTC(data))
+      dispatch(updatePackTC({ cardsPack: { _id: id, name: newName, private: checkBox } }))
       setOpen(false)
       closeModalWindow()
     } else {
@@ -91,9 +90,7 @@ export const UpdatePackModal: React.FC<UpdatePackModalPropsType> = ({
               <div className={s.actionButtonBlock}>
                 <SuperButton
                   className={s.button}
-                  onClick={() =>
-                    savePackHandler({ cardsPack: { _id: id, name: newName, private: checkBox } })
-                  }
+                  onClick={savePackHandler}
                   xType={!error ? 'default' : 'disabled'}
                   disabled={!!error}
                 >

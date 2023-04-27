@@ -64,7 +64,7 @@ export const PacksTable = () => {
                   )}
                   <td>{p.cardsCount}</td>
                   <td>{p.updated.slice(0, 10)}</td>
-                  <td>{p.user_name}</td>
+                  <td>{p.user_name.slice(0, 40)}</td>
 
                   <td className={s.actionsBlock}>
                     {p.user_id === _id ? (
