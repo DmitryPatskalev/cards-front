@@ -2,7 +2,8 @@ import React from 'react'
 
 import { createPortal } from 'react-dom'
 
-import s from 'common/cards/pack/handlers/packs-modal-window/ModalWindow.module.scss'
+import s from './ModalStyle.module.scss'
+
 import close from 'common/utils/img/icon-close.svg'
 import { Title } from 'common/utils/Title/Title'
 import { SuperButton } from 'components/super-components/button/SuperButton'
@@ -17,7 +18,7 @@ type DeletePackModalPropsType = {
   deleteHandler: (id: string) => void
 }
 
-export const DeletePackModal: React.FC<DeletePackModalPropsType> = ({
+export const DeleteItemModal: React.FC<DeletePackModalPropsType> = ({
   title,
   open,
   setOpen,
@@ -50,16 +51,17 @@ export const DeletePackModal: React.FC<DeletePackModalPropsType> = ({
                 <Title title={title} />
                 <img onClick={closeModalWindow} src={close} alt="close" />
               </div>
-              <div className={s.deleteModalBlock}>
-                <div className={s.packNameBlock}>
-                  Do you really want to remove
-                  <span className={s.namePack}>{name.slice(0, 30)}</span>
-                  All cards will be deleted
-                </div>
+
+              <div className={s.textBlock}>
+                Do you really want to remove
+                <span className={s.packName}>{name.slice(0, 30)}</span>
+                All cards will be deleted
               </div>
-              <SuperButton onClick={deletePackHandler} xType={'red'}>
-                Delete
-              </SuperButton>
+              <div className={s.actionButtonBlock}>
+                <SuperButton className={s.button} onClick={deletePackHandler} xType={'red'}>
+                  Delete
+                </SuperButton>
+              </div>
             </div>
           </SuperModal>,
           document.body

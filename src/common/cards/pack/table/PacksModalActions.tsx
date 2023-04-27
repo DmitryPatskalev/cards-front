@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { PackType } from 'api/packs-api'
 import { useAppDispatch } from 'app/store'
-import { DeletePackModal } from 'common/cards/pack/handlers/packs-modal-window/DeletePackModal'
+import { DeleteItemModal } from 'common/cards/pack/handlers/packs-modal-window/DeleteItemModal'
 import { UpdatePackModal } from 'common/cards/pack/handlers/packs-modal-window/UpdatePackModal'
 import { deletePackTC } from 'common/cards/pack/packs-reducer'
 import learn from 'common/utils/img/learn.svg'
@@ -50,7 +50,7 @@ export const PacksModalActions: React.FC<TableActionsPropsType> = ({ pack }) => 
         name={pack.name}
       />
 
-      <DeletePackModal
+      <DeleteItemModal
         title="Delete Pack"
         open={showDeleteModal}
         setOpen={setShowDeleteModal}

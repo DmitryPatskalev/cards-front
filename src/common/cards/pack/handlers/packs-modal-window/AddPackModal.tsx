@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from 'react'
 
+import s from './ModalStyle.module.scss'
+
 import { NewPackType } from 'api/packs-api'
 import { useAppDispatch } from 'app/store'
-import s from 'common/cards/pack/handlers/packs-modal-window/ModalWindow.module.scss'
 import { createNewPacksTC } from 'common/cards/pack/packs-reducer'
-import form from 'common/utils/form/FormFields.module.scss'
 import close from 'common/utils/img/icon-close.svg'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 import { Title } from 'common/utils/Title/Title'
@@ -58,34 +58,35 @@ export const AddPackModal: React.FC<AddPackModalPropsType> = ({ title, open, set
         <div className={s.modalContainer}>
           <div className={s.titleBlock}>
             <Title title={title} />
-            <img onClick={closeModalWindow} src={close} alt="" />
+            <img onClick={closeModalWindow} src={close} alt="close" />
           </div>
-          <div className={`${form.inputFieldContainer} ${s.inputContainer}`}>
-            <div className={form.titleFieldForm}>
-              <SubTitle title="Pack Name" />
-            </div>
-            <div className={form.inputFieldBlock}>
-              <SuperInput
-                value={packName}
-                onChange={onChangeNewPack}
-                placeholder="Type pack name"
-                className={form.inputForm}
-                type="text"
-                error={error}
-                autoFocus
-              />
-            </div>
+
+          <div className={s.inputBlock}>
+            <SubTitle title="Pack Name" />
+
+            <SuperInput
+              value={packName}
+              onChange={onChangeNewPack}
+              className={s.inputForm}
+              type="text"
+              error={error}
+              autoFocus
+            />
           </div>
+
           <div className={s.checkboxBlock}>
             <SuperCheckBox onChangeChecked={setCheckBox}>Private pack</SuperCheckBox>
           </div>
-          <SuperButton
-            onClick={() => savePackHandler({ cardsPack: { name: packName, private: checkBox } })}
-            xType={!error ? 'default' : 'disabled'}
-            disabled={!!error}
-          >
-            Save
-          </SuperButton>
+          <div className={s.actionButtonBlock}>
+            <SuperButton
+              className={s.button}
+              onClick={() => savePackHandler({ cardsPack: { name: packName, private: checkBox } })}
+              xType={!error ? 'default' : 'disabled'}
+              disabled={!!error}
+            >
+              Save
+            </SuperButton>
+          </div>
         </div>
       </SuperModal>
     </div>

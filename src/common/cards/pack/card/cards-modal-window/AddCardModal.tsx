@@ -2,12 +2,11 @@ import React, { ChangeEvent, FC, useState } from 'react'
 
 import { useParams } from 'react-router-dom'
 
-import s from './CardsModal.module.scss'
+import style from '../../handlers/packs-modal-window/ModalStyle.module.scss'
 
 import { NewCardType } from 'api/cards-api'
 import { useAppDispatch } from 'app/store'
 import { createNewCardTC } from 'common/cards/pack/card/cards-reducer'
-import style from 'common/cards/pack/handlers/packs-modal-window/ModalWindow.module.scss'
 import close from 'common/utils/img/icon-close.svg'
 import { SubTitle } from 'common/utils/SubTitle/SubTitle'
 import { Title } from 'common/utils/Title/Title'
@@ -66,43 +65,43 @@ export const AddCardModal: FC<AddCardModalPropsType> = ({ open, setOpen }) => {
             <img onClick={closeModalWindow} src={close} alt="close" />
           </div>
 
-          <div className={s.handlersContainer}>
-            <div className={s.inputBlock}>
-              <SubTitle title="Question" />
-              <SuperInput
-                value={newQuestion}
-                onChange={onChangeNewQuestion}
-                className={s.inputForm}
-                type="text"
-                error={error}
-                autoFocus
-              />
-            </div>
-
-            <div className={s.inputBlock}>
-              <SubTitle title="Answer" />
-              <SuperInput
-                value={newAnswer}
-                onChange={onChangeNewAnswer}
-                className={s.inputForm}
-                type="text"
-                error={error}
-                autoFocus
-              />
-            </div>
+          <div className={style.inputBlock}>
+            <SubTitle title="Question" />
+            <SuperInput
+              value={newQuestion}
+              onChange={onChangeNewQuestion}
+              className={style.inputForm}
+              type="text"
+              error={error}
+              autoFocus
+            />
           </div>
 
-          <SuperButton
-            onClick={() =>
-              saveCardHandler({
-                card: { cardsPack_id, question: newQuestion, answer: newAnswer },
-              })
-            }
-            xType={!error ? 'default' : 'disabled'}
-            disabled={!!error}
-          >
-            Save
-          </SuperButton>
+          <div className={style.inputBlock}>
+            <SubTitle title="Answer" />
+            <SuperInput
+              value={newAnswer}
+              onChange={onChangeNewAnswer}
+              className={style.inputForm}
+              type="text"
+              error={error}
+              autoFocus
+            />
+          </div>
+          <div className={style.actionButtonBlock}>
+            <SuperButton
+              className={style.button}
+              onClick={() =>
+                saveCardHandler({
+                  card: { cardsPack_id, question: newQuestion, answer: newAnswer },
+                })
+              }
+              xType={!error ? 'default' : 'disabled'}
+              disabled={!!error}
+            >
+              Save
+            </SuperButton>
+          </div>
         </div>
       </SuperModal>
     </div>

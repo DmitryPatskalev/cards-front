@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react'
 import { CardType } from 'api/cards-api'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { deleteCardTC } from 'common/cards/pack/card/cards-reducer'
-import { DeletePackModal } from 'common/cards/pack/handlers/packs-modal-window/DeletePackModal'
+import { DeleteItemModal } from 'common/cards/pack/handlers/packs-modal-window/DeleteItemModal'
 import pencil from 'common/utils/img/pencil-line-light.svg'
 import remove from 'common/utils/img/remove.svg'
 
@@ -33,7 +33,7 @@ export const CardsModalActions: FC<CardsModalActionsPropsType> = ({ card }) => {
         <img src={remove} alt="remove" />
       </button>
 
-      <DeletePackModal
+      <DeleteItemModal
         title="Delete Card"
         open={showDeleteModal}
         setOpen={setShowDeleteModal}
