@@ -13,6 +13,7 @@ import { Title } from 'common/utils/Title/Title'
 import { SuperButton } from 'components/super-components/button/SuperButton'
 import { SuperInput } from 'components/super-components/input/SuperInput'
 import { SuperModal } from 'components/super-components/modal/SuperModal'
+import { SuperSelect } from 'components/super-components/select/SuperSelect'
 
 type AddCardModalPropsType = {
   open: boolean
@@ -21,7 +22,8 @@ type AddCardModalPropsType = {
 export const AddCardModal: FC<AddCardModalPropsType> = ({ open, setOpen }) => {
   const [newQuestion, setNewQuestion] = useState('')
   const [newAnswer, setNewAnswer] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const [errorQuestion, setErrorQuestion] = useState<string | null>(null)
+  const [errorAnswer, setErrorAnswer] = useState<string | null>(null)
 
   const { cardsPack_id } = useParams()
 
@@ -36,19 +38,25 @@ export const AddCardModal: FC<AddCardModalPropsType> = ({ open, setOpen }) => {
       dispatch(createNewCardTC(data))
       closeModalWindow()
     } else {
-      setError('Title is required!')
+      setErrorQuestion('Title is required!')
+      setErrorAnswer('Title is required!')
     }
   }
 
   const onChangeNewQuestion = (e: ChangeEvent<HTMLInputElement>) => {
-    setError(null)
+    setErrorQuestion(null)
     setNewQuestion(e.currentTarget.value)
   }
 
   const onChangeNewAnswer = (e: ChangeEvent<HTMLInputElement>) => {
-    setError(null)
+    setErrorAnswer(null)
     setNewAnswer(e.currentTarget.value)
   }
+
+  const data = [
+    { id: 1, value: 'Text' },
+    { id: 2, value: 'Picture' },
+  ]
 
   return (
     <div>
@@ -66,13 +74,18 @@ export const AddCardModal: FC<AddCardModalPropsType> = ({ open, setOpen }) => {
           </div>
 
           <div className={style.inputBlock}>
+            <SubTitle title="Choose a question format" />
+            <SuperSelect options={data} className={style.inputForm} />
+          </div>
+
+          <div className={style.inputBlock}>
             <SubTitle title="Question" />
             <SuperInput
               value={newQuestion}
               onChange={onChangeNewQuestion}
               className={style.inputForm}
               type="text"
-              error={error}
+              error={errorQuestion}
               autoFocus
             />
           </div>
@@ -84,7 +97,7 @@ export const AddCardModal: FC<AddCardModalPropsType> = ({ open, setOpen }) => {
               onChange={onChangeNewAnswer}
               className={style.inputForm}
               type="text"
-              error={error}
+              error={errorAnswer}
               autoFocus
             />
           </div>
@@ -96,8 +109,8 @@ export const AddCardModal: FC<AddCardModalPropsType> = ({ open, setOpen }) => {
                   card: { cardsPack_id, question: newQuestion, answer: newAnswer },
                 })
               }
-              xType={!error ? 'default' : 'disabled'}
-              disabled={!!error}
+              xType={!errorQuestion || !errorAnswer ? 'default' : 'disabled'}
+              disabled={!!errorQuestion && !!errorAnswer}
             >
               Save
             </SuperButton>
