@@ -17,16 +17,19 @@ type TableActionsPropsType = {
 }
 
 export const PacksModalActions: React.FC<TableActionsPropsType> = ({ pack, id }) => {
+  const [showLearnCards, setShowLearnCards] = useState<boolean>(false)
   const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false)
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
+  const handleOpenLearnCards = () => setShowLearnCards(true)
   const handleOpenUpdateModal = () => setShowUpdateModal(true)
   const handleOpenDeleteModal = () => setShowDeleteModal(true)
 
   const handleOpenLearnPack = () => {
+    handleOpenLearnCards()
     navigate(`/cards/learn/${pack._id}`)
   }
 
@@ -36,7 +39,7 @@ export const PacksModalActions: React.FC<TableActionsPropsType> = ({ pack, id })
 
   return (
     <>
-      {pack.user_id === id && pack.cardsCount ? (
+      {pack.user_id === id ? (
         <>
           <button onClick={handleOpenLearnPack} disabled={!pack.cardsCount}>
             <img src={learn} alt="learn" />
@@ -55,7 +58,6 @@ export const PacksModalActions: React.FC<TableActionsPropsType> = ({ pack, id })
           </button>
         </>
       )}
-
       <UpdatePackModal
         title="Edit pack"
         open={showUpdateModal}
@@ -63,7 +65,6 @@ export const PacksModalActions: React.FC<TableActionsPropsType> = ({ pack, id })
         id={pack._id}
         name={pack.name}
       />
-
       <DeleteItemModal
         title="Delete Pack"
         open={showDeleteModal}
